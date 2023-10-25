@@ -1,0 +1,50 @@
+using EH.Models.Xpm;
+using Mapster;
+
+namespace EH.Shared.SdocJsonToXpmConverter.Mapping.Configs
+{
+    public class SdocToXpmMappingConfig : IRegister
+    {
+        public void Register(TypeAdapterConfig config)
+        {
+            // Mapeo inverso de Sdoc a XPM
+            TypeAdapterConfig<Sdoc, Event>.ForType()
+                .Map(dest => dest.Alerts.AlertCategory, src => src.AlertAlertCategory)
+                .Map(dest => dest.Alerts.AlertCode, src => src.AlertAlertCode)
+                .Map(dest => dest.Alerts.AlertDescription, src => src.AlertAlertDescription)
+                .Map(dest => dest.Alerts.AlertResolved, src => src.AlertAlertResolved)
+                .Map(dest => dest.Alerts.AlertSource, src => src.AlertAlertSource)
+                .Map(dest => dest.Alerts.AlertStatus, src => src.AlertAlertStatus)
+                .Map(dest => dest.Alerts.CompanyID, src => src.AlertCompanyId)
+                .Map(dest => dest.Alerts.DateUpdated, src => src.AlertDateUpdated)
+                .Map(dest => dest.Alerts.Care_Patient_Account_Alerts_ID, src => src.AlertECarePatientAccountAlertsId)
+                .Map(dest => dest.Alerts.EVN_UserID, src => src.AlertEVNUserId)
+                .Map(dest => dest.Alerts.NeboUserID, src => src.AlertNeboUserId)
+                .Map(dest => dest.Alerts.ProductSource, src => src.AlertProductSource)
+                .Map(dest => dest.Alerts.Protocol, src => src.AlertProtocol)
+                .Map(dest => dest.MessageEvent.BatchRowId, src => src.BatchRowId)
+                .Map(dest => dest.MessageHeader.Deserializer, src => src.Deserializer)
+                .Map(dest => dest.MessageEvent.DoNotOverWriteInsurance, src => src.DoNotOverWriteInsurance)
+                .Map(dest => dest.MessageEvent.EventReasonCode, src => src.EventReasonCode)
+                .Map(dest => dest.MessageEvent.IPS_Message_ID, src => src.IpsMessageId)
+                .Map(dest => dest.MessageEvent.IsBatchTrigger, src => src.IsBatchTrigger)
+                .Map(dest => dest.MessageEvent.IsTempAccount, src => src.IsTempAccount)
+                .Map(dest => dest.MessageEvent.MessageEventVersion, src => src.MessageEventVersion)
+                .Map(dest => dest.MSP.Payload, src => src.Payload)
+                .Map(dest => dest.MessageEvent.PopPic, src => src.PopPic)
+                .Map(dest => dest.MessageEvent.ScanAndTriggerId, src => src.ScanAndTriggerId)
+                .Map(dest => dest.MessageEvent.SequenceID, src => src.SequenceId)
+                .Map(dest => dest.MessageEvent.TestMode, src => src.TestMode)
+                .Map(dest => dest.Authentication.UserMnemonic, src => src.OperatorId)
+                .Map(dest => dest.MessageEvent.OrcaInstID, src => src.OrcaInstId)
+                .Map(dest => dest.MessageEvent.OriginalTriggeredUser, src => src.OriginalTriggeredUser)
+                .Map(dest => dest.MessageHeader.OverRideResponseReuse, src => src.OverRideResponseReuse)
+                .Map(dest => dest.Authentication.TradingPartnerID, src => src.TpIdentifier)
+                .Map(dest => dest.MessageEvent.UpdateIPS_TempAccount, src => src.UpdateIPSTempAccount)
+                .Map(dest => dest.MessageEvent.UseForHL7PostbackTemplateOnly, src => src.UseForHL7PostbackTemplateOnly)
+                .Map(dest => dest.MessageHeader.ValidHL7PostbackTemplate, src => src.ValidHL7PostbackTemplate)
+                .Map(dest => dest.WrapperMetadata, src => src.WrapperMetadata)
+                .IgnoreNonMapped(true);
+        }
+    }
+}
