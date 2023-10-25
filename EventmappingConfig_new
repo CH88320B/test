@@ -1,3 +1,12 @@
+using EH.Models.Xpm;
+using Mapster;
+
+namespace EH.Shared.SdocJsonToXpmConverter.Mapping.Configs
+{
+    public class EventMappingConfig : IRegister
+    {
+        public void Register( TypeAdapterConfig config )
+        {
 TypeAdapterConfig<Event, SdocAdapter.Root>.ForType()
     .Map(dest => dest.Alerts.AlertCategory, src => src.AlertAlertCategory)
     .Map(dest => dest.Alerts.AlertCode, src => src.AlertAlertCode)
@@ -163,6 +172,6 @@ TypeAdapterConfig<Event, SdocAdapter.MessageHeader>.ForType()
     .Map(dest => dest.VendorRequestedOverride, src => src.VendorRequestedOverride)
     .Map(dest => dest.VendorRequestID, src => src.VendorRequestID)
     .IgnoreNonMapped(true);
- }
- }
+  }
+  }
  }
