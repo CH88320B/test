@@ -1,0 +1,67 @@
+using Mapster;
+
+namespace EH.Shared.SdocToXpmConverter.Mapping.Configs
+{
+    public class OrderMappingConfig : IRegister
+    {
+        public void Register(TypeAdapterConfig config)
+        {
+            // Mapping config for Models.Xpm.Order and dependents.
+            TypeAdapterConfig<Models.Xpm.Order, SdocAdapter.Root>.ForType()
+                .Map(dest => dest.Appointments, src => src.Appointments)
+                .Map(dest => dest.Billing, src => src.Billing)
+                .Map(dest => dest.ClinicalTrials, src => src.ClinicalTrials)
+                .Map(dest => dest.Contact, src => src.Contact)
+                .Map(dest => dest.Diagnosis, src => src.Diagnosis)
+                .Map(dest => dest.DietTrayInstructions, src => src.DietTrayInstructions)
+                .Map(dest => dest.DietaryOrders, src => src.DietaryOrders)
+                .Map(dest => dest.FinancialTransactions, src => src.FinancialTransactions)
+                .Map(dest => dest.Generals, src => src.Generals)
+                .Map(dest => dest.Locations, src => src.Locations)
+                .Map(dest => dest.Notes, src => src.Notes)
+                .Map(dest => dest.Observations, src => src.Observations)
+                .Map(dest => dest.Personnel, src => src.Personnel)
+                .Map(dest => dest.Procedures, src => src.Procedures)
+                .Map(dest => dest.Requests, src => src.Requests)
+                .Map(dest => dest.Requisition, src => src.Requisition)
+                .Map(dest => dest.Resources, src => src.Resources)
+                .Map(dest => dest.Scheduling, src => src.Scheduling)
+                .Map(dest => dest.Timings, src => src.Timings)
+                .IgnoreNonMapped(true);
+
+            TypeAdapterConfig<Models.Xpm.Note, SdocAdapter.Note>.ForType()
+                .Map(dest => dest.NoteText, src => src.Comment)
+                .Map(dest => dest.Source, src => src.SourceOfComment)
+                .IgnoreNonMapped(true);
+
+            TypeAdapterConfig<(Models.Xpm.Procedure, Models.Xpm.Request), SdocAdapter.Procedure>.ForType()
+                .Map(dest => dest.Procedure.Charge, src => src.Charge)
+                .Map(dest => dest.Procedure.CPT, src => src.CPT)
+                .Map(dest => dest.Procedure.CPTVersionTypesVersion, src => src.CPTVersionTypesVersion)
+                .Map(dest => dest.Procedure.ProcedureDescription, src => src.ProcedureDescription)
+                .Map(dest => dest.Procedure.ReferringLocationNPI, src => src.ReferringLocationNPI)
+                .Map(dest => dest.Procedure.ProcedureDescription, src => src.ReferringLocationName)
+                .Map(dest => dest.Procedure.ProcedureDescription, src => src.ServicingLocationName)
+                .Map(dest => dest.Procedure.ProcedureDescription, src => src.ServicingLocationNPI)
+                .Map(dest => dest.Procedure.ProcedureDescription, src => src.ProcedureServiceType)
+                .IgnoreNonMapped(true);
+
+            TypeAdapterConfig<Models.Xpm.Diagnosis, SdocAdapter.Diagnose>.ForType()
+                .Map(dest => dest.DiagnosisCodes, src => src.DiagnosisCodeIdentifier)
+                .IgnoreNonMapped(true);
+
+            TypeAdapterConfig<Models.Xpm.Observation, SdocAdapter.Observation>.ForType()
+                .Map(dest => dest.Code, src => src.Code)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.InterpretationCode, src => src.InterpretationCode)
+                .Map(dest => dest.Method, src => src.Method)
+                .Map(dest => dest.ReferenceRange, src => src.ReferenceRange)
+                .Map(dest => dest.Status, src => src.Status)
+                .Map(dest => dest.SubCode, src => src.SubCode)
+                .Map(dest => dest.Type, src => src.Type)
+                .Map(dest => dest.Units, src => src.Units)
+                .Map(dest => dest.Value, src => src.Value)
+                .IgnoreNonMapped(true);
+        }
+    }
+}
