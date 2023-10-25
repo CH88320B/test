@@ -119,3 +119,86 @@ namespace EH.Shared.SdocJsonToXpmConverter.Mapping.Configs
         }
     }
 }
+using EH.Models.Xpm;
+using Mapster;
+
+namespace EH.Shared.SdocJsonToXpmConverter.Mapping.Configs
+{
+    public class MessageHeaderMappingConfig : IRegister
+    {
+        public void Register(TypeAdapterConfig config)
+        {
+            // Mapeo inverso de SdocAdapter.Root a MessageHeader
+            TypeAdapterConfig<SdocAdapter.Root, MessageHeader>.ForType()
+                .Map(dest => dest.AdminTxGuid, src => src.MessageHeader.AdminTxGUID)
+                .Map(dest => dest.AllowDemoSearchClientMasterPatientId, src => src.MessageHeader.AllowDemoSearch_ClientMasterPatientID)
+                .Map(dest => dest.AllowNewRequests, src => src.MessageHeader.AllowNewRequests)
+                .Map(dest => dest.BaseMessageType, src => src.MessageEvent.SDocBaseMessageType)
+                .Map(dest => dest.BatchTxGuid, src => src.MessageHeader.BatchTxGUID)
+                .Map(dest => dest.ClientAdminTimeZone, src => src.MessageHeader.ClientAdminTimeZone)
+                .Map(dest => dest.ClientMnemonic, src => src.Authentication.ClientMnemonic)
+                .Map(dest => dest.ClientNpi, src => src.MessageHeader.ClientNPI)
+                .Map(dest => dest.ClientRequestedEventIndicator, src => src.MessageEvent.ClientRequestedEventIndicator)
+                .Map(dest => dest.ClientSpecifiedClientId, src => src.Authentication.ClientSpecificClientID)
+                .Map(dest => dest.ConfigClientId, src => src.MessageHeader.ConfigClientId)
+                .Map(dest => dest.ConfigTradingPartner, src => src.MessageHeader.ConfigTradingPartner)
+                .Map(dest => dest.ConfigUserId, src => src.MessageHeader.ConfigUserId)
+                .Map(dest => dest.CorrelationId278, src => src.MessageHeader.CorrelationID_278)
+                .Map(dest => dest.CountryCode, src => src.MessageHeader.CountryCode)
+                .Map(dest => dest.DateOfMessageProcessed, src => src.MessageHeader.DateOfMessageProcessed)
+                .Map(dest => dest.DateTimeOfEvent, src => src.MessageEvent.DateOfMessage)
+                .Map(dest => dest.DateTimeOfEvent, src => src.MessageEvent.DateTimeOfEvent)
+                .Map(dest => dest.EncounterStateId, src => src.MessageHeader.EncounterStateId)
+                .Map(dest => dest.ExperianClientId, src => src.Authentication.PassportClientID)
+                .Map(dest => dest.ExperianUserId, src => src.Authentication.PassportUserID)
+                .Map(dest => dest.ExpirationDate, src => src.MessageHeader.ExpirationDate)
+                .Map(dest => dest.HisUserId, src => src.MessageHeader.HIS_UserID)
+                .Map(dest => dest.IntelliAvResponse_NextPayerCode, src => src.MessageHeader.IntelliAvResponse_NextPayerCode)
+                .Map(dest => dest.IsaInterchangeControlNumber, src => src.MessageHeader.ISAInterchangeControlNumber)
+                .Map(dest => dest.IsIpsMessage, src => src.MessageHeader.Is_IPS_Message)
+                .Map(dest => dest.IsQ22PaymentAdvisor, src => src.MessageHeader.Q22_IsPaymentAdvisor)
+                .Map(dest => dest.IsVendorRequest, src => src.MessageHeader.IsVendorRequest)
+                .Map(dest => dest.LoadFromMpiIncludeState, src => src.MessageHeader.LoadFromMPI_IncludeState)
+                .Map(dest => dest.MessageControlId, src => src.MessageHeader.MessageControlID)
+                .Map(dest => dest.MessageCorrelationId, src => src.MessageHeader.CorrelationID)
+                .Map(dest => dest.MessageDelaySeconds, src => src.MessageHeader.MessageDelaySeconds)
+                .Map(dest => dest.MessageEventFormat, src => src.MessageEvent.MessageEventFormat)
+                .Map(dest => dest.MessageEventType, src => src.MessageEvent.MessageEventType)
+                .Map(dest => dest.MessageQueryName, src => src.MessageHeader.MessageQueryName)
+                .Map(dest => dest.MessageWrapped, src => src.MessageHeader.MessageWrapped)
+                .Map(dest => dest.MsmqResponseQueue, src => src.MessageHeader.MsmqResponseQueue)
+                .Map(dest => dest.MsmqResponseQueue, src => src.MessageHeader.ResponseQueue)
+                .Map(dest => dest.MultiTransactionMode, src => src.MessageHeader.MultiTransactionMode)
+                .Map(dest => dest.NeboAccountId, src => src.MessageHeader.NeboAccountID)
+                .Map(dest => dest.NewEligibilityEvent, src => src.MessageHeader.NewEligibilityEvent)
+                .Map(dest => dest.OrcaInstanceId, src => src.MessageHeader.OrcaInstanceId)
+                .Map(dest => dest.PassportDepartment, src => src.Authentication.PassportDepartment, src => !string.IsNullOrWhiteSpace(src.Authentication.PassportDepartment))
+                .Map(dest => dest.PassportDepartment, src => src.PatientVisit.Department, src => string.IsNullOrWhiteSpace(src.Authentication.PassportDepartment))
+                .Map(dest => dest.PlatformFlag, src => src.MessageHeader.PlatformFlag)
+                .Map(dest => dest.PpaeInstanceId, src => src.MessageHeader.PpaeInstanceId)
+                .Map(dest => dest.PrincipalLanguageOfMessage, src => src.MessageHeader.PrincipalLanguageOfMessage)
+                .Map(dest => dest.ProcessingId, src => src.MessageHeader.PlatformFlag)
+                .Map(dest => dest.Q22CorrelationId, src => src.MessageHeader.Q22_CorrelationID)
+                .Map(dest => dest.ReasonforRouting, src => src.MessageHeader.ReasonforRouting)
+                .Map(dest => dest.ReceivingFacility, src => src.MessageHeader.ReceivingFacility)
+                .Map(dest => dest.StateId, src => src.MessageHeader.StateID)
+                .Map(dest => dest.SubmittedMessageType, src => src.MessageHeader.SubmittedMessageType)
+                .Map(dest => dest.SystemId, src => src.Authentication.SystemID)
+                .Map(dest => dest.SystemName, src => src.MessageHeader.SystemName)
+                .Map(dest => dest.TraceNumber, src => src.MessageHeader.TraceNumber)
+                .Map(dest => dest.TransactionCount, src => src.MessageHeader.TransactionCount)
+                .Map(dest => dest.TransactionId, src => src.MessageHeader.TransactionID)
+                .Map(dest => dest.TriggeredUser, src => src.Authentication.OriginalTriggeredUser)
+                .Map(dest => dest.TriggeredUserOverride, src => src.Authentication.TriggeredUserOverride)
+                .Map(dest => dest.UseClearingHouseBatchThrottle, src => src.MessageHeader.UseClearingHouseBatchThrottle)
+                .Map(dest => dest.UserMnemonic, src => src.Authentication.UserMnemonic)
+                .Map(dest => dest.UserTriggered, src => src.MessageHeader.UserTriggered)
+                .Map(dest => dest.UseSelectedServiceType, src => src.MessageEvent.UseSelectedServiceType)
+                .Map(dest => dest.VendorDataSource, src => src.MessageHeader.VendorDataSource)
+                .Map(dest => dest.VendorId, src => src.MessageEvent.VendorId)
+                .Map(dest => dest.VendorRequestedOverride, src => src.MessageHeader.VendorRequestedOverride)
+                .Map(dest => dest.VendorRequestID, src => src.MessageHeader.VendorRequestID)
+                .IgnoreNonMapped(true);
+        }
+    }
+}
