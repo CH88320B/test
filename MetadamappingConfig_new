@@ -1,0 +1,19 @@
+using Mapster;
+
+namespace EH.Shared.SdocToXpmConverter.Mapping.Configs
+{
+    public class MetadataMappingConfig : IRegister
+    {
+        public void Register(TypeAdapterConfig config)
+        {
+            // Mapping config for EH.Models.Xpm.Metadata and dependents.
+            TypeAdapterConfig<Models.Xpm.Metadata, SdocAdapter.Root>.ForType()
+                .Map(dest => dest.Adapt<Models.Xpm.EPin>(), src => src.EPin)
+                .IgnoreNonMapped(true);
+
+            TypeAdapterConfig<Models.Xpm.EPin, SdocAdapter.Root>.ForType()
+                .Map(dest => dest.EncounterId, src => string.Empty)
+                .IgnoreNonMapped(true);
+        }
+    }
+}
