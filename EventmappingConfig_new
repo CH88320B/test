@@ -48,3 +48,74 @@ namespace EH.Shared.SdocJsonToXpmConverter.Mapping.Configs
         }
     }
 }
+using EH.Models.Xpm;
+using Mapster;
+
+namespace EH.Shared.SdocJsonToXpmConverter.Mapping.Configs
+{
+    public class MessageEventMappingConfig : IRegister
+    {
+        public void Register(TypeAdapterConfig config)
+        {
+            // Mapeo inverso de SdocAdapter.MessageEvent a Event
+            TypeAdapterConfig<SdocAdapter.MessageEvent, Event>.ForType()
+                .Map(dest => dest.AlertECarePatientAccountAlertsId, src => src.eCare_Patient_Account_Alerts_ID)
+                .Map(dest => dest.BatchBinNumber, src => src.BatchBinNumber)
+                .Map(dest => dest.BatchFileName, src => src.BatchFileName)
+                .Map(dest => dest.BatchRowId, src => src.BatchRowId)
+                .Map(dest => dest.BypassAccountFinder, src => src.BypassAccountFinder)
+                .Map(dest => dest.CancellationMessageType, src => src.CancellationMessageType)
+                .Map(dest => dest.ClientRequestedEventIndicator, src => src.ClientRequestedEventIndicator)
+                .Map(dest => dest.ConcatenateAISActionCodes, src => src.ConcatenateAISActionCodes)
+                .Map(dest => dest.ConcatenateAssignedLocation, src => src.ConcatenateAssignedLocation)
+                .Map(dest => dest.ConcatenateProcedureCodes, src => src.ConcatenateProcedureCodes)
+                .Map(dest => dest.CreateDate, src => src.CreateDate)
+                .Map(dest => dest.Deserializer, src => src.Deserializer)
+                .Map(dest => dest.DoNotOverWriteInsurance, src => src.DoNotOverWriteInsurance)
+                .Map(dest => dest.DoNotStoreHL7PostbackTemplate, src => src.DoNotStoreHL7PostbackTemplate)
+                .Map(dest => dest.DoNotWriteToWC, src => src.DoNotWriteToWC)
+                .Map(dest => dest.EventReasonCode, src => src.EventReasonCode)
+                .Map(dest => dest.FAS_SetSearchType_ByAdditionalSettings, src => src.FASSetSearchTypeByAdditionalSettings)
+                .Map(dest => dest.ForceAutoRun, src => src.ForceAutoRun)
+                .Map(dest => dest.ForceAutoRunAuth, src => src.ForceAutoRunAuth)
+                .Map(dest => dest.ForceAutoRunAV, src => src.ForceAutoRunAV)
+                .Map(dest => dest.ForceAutoRunEV, src => src.ForceAutoRunEV)
+                .Map(dest => dest.ForceAutoRunMedNec, src => src.ForceAutoRunMedNec)
+                .Map(dest => dest.ForceAutoRunPayNav, src => src.ForceAutoRunPayNav)
+                .Map(dest => dest.FoundCoverageDiscovery, src => src.FoundCoverageDiscovery)
+                .Map(dest => dest.HasSnTInsertedEver, src => src.HasSnTInsertedEver)
+                .Map(dest => dest.HasSnTTriggeredEver, src => src.HasSnTTriggeredEver)
+                .Map(dest => dest.InsertBatchRecordError, src => src.InsertBatchRecordError)
+                .Map(dest => dest.IPSMessageType, src => src.IPSMessageType)
+                .Map(dest => dest.IsBatchTrigger, src => src.IsBatchTrigger)
+                .Map(dest => dest.IsCDB2IRequest, src => src.IsCDB2IRequest)
+                .Map(dest => dest.JoinOnInsuranceMnemonicOnly, src => src.JoinOnInsuranceMnemonicOnly)
+                .Map(dest => dest.MessageInputType, src => src.MessageInputType)
+                .Map(dest => dest.MPIUpdateInsurancesOnly, src => src.MPIUpdateInsurancesOnly)
+                .Map(dest => dest.MPIWriteAccountInsurance, src => src.MPIWriteAccountInsurance)
+                .Map(dest => dest.NextBarDisplayResetMsg, src => src.NextBarDisplayResetMsg)
+                .Map(dest => dest.OnDemandCDRequest, src => src.OnDemandCDRequest)
+                .Map(dest => dest.OnDemandFASRequest, src => src.OnDemandFASRequest)
+                .Map(dest => dest.PersonType, src => src.PersonType)
+                .Map(dest => dest.AddressToValidate, src => src.PopPic)
+                .Map(dest => dest.PopPic, src => src.PopPic)
+                .Map(dest => dest.RemoveProcedureCodes, src => src.RemoveProcedureCodes)
+                .Map(dest => dest.ResponseChainingOn, src => src.ResponseChainingOn)
+                .Map(dest => dest.ResponseQueue, src => src.ResponseQueue)
+                .Map(dest => dest.RO_MessageType, src => src.ROMessageType)
+                .Map(dest => dest.SDocBaseMessageSpecification, src => src.SDocBaseMessageSpecification)
+                .Map(dest => dest.SequenceID, src => src.SequenceId)
+                .Map(dest => dest.SkipAllIRules, src => src.SkipAllIRules)
+                .Map(dest => dest.SocanovaSendTime, src => src.SocanovaSendTime)
+                .Map(dest => dest.SourceInterface, src => src.SourceInterface)
+                .Map(dest => dest.StrainCorrelationId, src => src.StrainCorrelationId)
+                .Map(dest => dest.SubmitterIdentificationNumber, src => src.SubmitterIdentificationNumber)
+                .Map(dest => dest.TestMode, src => src.TestMode)
+                .Map(dest => dest.UseForHL7PostbackTemplateOnly, src => src.UseForHL7PostbackTemplateOnly)
+                .Map(dest => dest.UserTriggered, src => src.UserTriggered)
+                .Map(dest => dest.UseSelectedServiceType, src => src.UseSelectedServiceType)
+                .Map(dest => dest.ValidHL7PostbackTemplate, src => src.ValidHL7PostbackTemplate)
+                .IgnoreNonMapped(true);
+        }
+    }
+}
