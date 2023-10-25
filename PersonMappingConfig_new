@@ -366,4 +366,6 @@ TypeAdapterConfig<SdocAdapter.NextOfKin, Models.Xpm.NextOfKin>.ForType()
     .Map(dest => dest.StreetAddress, src => src.Address_StreetAddress)
     .Map(dest => dest.Zip, src => src.Address_Zip)
     .IgnoreNonMapped(true);
-
+   }
+    }
+}
