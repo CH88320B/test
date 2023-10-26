@@ -1,0 +1,355 @@
+namespace EH.Shared.SdocAdapter;
+
+public class PatientVisit
+{
+    public PatientVisit()
+    {
+        AccountNumber = FacilityNPI = State = PatientType = AdmitURN = MajorDiagnosticCategory =
+        DiagnosisDescription = DiagnosisCode1AlternateText = DiagnosisType = DiagnosisCode1 =
+        PatientEncounterID = AdmissionReason = AdmissionSource = AdmissionType_DDSO = AssignedLocation = DeleteAccountIndicator =
+        AdmissionType = OtherHealthcareProvider = TransferToBadDebtCode = VisitPriorityCode =
+        PreadmitNumber = PatientFacility = PreAdmitTestIndicator = ClinicOrganizationName =
+        AlternateVisitID = PatientStatus = InterestCode = VisitArrivalMode =
+        PatientValuablesLocation = BadDebtAgencyCode = ServiceType = BedType = AdmitSource = AccommodationCode =
+        ReferralSourceID = LocationStatus = ReferralSourceFirstName = RoomType =
+        ComprehensiveLocationIdentifier = DischargeDisposition = TransferReason_AlternateText = CreditRating =
+        PatientClass = TransferReason_AlternateIdentifier = PatientStatusCode = VisitDescription = VisitPublicityCode =
+        VisitID = ProcedureCodes = ServiceCode = BillingNumber = VisitTypeDescription = FinancialClearanceStatus =
+        EncounterPayerDescription = EncounterPayerID = PatientModule = AppointmentStatus = ExpectedService =
+        AdmitProcedureCode = AdmitProcedureCodesCombined = PrecertNumbers = PatientServiceCenter =
+        AdmittingDiagnosisCode = AdmittingDiagnosisCode_ICD10 = ProcedureCodeQuantity = CertificationType =
+        CertificateTypeCode = PPE_User = OrderLocation = LevelOfService = EntityIdentifier = VerifiedName =
+        InsVerifiedBy = InsVerifiedBy = UpdatedByEDRep = NOAVisitTime = AetnaPIN = RegisteredByUser =
+        ProcedureMnemonic = NeboMessageID = MSPByPass = SelectedServiceType = NDC = DrugName = DrugStrength =
+        HealthPlanName = AuthProviderNPI = AuthReferringProviderNPI = AuthReferringLocationNPI =
+        ClientSpecificNumber = AISActionCodes = AuthFacilityID = ReferralID = FacilityFaxNumber =
+        IDXLocation = ClientProvided_MedicalNecessityPasses = ClientProvided_MedicalNecessityFailedReason =
+        ClientProvided_PatientArrivedBy = PropertyAndCasualty = ClientProvided_AccountUpdatedBy =
+        TrackingNumber = Activity = Activities = ActivityIDs = FacilityTaxId = ClientTaxId = FacilityTaxonomyCode =
+        VIPIndicator = PatientAttendingDocPhysicianID = PatientAttendingDocFamilyName = PatientAttendingDocGivenName =
+        PatientAttendingDocMiddleName = PatientAttendingDocDegree = PatientAttendingDocNPI =
+        PatientReferringDocFamilyName = PatientReferringDocGivenName = PatientReferringDocMiddleName = PatientReferringDocDegree =
+        PatientConsultingDocGivenName = PatientConsultingDocFamilyName = PatientConsultingDocMiddleName = PatientConsultingDocDegree =
+        PatientAdmittingDocPhysicianID = PatientAdmittingDocFamilyName = PatientAdmittingDocGivenName = PatientAdmittingDocMiddleName =
+        PatientAdmittingDocDegree = PatientAdmittingDocNPI = Department = PatientAttendingDocAddress1 = PatientAttendingDocAddress2 =
+        PatientAttendingDocCity = PatientAttendingDocState = PatientAttendingDocZip = PatientAttendingDocTaxonomyCode =
+        PatientAttendingDocSpecialty = PatientAttendingDocFaxNumber = PatientAttendingDocPhoneNumber =
+        PatientAdmittingDocAddress1 = PatientAdmittingDocAddress2 = PatientAdmittingDocCity = PatientAdmittingDocState =
+        PatientAdmittingDocZip = PatientAdmittingDocTaxonomyCode = PatientAdmittingDocSpecialty = PatientAdmittingDocFaxNumber =
+        PatientAdmittingDocPhoneNumber = PatientReferringDocIDNumber = PatientConsultingDocIDNumber = OccurenceCode =
+        DischargedToLocation = PPE_Amount = PPE_TotalAmount = ClientMasterPatientID = PatientMemberID =
+        AccidentState = AccidentCode = AccidentLocation = ServiceProviderName = ServiceProviderID = VisitTypeId =
+        PassportVisitIdentifier = AssignedArea = VisitTime = FacilityType = FacilityCode = FacilityName = FacilityAddress1 =
+        FacilityAddress2 = FacilityCity = FacilityState = FacilityContactName = FacilityContactPhone = PrincipalDiagnosisCode =
+        PrincipalDiagnosisCode_ICD10 = DiagnosisCodeMethod = ProcedureTypeCode = Physician_RoleDescription = IDNumber = 
+        SourceTable = AssigningAuthority = NameTypeCode = IdentifierCheckDigit = CodeIdentifyingTheCheckDigitSchemeEmployed = 
+        IdentifierTypeCode = AssigningFacility = NameRepresentationCode = NameContext = NameValidityRange = NameAssemblyOrder = 
+        EffectiveDate = ExpirationDate = FirstName = MiddleName = LastName = FullName = DischargeCode = ServicingLocationName = 
+        ServicingLocationNPI = PPETotalAmount = LengthOfStay = ProcedureCodeQualifier = PlaceOfService = PETouchlessTypeIndicator = ControlNumbers = VIPCode = 
+        AmountOwed = DateBegin = string.Empty;
+
+        AdmitDateTime = DischargeDateTime = DateEnd = ServiceDate = DeleteAccountDate =
+        DateAdmitted = PPE_DateTime = VerifiedDate = NOAAdmissionDate = PatientEntry_ServiceEndDate =
+        EstimatedDOS = PatientEntry_ServiceStartDate = OnsetOfIllness = TransferToBadDebtDate =
+        AccidentDateTime = SearchCriteriaDOS = DateTime.MinValue;
+
+        ClaimMonetaryAmount = BadDebtRecoveryAmount = BadDebtTransferAmount = TotalAdjustments =
+        TotalCharges = TotalPayments = CurrentPatientBalance = PaymentReceived = DiscountPosted =
+        ProcedureCharge1 = ProcedureCharge2 = ProcedureCharge3 = ProcedureCharge4 = ProcedureCharge5 = ProcedureCharge6 =
+        ProcedureCharge7 = ProcedureCharge8 = 0.0;
+
+        InsuranceCount = IsPortalUser = IsComplete = ServiceProviderNPI = Ordinality = Order = 0;
+
+        IsSelfPay = IsDischarge = ClaimMonetaryAmountExists = BypassEMRN_Updates = PPE_PSTNoPayorResponseFlag = PPE_PSTNoReqSTCsFlag = 
+        PPE_ContractDefinitionFlag = PPE_EstimateWithNoBenefitFlag = PPE_EstimateWithEditBenefitFlag = PPE_EstimateContChargeZeroFlag = false;
+    }
+
+
+
+
+    public bool BypassEMRN_Updates { get; set; }
+    public bool ClaimMonetaryAmountExists { get; set; }
+    public bool IsDischarge { get; set; }
+    public bool IsObservation { get; set; }
+    public bool IsSelfPay { get; set; }
+    public bool PPE_ContractDefinitionFlag { get; set; }
+    public bool PPE_EstimateContChargeZeroFlag { get; set; }
+    public bool PPE_EstimateWithEditBenefitFlag { get; set; }
+    public bool PPE_EstimateWithNoBenefitFlag { get; set; }
+    public bool PPE_PSTNoPayorResponseFlag { get; set; }
+    public bool PPE_PSTNoReqSTCsFlag { get; set; }
+    public DateTime AccidentDateTime { get; set; }
+    public DateTime AdmitDateTime { get; set; }
+    public DateTime DateAdmitted { get; set; }
+    public string DateBegin { get; set; }
+    public DateTime DateEnd { get; set; }
+    public DateTime DeleteAccountDate { get; set; }
+    public DateTime DischargeDateTime { get; set; }
+    public DateTime EstimatedDOS { get; set; }
+    public DateTime NOAAdmissionDate { get; set; }
+    public DateTime OnsetOfIllness { get; set; }
+    public DateTime PatientEntry_ServiceEndDate { get; set; }
+    public DateTime PatientEntry_ServiceStartDate { get; set; }
+    public DateTime PPE_DateTime { get; set; }
+    public DateTime SearchCriteriaDOS { get; set; }
+    public DateTime ServiceDate { get; set; }
+    public DateTime TransferToBadDebtDate { get; set; }
+    public DateTime VerifiedDate { get; set; }
+    public double BadDebtRecoveryAmount { get; set; }
+    public double BadDebtTransferAmount { get; set; }
+    public double ClaimMonetaryAmount { get; set; }
+    public double CurrentPatientBalance { get; set; }
+    public double DiscountPosted { get; set; }
+    public double PaymentReceived { get; set; }
+    public double ProcedureCharge1 { get; set; }
+    public double ProcedureCharge2 { get; set; }
+    public double ProcedureCharge3 { get; set; }
+    public double ProcedureCharge4 { get; set; }
+    public double ProcedureCharge5 { get; set; }
+    public double ProcedureCharge6 { get; set; }
+    public double ProcedureCharge7 { get; set; }
+    public double ProcedureCharge8 { get; set; }
+    public double TotalAdjustments { get; set; }
+    public double TotalCharges { get; set; }
+    public double TotalPayments { get; set; }
+    public int InsuranceCount { get; set; }
+    public int IsComplete { get; set; }
+    public int IsPortalUser { get; set; }
+    public int Order { get; set; }
+    public int Ordinality { get; set; }
+    public int ServiceProviderNPI { get; set; }
+    public SDoc_ScannedImage ScannedImages { get; set; }
+    public string AccidentCode { get; set; }
+    public string AccidentLocation { get; set; }
+    public string AccidentState { get; set; }
+    public string AccommodationCode { get; set; }
+    public string AccountNumber { get; set; }
+    public string Activities { get; set; }
+    public string Activity { get; set; }
+    public string ActivityIDs { get; set; }
+    public string AdmissionReason { get; set; }
+    public string AdmissionSource { get; set; }
+    public string AdmissionType { get; set; }
+    public string AdmissionType_DDSO { get; set; }
+    public string AdmitProcedureCode { get; set; }
+    public string AdmitProcedureCodesCombined { get; set; }
+    public string AdmitSource { get; set; }
+    public string AdmittingDiagnosisCode { get; set; }
+    public string AdmittingDiagnosisCode_ICD10 { get; set; }
+    public string AdmitURN { get; set; }
+    public string AetnaPIN { get; set; }
+    public string AISActionCodes { get; set; }
+    public string AlternateVisitID { get; set; }
+    public string AmountOwed { get; set; }
+    public string AppointmentStatus { get; set; }
+    public string AssignedArea { get; set; }
+    public string AssignedLocation { get; set; }
+    public string AssigningAuthority { get; set; }
+    public string AssigningFacility { get; set; }
+    public string AuthFacilityID { get; set; }
+    public string AuthProviderNPI { get; set; }
+    public string AuthReferringLocationNPI { get; set; }
+    public string AuthReferringProviderNPI { get; set; }
+    public string BadDebtAgencyCode { get; set; }
+    public string BedType { get; set; }
+    public string BillingNumber { get; set; }
+    public string CertificateTypeCode { get; set; }
+    public string CertificationType { get; set; }
+    public string ClientMasterPatientID { get; set; }
+    public string ClientProvided_AccountUpdatedBy { get; set; }
+    public string ClientProvided_MedicalNecessityFailedReason { get; set; }
+    public string ClientProvided_MedicalNecessityPasses { get; set; }
+    public string ClientProvided_PatientArrivedBy { get; set; }
+    public string ClientSpecificNumber { get; set; }
+    public string ClientTaxId { get; set; }
+    public string ClinicOrganizationName { get; set; }
+    public string CodeIdentifyingTheCheckDigitSchemeEmployed { get; set; }
+    public string ComprehensiveLocationIdentifier { get; set; }
+    public string CreditRating { get; set; }
+    public string DeleteAccountIndicator { get; set; }
+    public string Department { get; set; }
+    public string DiagnosisCode1 { get; set; }
+    public string DiagnosisCode1AlternateText { get; set; }
+    public string DiagnosisCodeMethod { get; set; }
+    public string DiagnosisDescription { get; set; }
+    public string DiagnosisType { get; set; }
+    public string DischargeCode { get; set; }
+    public string DischargeDisposition { get; set; }
+    public string DischargedToLocation { get; set; }
+    public string DrugName { get; set; }
+    public string DrugStrength { get; set; }
+    public string EffectiveDate { get; set; }
+    public string EncounterPayerDescription { get; set; }
+    public string EncounterPayerID { get; set; }
+    public string EntityIdentifier { get; set; }
+    public string ExpectedService { get; set; }
+    public string ExpirationDate { get; set; }
+    public string FacilityAddress1 { get; set; }
+    public string FacilityAddress2 { get; set; }
+    public string FacilityCity { get; set; }
+    public string FacilityCode { get; set; }
+    public string FacilityContactName { get; set; }
+    public string FacilityContactPhone { get; set; }
+    public string FacilityFaxNumber { get; set; }
+    public string FacilityName { get; set; }
+    public string FacilityNPI { get; set; }
+    public string FacilityState { get; set; }
+    public string FacilityTaxId { get; set; }
+    public string FacilityTaxonomyCode { get; set; }
+    public string FacilityType { get; set; }
+    public string FacilityZip { get; set; }
+    public string FinancialClearanceStatus { get; set; }
+    public string FirstName { get; set; }
+    public string FullName { get; set; }
+    public string HealthPlanName { get; set; }
+    public string IdentifierCheckDigit { get; set; }
+    public string IdentifierTypeCode { get; set; }
+    public string IDNumber { get; set; }
+    public string IDXLocation { get; set; }
+    public string InsVerifiedBy { get; set; }
+    public string InterestCode { get; set; }
+    public string LastName { get; set; }
+    public string LengthOfStay { get; set; }
+    public string LevelOfService { get; set; }
+    public string LocationStatus { get; set; }
+    public string MajorDiagnosticCategory { get; set; }
+    public string MiddleName { get; set; }
+    public string MPIN { get; set; }
+    public string MSPByPass { get; set; }
+    public string NameAssemblyOrder { get; set; }
+    public string NameContext { get; set; }
+    public string NameRepresentationCode { get; set; }
+    public string NameTypeCode { get; set; }
+    public string NameValidityRange { get; set; }
+    public string NDC { get; set; }
+    public string NeboMessageID { get; set; }
+    public string NOAVisitTime { get; set; }
+    public string OccurenceCode { get; set; }
+    public string OrderLocation { get; set; }
+    public string OtherHealthcareProvider { get; set; }
+    public string PassportVisitIdentifier { get; set; }
+    public string PatientAdmittingDocAddress1 { get; set; }
+    public string PatientAdmittingDocAddress2 { get; set; }
+    public string PatientAdmittingDocCity { get; set; }
+    public string PatientAdmittingDocDegree { get; set; }
+    public string PatientAdmittingDocFamilyName { get; set; }
+    public string PatientAdmittingDocFaxNumber { get; set; }
+    public string PatientAdmittingDocGivenName { get; set; }
+    public string PatientAdmittingDocMiddleName { get; set; }
+    public string PatientAdmittingDocNPI { get; set; }
+    public string PatientAdmittingDocPhoneNumber { get; set; }
+    public string PatientAdmittingDocPhysicianID { get; set; }
+    public string PatientAdmittingDocSpecialty { get; set; }
+    public string PatientAdmittingDocState { get; set; }
+    public string PatientAdmittingDocTaxonomyCode { get; set; }
+    public string PatientAdmittingDocZip { get; set; }
+    public string PatientAttendingDocAddress1 { get; set; }
+    public string PatientAttendingDocAddress2 { get; set; }
+    public string PatientAttendingDocCity { get; set; }
+    public string PatientAttendingDocDegree { get; set; }
+    public string PatientAttendingDocFamilyName { get; set; }
+    public string PatientAttendingDocFaxNumber { get; set; }
+    public string PatientAttendingDocGivenName { get; set; }
+    public string PatientAttendingDocMiddleName { get; set; }
+    public string PatientAttendingDocNPI { get; set; }
+    public string PatientAttendingDocPhoneNumber { get; set; }
+    public string PatientAttendingDocPhysicianID { get; set; }
+    public string PatientAttendingDocSpecialty { get; set; }
+    public string PatientAttendingDocState { get; set; }
+    public string PatientAttendingDocTaxonomyCode { get; set; }
+    public string PatientAttendingDocZip { get; set; }
+    public string PatientClass { get; set; }
+    public string PatientConsultingDocDegree { get; set; }
+    public string PatientConsultingDocFamilyName { get; set; }
+    public string PatientConsultingDocGivenName { get; set; }
+    public string PatientConsultingDocIDNumber { get; set; }
+    public string PatientConsultingDocMiddleName { get; set; }
+    public string PatientEncounterID { get; set; }
+    public string PatientFacility { get; set; }
+    public string PatientMemberID { get; set; }
+    public string PatientModule { get; set; }
+    public string PatientReferringDocDegree { get; set; }
+    public string PatientReferringDocFamilyName { get; set; }
+    public string PatientReferringDocGivenName { get; set; }
+    public string PatientReferringDocIDNumber { get; set; }
+    public string PatientReferringDocMiddleName { get; set; }
+    public string PatientServiceCenter { get; set; }
+    public string PatientStatus { get; set; }
+    public string PatientStatusCode { get; set; }
+    public string PatientType { get; set; }
+    public string PatientValuablesLocation { get; set; }
+    public string PETouchlessTypeIndicator { get; set; }
+    public string Physician_RoleDescription { get; set; }
+    public string PlaceOfService { get; set; }
+    public string PPE_Amount { get; set; }
+    public string PPE_TotalAmount { get; set; }
+    public string PPE_User { get; set; }
+    public string PPETotalAmount { get; set; }
+    public string PreadmitNumber { get; set; }
+    public string PreAdmitTestIndicator { get; set; }
+    public string PrecertNumbers { get; set; }
+    public string PrincipalDiagnosisCode { get; set; }
+    public string PrincipalDiagnosisCode_ICD10 { get; set; }
+    public string ProcedureCodeQualifier { get; set; }
+    public string ProcedureCodeQuantity { get; set; }
+    public string ProcedureCodes { get; set; }
+    public string ProcedureMnemonic { get; set; }
+    public string ProcedureTypeCode { get; set; }
+    public string PropertyAndCasualty { get; set; }
+    public string QueueManagerUserDefinedField1 { get; set; }
+    public string QueueManagerUserDefinedField10 { get; set; }
+    public string QueueManagerUserDefinedField11 { get; set; }
+    public string QueueManagerUserDefinedField12 { get; set; }
+    public string QueueManagerUserDefinedField13 { get; set; }
+    public string QueueManagerUserDefinedField14 { get; set; }
+    public string QueueManagerUserDefinedField15 { get; set; }
+    public string QueueManagerUserDefinedField16 { get; set; }
+    public string QueueManagerUserDefinedField17 { get; set; }
+    public string QueueManagerUserDefinedField18 { get; set; }
+    public string QueueManagerUserDefinedField19 { get; set; }
+    public string QueueManagerUserDefinedField2 { get; set; }
+    public string QueueManagerUserDefinedField20 { get; set; }
+    public string QueueManagerUserDefinedField3 { get; set; }
+    public string QueueManagerUserDefinedField4 { get; set; }
+    public string QueueManagerUserDefinedField5 { get; set; }
+    public string QueueManagerUserDefinedField6 { get; set; }
+    public string QueueManagerUserDefinedField7 { get; set; }
+    public string QueueManagerUserDefinedField8 { get; set; }
+    public string QueueManagerUserDefinedField9 { get; set; }
+    public string ReferralID { get; set; }
+    public string ReferralSourceFirstName { get; set; }
+    public string ReferralSourceID { get; set; }
+    public string RegisteredByUser { get; set; }
+    public string RoomType { get; set; }
+    public string SelectedServiceType { get; set; }
+    public string ServiceCode { get; set; }
+    public string ServiceProviderID { get; set; }
+    public string ServiceProviderName { get; set; }
+    public string ServiceType { get; set; }
+    public string ServicingLocationName { get; set; }
+    public string ServicingLocationNPI { get; set; }
+    public string SourceTable { get; set; }
+    public string State { get; set; }
+    public string TrackingNumber { get; set; }
+    public string TransferReason_AlternateIdentifier { get; set; }
+    public string TransferReason_AlternateText { get; set; }
+    public string TransferToBadDebtCode { get; set; }
+    public string UpdatedByEDRep { get; set; }
+    public string VerifiedName { get; set; }
+    public string VIPCode { get; set; }
+    public string VIPIndicator { get; set; }
+    public string VisitArrivalMode { get; set; }
+    public string VisitDescription { get; set; }
+    public string VisitID { get; set; }
+    public string VisitPriorityCode { get; set; }
+    public string VisitPublicityCode { get; set; }
+    public string VisitTime { get; set; }
+    public string VisitTypeDescription { get; set; }
+    public string VisitTypeId { get; set; }
+    public string ControlNumbers { get; set; }
+}
+
+
+
+
+
