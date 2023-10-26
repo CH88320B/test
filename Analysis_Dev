@@ -1,0 +1,33 @@
+Analysis and Design (10-20% of time):
+Fully understand the structure of the XPM and SDoc.
+Identify all classes and properties that need to be mapped.
+Design the C# classes that will reflect the SDoc structure and define the mappings with Mapster.
+
+Implementation of the Mapping (40-50% of the time):
+Write all C# classes and mappings with Mapster.
+Test and debug the mappings to make sure they fit the requirements.
+
+
+
+AWS Lambda development (20-30% of time):
+Create an AWS Lambda project in C#.
+Implement the conversion logic using the previously defined classes and mappings.
+Configure Lambda triggers and access policies.
+Testing and Debugging (10-20% of the time):
+
+Test the Lambda function in a local environment.
+Perform integration testing to ensure that input and output data is correct.
+
+Deployment (10-20% of time):
+
+Package and upload the Lambda function to AWS.
+Configure the necessary environment variables and permissions.
+Test again in the AWS environment.
+
+
+Optimization and Learning (10-20% of time):
+
+Evaluate the performance of the function and optimize as needed.
+Learn from any bugs or problems encountered and improve the implementation.
+
+Translated with www.DeepL.com/Translator (free version)
