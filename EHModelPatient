@@ -1,0 +1,743 @@
+#region Assembly EH.Models.Xpm, Version=21.2.0.0, Culture=neutral, PublicKeyToken=null
+// C:\Users\C88320B\.nuget\packages\eh.models.xpm\21.2.0\lib\net6.0\EH.Models.Xpm.dll
+// Decompiled with ICSharpCode.Decompiler 7.1.0.6543
+#endregion
+
+using System.Collections.Generic;
+using Newtonsoft.Json;
+
+namespace EH.Models.Xpm
+{
+    public class PatientVisit
+    {
+        public string? PatientClass { get; set; }
+
+        public string? AssignedLocation { get; set; }
+
+        public string? RoomType { get; set; }
+
+        public string? BedType { get; set; }
+
+        public string? PatientFacility { get; set; }
+
+        public string? LocationStatus { get; set; }
+
+        [JsonProperty("Cal_ComprehensiveLocationIdentifier")]
+        public string? ComprehensiveLocationIdentifier { get; set; }
+
+        public string? AdmissionType { get; set; }
+
+        public string? PreadmitNumber { get; set; }
+
+        public List<Physician>? Physician { get; set; }
+
+        public string? HospitalServiceCode { get; set; }
+
+        public string? TemporaryLocation { get; set; }
+
+        public string? PreAdmitTestIndicator { get; set; }
+
+        public string? ReadmissionIndicator { get; set; }
+
+        public string? AdmitSource { get; set; }
+
+        public string? PatientAmbulatoryStatus { get; set; }
+
+        [JsonProperty("PatientVIPIndicator")]
+        public string? PatientVipIndicator { get; set; }
+
+        public string? PatientType { get; set; }
+
+        [JsonProperty("VisitIDNumber")]
+        public string? VisitIdNumber { get; set; }
+
+        public string? FinancialClass { get; set; }
+
+        public string? ChargePriceIndicator { get; set; }
+
+        public string? CourtesyCode { get; set; }
+
+        public string? CreditRating { get; set; }
+
+        public string? ContractCode { get; set; }
+
+        public string? ContractEffectiveDate { get; set; }
+
+        public string? ContractAmount { get; set; }
+
+        public string? ContractPeriod { get; set; }
+
+        public string? InterestCode { get; set; }
+
+        public string? TransferToBadDebtCode { get; set; }
+
+        public string? TransferToBadDebtDate { get; set; }
+
+        public string? BadDebtAgencyCode { get; set; }
+
+        public Financials? Financials { get; set; }
+
+        public string? DeleteAccountIndicator { get; set; }
+
+        public string? DeleteAccountDate { get; set; }
+
+        public string? DischargeDisposition { get; set; }
+
+        public string? DischargedToLocation { get; set; }
+
+        public string? DietType { get; set; }
+
+        public string? ServicingFacility { get; set; }
+
+        public string? BedStatus { get; set; }
+
+        public string? PatientStatus { get; set; }
+
+        public string? PendingLocation { get; set; }
+
+        public string? PriorTemporaryLocation { get; set; }
+
+        public string? DischargeDateTime { get; set; }
+
+        [JsonProperty("AlternateVisitID")]
+        public string? AlternateVisitId { get; set; }
+
+        public string? VisitIndicator { get; set; }
+
+        public string? OtherHealthcareProvider { get; set; }
+
+        public string? ServiceEpisodeDescription { get; set; }
+
+        public string? ServiceEpisodeIdentifier { get; set; }
+
+        public Calculated? Calculated { get; set; }
+
+        public string? PriorPendingLocation { get; set; }
+
+        public string? AccommodationCode { get; set; }
+
+        public string? AdmissionReason { get; set; }
+
+        public string? TransferReasonAlternateIdentifier { get; set; }
+
+        public string? TransferReasonAlternateText { get; set; }
+
+        public string? PatientValuables { get; set; }
+
+        public string? PatientValuablesLocation { get; set; }
+
+        public string? VisitUserCode { get; set; }
+
+        public string? ServiceDate { get; set; }
+
+        public string? ExpectedDischargeDateTime { get; set; }
+
+        public string? EstimatedLengthofInpatientStay { get; set; }
+
+        public string? ActualLengthofInpatientStay { get; set; }
+
+        public string? VisitDescription { get; set; }
+
+        [JsonProperty("ReferralSourceID")]
+        public string? ReferralSourceId { get; set; }
+
+        public string? ReferralSourceSurname { get; set; }
+
+        public string? ReferralSourceFirstName { get; set; }
+
+        public string? PreviousServiceDate { get; set; }
+
+        public string? EmploymentIllnessRelatedIndicator { get; set; }
+
+        public string? PurgeStatusCode { get; set; }
+
+        public string? PurgeStatusDate { get; set; }
+
+        public string? SpecialProgramCode { get; set; }
+
+        public string? RetentionIndicator { get; set; }
+
+        public string? ExpectedNumberofInsurancePlans { get; set; }
+
+        public string? VisitPublicityCode { get; set; }
+
+        public string? VisitProtectionIndicator { get; set; }
+
+        public string? ClinicOrganizationName { get; set; }
+
+        public string? PatientStatusCode { get; set; }
+
+        public string? VisitPriorityCode { get; set; }
+
+        public string? PreviousTreatmentDate { get; set; }
+
+        public string? ExpectedDischargeDisposition { get; set; }
+
+        public string? SignatureonFileDate { get; set; }
+
+        public string? FirstSimilarIllnessDate { get; set; }
+
+        public string? PatientChargeAdjustmentCode { get; set; }
+
+        public string? RecurringServiceCode { get; set; }
+
+        public string? BillingMediaCode { get; set; }
+
+        public string? ExpectedSurgeryDateandTime { get; set; }
+
+        public string? MilitaryPartnershipCode { get; set; }
+
+        [JsonProperty("MilitaryNon-AvailabilityCode")]
+        public string? MilitaryNonAvailabilityCode { get; set; }
+
+        public string? NewbornBabyIndicator { get; set; }
+
+        public string? BabyDetainedIndicator { get; set; }
+
+        public string? ModeOfArrivalCode { get; set; }
+
+        public string? RecreationalDrugUseCode { get; set; }
+
+        public string? AdmissionLevelofCareCode { get; set; }
+
+        public string? PrecautionCode { get; set; }
+
+        public string? PatientConditionCode { get; set; }
+
+        public string? LivingWillCode2 { get; set; }
+
+        public string? OrganDonorCode { get; set; }
+
+        public string? AdvanceDirectiveCode { get; set; }
+
+        public string? PatientStatusEffectiveDate { get; set; }
+
+        public string? ExpectedLOAReturnDateTime { get; set; }
+
+        [JsonProperty("ExpectedPre-admissionTestingDateTime")]
+        public string? ExpectedPreAdmissionTestingDateTime { get; set; }
+
+        public string? NotifyClergyCode { get; set; }
+
+        public string? AdvancedDirectiveLastVerifiedDate { get; set; }
+
+        public string? AdmitDateTime { get; set; }
+
+        public string? ClaimMonetaryAmount { get; set; }
+
+        [JsonProperty("UBData")]
+        public UbData? UbData { get; set; }
+
+        public List<string>? ProcedureCodes { get; set; }
+
+        [JsonProperty("Cal_AdmitURN")]
+        public string? AdmitURN { get; set; }
+
+        [JsonProperty("Cal_AdmissionType_DDSO")]
+        public string? AdmissionTypeDDSO { get; set; }
+
+        [JsonProperty("Cal_IsSelfPay")]
+        public string? IsSelfPay { get; set; }
+
+        [JsonProperty("Cal_BillingNumber")]
+        public string? BillingNumber { get; set; }
+
+        [JsonProperty("Cal_ServiceProviderName")]
+        public string? ServiceProviderName { get; set; }
+
+        [JsonProperty("Cal_ServiceProviderID")]
+        public string? ServiceProviderId { get; set; }
+
+        [JsonProperty("Cal_VisitTypeID")]
+        public string? VisitTypeId { get; set; }
+
+        [JsonProperty("Cal_VisitTypeDescription")]
+        public string? VisitTypeDescription { get; set; }
+
+        [JsonProperty("Cal_FinancialClearanceStatus")]
+        public string? FinancialClearanceStatus { get; set; }
+
+        [JsonProperty("Cal_EncounterPayerID")]
+        public string? EncounterPayerId { get; set; }
+
+        [JsonProperty("Cal_EncounterPayerDescription")]
+        public string? EncounterPayerDescription { get; set; }
+
+        [JsonProperty("Cal_PatientModule")]
+        public string? PatientModule { get; set; }
+
+        [JsonProperty("Cal_IsPortalUser")]
+        public string? IsPortalUser { get; set; }
+
+        [JsonProperty("Cal_IsComplete")]
+        public string? IsComplete { get; set; }
+
+        [JsonProperty("Cal_AppointmentStatus")]
+        public string? AppointmentStatus { get; set; }
+
+        [JsonProperty("Cal_ExpectedService")]
+        public string? ExpectedService { get; set; }
+
+        [JsonProperty("Cal_AdmitProcedureCode")]
+        public string? AdmitProcedureCode { get; set; }
+
+        [JsonProperty("Cal_AdmitProcedureCodesCombined")]
+        public string? AdmitProcedureCodesCombined { get; set; }
+
+        [JsonProperty("Cal_PrecertNumbers")]
+        public string? PrecertNumbers { get; set; }
+
+        [JsonProperty("Cal_PatientServiceCenter")]
+        public string? PatientServiceCenter { get; set; }
+
+        [JsonProperty("Cal_PatientMemberID")]
+        public string? PatientMemberId { get; set; }
+
+        [JsonProperty("Cal_ClientMasterPatientID")]
+        public string? ClientMasterPatientId { get; set; }
+
+        [JsonProperty("Cal_MPIN")]
+        public string? MPIN { get; set; }
+
+        [JsonProperty("Cal_AdmittingDiagnosisCode")]
+        public string? AdmittingDiagnosisCode { get; set; }
+
+        [JsonProperty("Cal_AdmittingDiagnosisCode_ICD10")]
+        public string? AdmittingDiagnosisCodeICD10 { get; set; }
+
+        [JsonProperty("Cal_ProcedureCodeQuantity")]
+        public string? ProcedureCodeQuantity { get; set; }
+
+        [JsonProperty("Cal_CertificationType")]
+        public string? CertificationType { get; set; }
+
+        [JsonProperty("Cal_ClaimMonetaryAmountExists")]
+        public string? ClaimMonetaryAmountExists { get; set; }
+
+        [JsonProperty("Cal_PPE_Amount")]
+        public string? PPEAmount { get; set; }
+
+        [JsonProperty("Cal_PPE_DateTime")]
+        public string? PPEDateTime { get; set; }
+
+        [JsonProperty("Cal_PPE_User")]
+        public string? PPEUser { get; set; }
+
+        [JsonProperty("Cal_OrderLocation")]
+        public string? OrderLocation { get; set; }
+
+        [JsonProperty("Cal_LevelOfService")]
+        public string? LevelOfService { get; set; }
+
+        [JsonProperty("Cal_EntityIdentifier")]
+        public string? EntityIdentifier { get; set; }
+
+        [JsonProperty("Cal_VerifiedDate")]
+        public string? VerifiedDate { get; set; }
+
+        [JsonProperty("Cal_VerifiedName")]
+        public string? VerifiedName { get; set; }
+
+        [JsonProperty("Cal_InsVerifiedBy")]
+        public string? InsVerifiedBy { get; set; }
+
+        [JsonProperty("Cal_UpdatedByEDRep")]
+        public string? UpdatedByEDRep { get; set; }
+
+        [JsonProperty("Cal_NOAAdmissionDate")]
+        public string? NOAAdmissionDate { get; set; }
+
+        [JsonProperty("Cal_NOAVisitTime")]
+        public string? NOAVisitTime { get; set; }
+
+        [JsonProperty("Cal_AetnaPIN")]
+        public string? AetnaPIN { get; set; }
+
+        [JsonProperty("Cal_RegisteredByUser")]
+        public string? RegisteredByUser { get; set; }
+
+        [JsonProperty("Cal_InsuranceCount")]
+        public string? InsuranceCount { get; set; }
+
+        [JsonProperty("Cal_ProcedureMnemonic")]
+        public string? ProcedureMnemonic { get; set; }
+
+        [JsonProperty("Cal_PaymentReceived")]
+        public string? PaymentReceived { get; set; }
+
+        [JsonProperty("Cal_DiscountPosted")]
+        public string? DiscountPosted { get; set; }
+
+        [JsonProperty("Cal_NeboMessageID")]
+        public string? NeboMessageId { get; set; }
+
+        [JsonProperty("Cal_MSPByPass")]
+        public string? MSPByPass { get; set; }
+
+        [JsonProperty("Cal_SelectedServiceType")]
+        public string? SelectedServiceType { get; set; }
+
+        [JsonProperty("Cal_NDC")]
+        public string? NDC { get; set; }
+
+        [JsonProperty("Cal_DrugName")]
+        public string? DrugName { get; set; }
+
+        [JsonProperty("Cal_DrugStrength")]
+        public string? DrugStrength { get; set; }
+
+        [JsonProperty("Cal_HealthPlanName")]
+        public string? HealthPlanName { get; set; }
+
+        [JsonProperty("Cal_CertificateTypeCode")]
+        public string? CertificateTypeCode { get; set; }
+
+        [JsonProperty("Cal_AuthProviderNPI")]
+        public string? AuthProviderNPI { get; set; }
+
+        [JsonProperty("Cal_AuthReferringProviderNPI")]
+        public string? AuthReferringProviderNPI { get; set; }
+
+        [JsonProperty("Cal_AuthReferringLocationNPI")]
+        public string? AuthReferringLocationNPI { get; set; }
+
+        [JsonProperty("Cal_ClientSpecificNumber")]
+        public string? ClientSpecificNumber { get; set; }
+
+        [JsonProperty("Cal_AISActionCodes")]
+        public string? AISActionCodes { get; set; }
+
+        [JsonProperty("Cal_AuthFacilityID")]
+        public string? AuthFacilityId { get; set; }
+
+        [JsonProperty("Cal_ReferralID")]
+        public string? ReferralId { get; set; }
+
+        [JsonProperty("Cal_FacilityFaxNumber")]
+        public string? FacilityFaxNumber { get; set; }
+
+        [JsonProperty("Cal_PatientEntry_ServiceStartDate")]
+        public string? PatientEntryServiceStartDate { get; set; }
+
+        [JsonProperty("Cal_PatientEntry_ServiceEndDate")]
+        public string? PatientEntryServiceEndDate { get; set; }
+
+        [JsonProperty("Cal_IDXLocation")]
+        public string? IDXLocation { get; set; }
+
+        [JsonProperty("Cal_ClientProvided_MedicalNecessityPasses")]
+        public string? ClientProvidedMedicalNecessityPasses { get; set; }
+
+        [JsonProperty("Cal_ClientProvided_MedicalNecessityFailedReason")]
+        public string? ClientProvidedMedicalNecessityFailedReason { get; set; }
+
+        [JsonProperty("Cal_ClientProvided_PatientArrivedBy")]
+        public string? ClientProvidedPatientArrivedBy { get; set; }
+
+        [JsonProperty("Cal_PropertyAndCasualty")]
+        public string? PropertyAndCasualty { get; set; }
+
+        [JsonProperty("Cal_OnsetOfIllness")]
+        public string? OnsetOfIllness { get; set; }
+
+        [JsonProperty("Cal_ClientProvided_AccountUpdatedBy")]
+        public string? ClientProvidedAccountUpdatedBy { get; set; }
+
+        [JsonProperty("Cal_PPE_TotalAmount")]
+        public string? PPETotalAmount { get; set; }
+
+        [JsonProperty("Cal_TrackingNumber")]
+        public string? TrackingNumber { get; set; }
+
+        [JsonProperty("Cal_Activity")]
+        public string? Activity { get; set; }
+
+        [JsonProperty("Cal_Activities")]
+        public string? Activities { get; set; }
+
+        [JsonProperty("Cal_ActivityIDs")]
+        public string? ActivityIDs { get; set; }
+
+        [JsonProperty("Cal_FacilityTaxId")]
+        public string? FacilityTaxId { get; set; }
+
+        [JsonProperty("Cal_ClientTaxId")]
+        public string? ClientTaxId { get; set; }
+
+        [JsonProperty("Cal_BypassEMRN_Updates")]
+        public string? BypassEMRNUpdates { get; set; }
+
+        [JsonProperty("Cal_EstimatedDOS")]
+        public string? EstimatedDOS { get; set; }
+
+        [JsonProperty("Cal_FacilityTaxonomyCode")]
+        public string? FacilityTaxonomyCode { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields1")]
+        public string? QueueManagerUserDefinedFields1 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields2")]
+        public string? QueueManagerUserDefinedFields2 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields3")]
+        public string? QueueManagerUserDefinedFields3 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields4")]
+        public string? QueueManagerUserDefinedFields4 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields5")]
+        public string? QueueManagerUserDefinedFields5 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields6")]
+        public string? QueueManagerUserDefinedFields6 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields7")]
+        public string? QueueManagerUserDefinedFields7 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields8")]
+        public string? QueueManagerUserDefinedFields8 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields9")]
+        public string? QueueManagerUserDefinedFields9 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields10")]
+        public string? QueueManagerUserDefinedFields10 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields11")]
+        public string? QueueManagerUserDefinedFields11 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields12")]
+        public string? QueueManagerUserDefinedFields12 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields13")]
+        public string? QueueManagerUserDefinedFields13 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields14")]
+        public string? QueueManagerUserDefinedFields14 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields15")]
+        public string? QueueManagerUserDefinedFields15 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields16")]
+        public string? QueueManagerUserDefinedFields16 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields17")]
+        public string? QueueManagerUserDefinedFields17 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields18")]
+        public string? QueueManagerUserDefinedFields18 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields19")]
+        public string? QueueManagerUserDefinedFields19 { get; set; }
+
+        [JsonProperty("Cal_QueueManagerUserDefinedFields20")]
+        public string? QueueManagerUserDefinedFields20 { get; set; }
+
+        [JsonProperty("Cal_ProcedureCharge1")]
+        public string? ProcedureCharge1 { get; set; }
+
+        [JsonProperty("Cal_ProcedureCharge2")]
+        public string? ProcedureCharge2 { get; set; }
+
+        [JsonProperty("Cal_ProcedureCharge3")]
+        public string? ProcedureCharge3 { get; set; }
+
+        [JsonProperty("Cal_ProcedureCharge4")]
+        public string? ProcedureCharge4 { get; set; }
+
+        [JsonProperty("Cal_ProcedureCharge5")]
+        public string? ProcedureCharge5 { get; set; }
+
+        [JsonProperty("Cal_ProcedureCharge6")]
+        public string? ProcedureCharge6 { get; set; }
+
+        [JsonProperty("Cal_ProcedureCharge7")]
+        public string? ProcedureCharge7 { get; set; }
+
+        [JsonProperty("Cal_ProcedureCharge8")]
+        public string? ProcedureCharge8 { get; set; }
+
+        [JsonProperty("Cal_ServiceCode")]
+        public string? ServiceCode { get; set; }
+
+        public Calculated? PVCalculated { get; set; }
+
+        [JsonProperty("PatientMerge")]
+        public List<PatientMerge>? PatientMerges { get; set; }
+
+        public string? OrganDonorCode2 { get; set; }
+
+        public Accident? Accident { get; set; }
+
+        public string? Disability { get; set; }
+
+        public string? AdvanceDirectiveCode2 { get; set; }
+
+        [JsonProperty("DeathandAutopsy")]
+        public DeathAndAutopsy? DeathAndAutopsy { get; set; }
+
+        [JsonProperty("Cal_ControlNumbers")]
+        public string? ControlNumbers { get; set; }
+
+        [JsonProperty("Workplace")]
+        public List<Workplace>? Workplaces { get; set; }
+
+        [JsonProperty("Cal_PreventativeServiceCodeQualifier")]
+        public string? PreventativeServiceCodeQualifier { get; set; }
+
+        [JsonProperty("Cal_PreventativeServicePlaceOfService")]
+        public string? PreventativeServicePlaceOfService { get; set; }
+
+        [JsonProperty("Cal_ServicingLocationName")]
+        public string? ServicingLocationName { get; set; }
+
+        [JsonProperty("Cal_ReferringLocationName")]
+        public string? ReferringLocationName { get; set; }
+
+        public string? InfoGivenByCompleteQuestionnaire { get; set; }
+
+        public string? InfoGivenByLastName { get; set; }
+
+        public string? InfoGivenByFirstName { get; set; }
+
+        public string? InfoGivenByMiddleInitial { get; set; }
+
+        public string? InfoGivenBySuffix { get; set; }
+
+        public string? InfoGivenByPrefix { get; set; }
+
+        public string? InfoGivenByRelationshipCode { get; set; }
+
+        public string? InfoGivenByRelationshipDescription { get; set; }
+
+        [JsonProperty("InfoGivenBy_Date")]
+        public string? InfoGivenByDate { get; set; }
+
+        public string? DualEntitlementMedicareDualEntitlement { get; set; }
+
+        public string? DualEntitlementMedicareInitialEntitlementOnESRD { get; set; }
+
+        public string? DualEntitlementWorkingAgedMSPDisabilityApply { get; set; }
+
+        public string? AdmittedToHospitalLast60Days { get; set; }
+
+        public string? AdmittedLast60DaysFacilityName { get; set; }
+
+        public string? AdmittedLast60DaysAdmitDate { get; set; }
+
+        public string? AdmittedLast60DaysDischargeDate { get; set; }
+
+        public string? HospiceIsPatientHospice { get; set; }
+
+        public string? HospiceIsCoveredUnderHospiceProgram { get; set; }
+
+        public string? Miscellaneouse4 { get; set; }
+
+        public string? Miscellaneouse5 { get; set; }
+
+        public string? Miscellaneouse6 { get; set; }
+
+        public string? Miscellaneouse7 { get; set; }
+
+        public string? Miscellaneouse8 { get; set; }
+
+        public string? Miscellaneouse9 { get; set; }
+
+        [JsonProperty("Cal_PassportVisitIdentifier")]
+        public string? PassportVisitIdentifier { get; set; }
+
+        [JsonProperty("Cal_PrincipalDiagnosisCode")]
+        public string? PrincipalDiagnosisCode { get; set; }
+
+        [JsonProperty("Cal_PrincipalDiagnosisCode_ICD10")]
+        public string? PrincipalDiagnosisCodeICD10 { get; set; }
+
+        [JsonProperty("Cal_ProcedureTypeCode")]
+        public string? ProcedureTypeCode { get; set; }
+
+        [JsonProperty("ScannedImages")]
+        public List<ScannedImages>? ScannedImages { get; set; }
+
+        [JsonProperty("Cal_VisitTime")]
+        public string? VisitTime { get; set; }
+
+        [JsonProperty("Cal_AssignedArea")]
+        public string? AssignedArea { get; set; }
+
+        [JsonProperty("Cal_ServicingLocationNPI")]
+        public string? ServicingLocationNPI { get; set; }
+
+        [JsonProperty("Cal_PPE_PSTNoPayorResponseFlag")]
+        public string? PSTNoPayorResponseFlag { get; set; }
+
+        [JsonProperty("Cal_PPE_PSTNoReqSTCsFlag")]
+        public string? PSTNoReqSTCsFlag { get; set; }
+
+        [JsonProperty("Cal_PPE_ContractDefinitionFlag")]
+        public string? ContractDefinitionFlag { get; set; }
+
+        [JsonProperty("Cal_PPE_EstimateWithNoBenefitFlag")]
+        public string? EstimateWithNoBenefitFlag { get; set; }
+
+        [JsonProperty("Cal_PPE_EstimateWithEditBenefitFlag")]
+        public string? EstimateWithEditBenefitFlag { get; set; }
+
+        [JsonProperty("Cal_PPE_EstimateContChargeZeroFlag")]
+        public string? EstimateContChargeZeroFlag { get; set; }
+
+        [JsonProperty("Cal_ServiceProviderNPI")]
+        public string? ServiceProviderNPI { get; set; }
+
+        [JsonProperty("Cal_FacilityCode")]
+        public string? FacilityCode { get; set; }
+
+        [JsonProperty("Cal_FacilityName")]
+        public string? FacilityName { get; set; }
+
+        [JsonProperty("Cal_FacilityNPI")]
+        public string? FacilityNPI { get; set; }
+
+        [JsonProperty("Cal_FacilityAddress1")]
+        public string? FacilityAddress1 { get; set; }
+
+        [JsonProperty("Cal_FacilityAddress2")]
+        public string? FacilityAddress2 { get; set; }
+
+        [JsonProperty("Cal_FacilityState")]
+        public string? FacilityState { get; set; }
+
+        [JsonProperty("Cal_FacilityCity")]
+        public string? FacilityCity { get; set; }
+
+        [JsonProperty("Cal_FacilityZip")]
+        public string? FacilityZip { get; set; }
+
+        [JsonProperty("Cal_FacilityContactPhone")]
+        public string? FacilityContactPhone { get; set; }
+
+        [JsonProperty("Cal_FacilityContactName")]
+        public string? FacilityContactName { get; set; }
+
+        [JsonProperty("Cal_IsObservation")]
+        public string? IsObservation { get; set; }
+
+        [JsonProperty("Cal_PETouchlessTypeIndicator")]
+        public string? PETouchlessTypeIndicator { get; set; }
+    }
+}
+#if false // Decompilation log
+'168' items in cache
+------------------
+Resolve: 'System.Runtime, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.Runtime, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.22\ref\net6.0\System.Runtime.dll'
+------------------
+Resolve: 'Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed'
+Found single assembly: 'Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed'
+WARN: Version mismatch. Expected: '12.0.0.0', Got: '13.0.0.0'
+Load from: 'C:\Users\C88320B\.nuget\packages\newtonsoft.json\13.0.1\lib\netstandard2.0\Newtonsoft.Json.dll'
+------------------
+Resolve: 'System.Collections, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.Collections, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\6.0.22\ref\net6.0\System.Collections.dll'
+#endif
