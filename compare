@@ -1,0 +1,23 @@
+tengo este XPM y quiero llevarlo a  SDoc
+{
+    "Encounter": [
+        {
+            "EncounterID": null,
+            "Metadata": {
+                "EPin": {
+                    "EncounterId": ""
+                }
+            },
+            "PatientVisit": {
+                "PatientClass": "O",
+                "AssignedLocation": "UPW",
+                "RoomType": null,
+                "BedType": null,
+                "PatientFacility": "",
+                "LocationStatus": null,
+                "Cal_ComprehensiveLocationIdentifier": null,
+                "AdmissionType": "EL",
+                "PreadmitNumber": null,
+                "Physician": [
+                    {
+
