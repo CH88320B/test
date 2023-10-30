@@ -1,0 +1,8 @@
+ private static T MapClass<T>(JToken? objectToken)
+         {
+        if (objectToken == null) return (T)Activator.CreateInstance(typeof(T));
+
+        var a = objectToken.ToObject<T>();
+
+        return objectToken.ToObject<T>();
+    }
