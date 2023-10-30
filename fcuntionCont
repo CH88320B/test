@@ -6,3 +6,39 @@
 
         return objectToken.ToObject<T>();
     }
+
+
+public sealed class Root
+{
+    /// <summary>
+    /// Equivalent to SDOC_ROOT without importing the heavy library
+    /// </summary>
+    /// <param name="sdocXml"></param>
+    public Root( string sdocXml)
+    {
+        var documentObject = GetJsonFromXml( sdocXml );
+        
+
+        if (documentObject[SDocKey.Root] == null ) throw new InvalidDataException( "SDoc XML did not map properly, unable to continue" );
+
+        var documentRoot = documentObject[SDocKey.Root];  
+        //FaxDocuments = MapClass<FaxDocument>(documentRoot[SDocKey.FaxDocuments]);
+        //MSP = MapMSP(documentRoot[SDocKey.MSP]);
+        //Patient = MapClass<Patient>( documentRoot[SDocKey.Patient] );
+        PatientVisit = MapClass<PatientVisit>( documentRoot[SDocKey.PatientVisit] );
+        MessageEvent = MapClass<MessageEvent>( documentRoot[SDocKey.MessageEvent] );
+        MessageHeader = MapClass<MessageHeader>( documentRoot[SDocKey.MessageHeader] );
+        NOAs = MapClass<NOA>(documentRoot[SDocKey.NOAs]);
+        Guarantor = MapClass<Guarantor>( documentRoot[SDocKey.Guarantor] );
+        Authentication = MapClass<Authentication>( documentRoot[SDocKey.Authentication] );
+        UBData = MapClass<UBData>( documentRoot[SDocKey.UBData] );
+        Insurances = MapInsuranceList( documentRoot[SDocKey.Insurances] );
+        NextOfKins = MapList<NextOfKin>( documentRoot[SDocKey.NextOfKins] );
+        //Orders = MapOrderList( documentRoot[SDocKey.Orders] );
+        Order = MapOrder(documentRoot[SDocKey.Orders]);
+        Alerts = MapClass<Alert>(documentRoot[SDocKey.Alerts]);
+        MessageEvent = MapClass<MessageEvent>(documentRoot[SDocKey.MessageEvent]);
+        OrderManagers = MapList<OrderManager>(documentRoot[SDocKey.OrderManagers]);
+    }
+
+System.ArgumentException: 'Accessed JArray values with invalid key value: "PatientVisit". Int32 array index expected.'
