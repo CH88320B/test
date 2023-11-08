@@ -1,0 +1,461 @@
+using System.Net.NetworkInformation;
+using System.Xml.Linq;
+using EH.Shared.SdocAdapter.Constants;
+using EH.Shared.SdocAdapter.Dtos;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+namespace EH.Shared.SdocAdapter;
+
+public sealed class Root
+{
+    /// <summary>
+    /// Equivalent to SDOC_ROOT without importing the heavy library
+    /// </summary>
+    /// <param name="sdocXml"></param>
+    public Root( string sdocXml)
+    {
+        var documentObject = GetJsonFromXml( sdocXml );
+        
+
+        if (documentObject[SDocKey.Root] == null ) throw new InvalidDataException( "SDoc XML did not map properly, unable to continue" );
+
+        var documentRoot = documentObject[SDocKey.Root];  
+     //FaxDocuments = MapClass<FaxDocument>(documentRoot[SDocKey.FaxDocuments]);
+        //MSP = MapMSP(documentRoot[SDocKey.MSP]);
+        //Patient = MapClass<Patient>( documentRoot[SDocKey.Patient] );
+       PatientVisit = MapClass<SdocPatientVisit>( documentRoot[SDocKey.PatientVisit] );
+
+
+        //PatientVisit = MapList<PatientVisit>(documentRoot[SDocKey.PatientVisit]);
+        MessageEvent = MapClass<MessageEvent>( documentRoot[SDocKey.MessageEvent] );
+        MessageHeader = MapClass<MessageHeader>( documentRoot[SDocKey.MessageHeader] );
+        NOAs = MapClass<NOA>(documentRoot[SDocKey.NOAs]);
+        Guarantor = MapClass<Guarantor>( documentRoot[SDocKey.Guarantor] );
+        Authentication = MapClass<Authentication>( documentRoot[SDocKey.Authentication] );
+        UBData = MapClass<UBData>( documentRoot[SDocKey.UBData] );
+        Insurances = MapInsuranceList( documentRoot[SDocKey.Insurances] );
+        NextOfKins = MapList<NextOfKin>( documentRoot[SDocKey.NextOfKins] );
+        Orders = MapOrderList( documentRoot[SDocKey.Orders] );
+        //Order = MapOrder(documentRoot[SDocKey.Orders]);
+        Alerts = MapClass<Alert>(documentRoot[SDocKey.Alerts]);
+        MessageEvent = MapClass<MessageEvent>(documentRoot[SDocKey.MessageEvent]);
+        OrderManagers = MapList<OrderManager>(documentRoot[SDocKey.OrderManagers]);
+    }
+    public List<FamilyMember> FamilyMembers { get; }
+    public FaxDocument FaxDocuments { get; }
+    public List<Spouse> Spouses { get; }
+    public Patient Patient { get; }
+    public MSP MSP { get; }
+    // public List<SdocPatientVisit> PatientVisit { get; }
+    public SdocPatientVisit PatientVisit { get; }
+    public MessageEvent MessageEvent { get; }
+    public MessageHeader MessageHeader { get; }
+    public NOA NOAs { get; }
+    public Guarantor Guarantor { get; }
+    public Authentication Authentication { get; }
+    public UBData UBData { get; set; }
+    public Alert Alerts { get; set; }
+    public List<Insurance> Insurances { get; }
+    public List<NextOfKin> NextOfKins { get; }
+    public List<Order> Orders { get; }
+    public Order Order { get; }
+    public List<OrderManager> OrderManagers { get; }
+
+    private static JObject GetJsonFromXml(string xml)
+    {
+        //var document = XDocument.Parse(xml);
+
+       //var json = JsonConvert.SerializeXNode(document);
+      var json = xml;
+       return JObject.Parse(json);
+    }
+
+    private static T MapClass<T>(JToken? objectToken)
+         {
+        if (objectToken == null) return (T)Activator.CreateInstance(typeof(T));
+
+        var a = objectToken.ToObject<T>();
+
+        return objectToken.ToObject<T>();
+    }
+
+    private static List<T> MapList<T>( JToken? objectToken )
+    {
+        if (objectToken == null ) return new List<T>();
+
+        return objectToken.Children().Select( MapClass<T> ).ToList();
+    }
+
+    private static List<Insurance> MapInsuranceList( JToken? objectToken)
+    {
+        var insuranceList = new List<Insurance>();
+        if (objectToken != null && ((JToken)objectToken).Type == JTokenType.Object)
+        {//if there is just one <insurance> tag in sDoc
+            var insurance = MapClass<Insurance>(objectToken);
+            insuranceList.Add(insurance);
+            return insuranceList;
+        }
+
+        var dtoList = MapList<InsuranceDto>( objectToken );
+
+        if ( dtoList.Count == 0 ) return new List<Insurance>();
+
+        
+        dtoList.Where(x => x != null).ToList().ForEach( x =>  insuranceList.Add( 
+                                                        new Insurance
+                                                            {
+                                                                AccidentDate = x.AccidentDate,
+                                                                AssignmentOfBenefits = x.AssignmentOfBenefits, 
+                                                                BadPlanCodeIncorrectPlanCode = x.BadPlanCodeIncorrectPlanCode,
+                                                                BadPlanCodeMessage = x.BadPlanCodeMessage,
+                                                                BadPlanCodeRecommendedPlanCode = x.BadPlanCodeRecommendedPlanCode,
+                                                                BypassPayerCodeMapping = x.BypassPayerCodeMapping,
+                                                                CDProcID = x.CDProcID,
+                                                                CDReqID = x.CDReqID,
+                                                                CardControlNumber = x.CardControlNumber,
+                                                                CardNumber = x.CardNumber,
+                                                                CertificationBeginDate = x.CertificationBeginDate,
+                                                                CertificationEndDate = x.CertificationEndDate,
+                                                                ChainedBatchRecordID = x.ChainedBatchRecordID,
+                                                                ClientCompanyID = x.ClientCompanyID,
+                                                                ClientPayerDescription = x.ClientPayerDescription,
+                                                                ClientPayerMnemonic = x.ClientPayerMnemonic,
+                                                                ClientPlanID = x.ClientPlanID,
+                                                                CompanyPlanCode = x.CompanyPlanCode,
+                                                                CoordOfBenPriority = x.CoordOfBenPriority,
+                                                                CoordinationOfBenefits = x.CoordinationOfBenefits,
+                                                                DLPVID = x.DLPVID,
+                                                                DSID = x.DSID,
+                                                                DateRun = x.DateRun,
+                                                                DisplayWorkcenter = x.DisplayWorkcenter,
+                                                                EffectiveDate = x.EffectiveDate,
+                                                                FacilityNetworkIdentificationNumber = x.FacilityNetworkIdentificationNumber,
+                                                                GenericResponseTypeDescription = x.GenericResponseTypeDescription,
+                                                                GHPInsuredRelationship_RelationshipDescription = x.GHPInsuredRelationship_RelationshipDescription,
+                                                                GenericResponseTypeID = x.GenericResponseTypeID,
+                                                                GroupName = x.GroupName,
+                                                                HCFAPatientRelationshipToInsured = x.HCFAPatientRelationshipToInsured,
+                                                                HospitalEffectiveDate = x.HospitalEffectiveDate,
+                                                                Index = x.Index,
+                                                                InsuranceAuthorizationInformation = x.InsuranceAuthorizationInformation,
+                                                                InsuranceCoPhoneNumber = x.InsuranceCoPhoneNumber,
+                                                                InsuranceCompanyAddress_City = x.InsuranceCompanyAddress_City,
+                                                                InsuranceCompanyAddress_OtherDesignation = x.InsuranceCompanyAddress_OtherDesignation,
+                                                                InsuranceCompanyAddress_State = x.InsuranceCompanyAddress_State,
+                                                                InsuranceCompanyAddress_StreetAddress = x.InsuranceCompanyAddress_StreetAddress,
+                                                                InsuranceCompanyAddress_Zip = x.InsuranceCompanyAddress_Zip,
+                                                                InsuranceID = x.InsuranceID,
+                                                                InsurancePlanType = x.InsurancePlanType,
+                                                                InsurancePrimaryAuthorization = x.InsurancePrimaryAuthorization,
+                                                                InsuranceType = x.InsuranceType,
+                                                                MajorMedicalFlag = x.MajorMedicalFlag,
+                                                                MasterPolicyNumber = x.MasterPolicyNumber,
+                                                                MedicalAssistanceBenefitPackage = x.MedicalAssistanceBenefitPackage,
+                                                                MedicalAssistanceProgramStatus = x.MedicalAssistanceProgramStatus,
+                                                                MedicalAssistanceResourceCode = x.MedicalAssistanceResourceCode,
+                                                                MedicareHealthInsCardNumber = x.MedicareHealthInsCardNumber,
+                                                                MedicareLifetimeSignatureAuthDate = x.MedicareLifetimeSignatureAuthDate,
+                                                                OverrideInsuranceAddress = x.OverrideInsuranceAddress,
+                                                                OverrideInsuranceCity = x.OverrideInsuranceCity,
+                                                                OverrideInsuranceName = x.OverrideInsuranceName,
+                                                                OverrideInsuranceState = x.OverrideInsuranceState,
+                                                                OverrideInsuranceZip = x.OverrideInsuranceZip,
+                                                                PassportInsuranceFound = x.PassportInsuranceFound,
+                                                                PassportPayerDescription = x.PassportPayerDescription,
+                                                                PassportPayerMnemonicOverride = x.PassportPayerMnemonicOverride,
+                                                                PatientMemberNumber_IDNumber = x.PatientMemberNumber_IDNumber,
+                                                                PayerCost = x.PayerCost,
+                                                                PlanIdentifier = x.PlanIdentifier,
+                                                                PreAdmitCertPAC = x.PreAdmitCertPAC,
+                                                                PrivateRoomRate = x.PrivateRoomRate,
+                                                                ProfeeAddress = x.ProfeeAddress,
+                                                                ProfeeCity = x.ProfeeCity,
+                                                                ProfeeMailTo = x.ProfeeMailTo,
+                                                                ProfeePhoneNumber = x.ProfeePhoneNumber,
+                                                                ProfeeState = x.ProfeeState,
+                                                                ProfeeZip = x.ProfeeZip,
+                                                                PropertyAndCasualtyClaimNumber = x.PropertyAndCasualtyClaimNumber,
+                                                                RanByUserID = x.RanByUserID,
+                                                                RanByUsername = x.RanByUsername,
+                                                                ReAddedInsurance = x.ReAddedInsurance,
+                                                                ReleaseInformationCode = x.ReleaseInformationCode,
+                                                                ReportofEligibilityFlag = x.ReportofEligibilityFlag,
+                                                                RequestedServiceType = x.RequestedServiceType,
+                                                                Response_Raw = x.Response_Raw,
+                                                                SemiPrivateRoomRate = x.SemiPrivateRoomRate,
+                                                                SetID = x.SetID,
+                                                                Subscriber = MapClass<Subscriber>( x.Subscriber ),
+                                                                TXID = x.TXID,
+                                                                TermDate = x.TermDate,
+                                                                TriggeredIns = x.TriggeredIns,
+                                                                TypeOfAgreementCode = x.TypeOfAgreementCode,
+                                                                UserAdded = x.UserAdded,
+                                                                VerificationBy = x.VerificationBy,
+                                                                VerificationStatus = x.VerificationStatus
+                                                        } 
+                                                        ) 
+                                                    );
+
+        return insuranceList;
+    }
+
+    private static List<Order> MapOrderList( JToken? objectToken )
+    {
+        var dtoList = MapList<OrderDto>(objectToken);
+
+        if ( dtoList.Count == 0 ) return new List<Order>();
+
+        var orderList = new List<Order>();
+
+        dtoList.ForEach( x => orderList.Add( new Order
+        {
+            Notes = MapList<Note>( x.Notes ),
+            Observations = MapList<Observation>( x.Observations ),
+            Diagnosis = MapList<Diagnose>(x.Diagnoses)
+        } ));
+
+        return orderList;
+    }
+
+    private static Order MapOrder(JToken? objectToken)
+    {
+        var orderDto = MapClass<OrderDto>(objectToken);
+
+        if (orderDto == null) return new Order();
+
+        var procedures = MapList<Procedure>(orderDto.Procedures);
+        var diagnoses = MapList<Diagnose>(orderDto.Diagnoses);
+        var observations = MapList<Observation>(orderDto.Observations);
+        var notes = MapList<Note>(orderDto.Notes);
+        var requests = MapList<Request>(orderDto.Requests);
+        return new Order
+        {
+            Diagnosis = diagnoses,
+            Procedures = procedures,
+            OrderSequence = orderDto.OrderSequence,
+            Observations = observations,
+            Notes = notes,
+            Requests = requests,
+            OrderControl = orderDto.OrderControl,
+            OrderStatus = orderDto.OrderStatus,
+            ServiceType = orderDto.ServiceType,
+            
+        };
+    }
+
+    private static MSP MapMSP(JToken? objectToken)
+    {
+        var mspDto = MapClass<MSPDto>(objectToken);
+        if (mspDto == null) return new MSP();
+        var ESRDs = MapClass<ESRD>(mspDto.ESRD);
+        var General = MapClass<General>(mspDto.General);
+        var Entitlement = MapClass<Entitlement>(mspDto.Entitlement);
+        var Disability = MapClass<Disability>(mspDto.Disability);
+        var Age = MapClass<Age>(mspDto.Age);
+        var NoFaultLiabilityInsurance = MapClass<NoFaultLiabilityInsurance>(mspDto.NoFaultLiabilityInsurance);
+        return new MSP
+        {
+           Disability = Disability,
+           Age = Age,
+           Entitlement = Entitlement,
+           NoFaultLiabilityInsurance = NoFaultLiabilityInsurance,
+           General = General,
+           CompleteQuestionnaire = mspDto.CompleteQuestionnaire,
+           InfoGivenByName_LastName = mspDto.InfoGivenByName_LastName,
+           InfoGivenByName_FirstName = mspDto.InfoGivenByName_FirstName,
+           InfoGivenByName_MiddleInitial = mspDto.InfoGivenByName_MiddleInitial,
+           InfoGivenByName_Suffix = mspDto.InfoGivenByName_Suffix,
+           InfoGivenByName_Prefix = mspDto.InfoGivenByName_Prefix,
+           InfoGivenByRelationship_RelationshipCode = mspDto.InfoGivenByRelationship_RelationshipCode,
+           InfoGivenByRelationship_RelationshipDescription = mspDto.InfoGivenByRelationship_RelationshipDescription,
+           InfoGivenDate = mspDto.InfoGivenDate,
+           BlackLungBenefitsStatus = mspDto.BlackLungBenefitsStatus,
+           BenifitsBeginDate = mspDto.BenifitsBeginDate,
+           LargeGroupHealthInsurancePatient = mspDto.LargeGroupHealthInsurancePatient,
+           MedicalInsurancePhoneNumber = mspDto.MedicalInsurancePhoneNumber,
+           MedicareEligibilityDisabilityDate = mspDto.MedicareEligibilityDisabilityDate,
+           DiagnosisListedStatus = mspDto.DiagnosisListedStatus,
+           EmployerGroupHealthInsurancePatient = mspDto.EmployerGroupHealthInsurancePatient,
+           PaidByProgramStatus = mspDto.PaidByProgramStatus,
+           HealthServiceProgramName = mspDto.HealthServiceProgramName,
+           HealthServiceProgramAddress_AddressLine1 = mspDto.HealthServiceProgramAddress_AddressLine1,
+           HealthServiceProgramAddress_AddressLine2 = mspDto.HealthServiceProgramAddress_AddressLine2,
+           WorkerCompClaimStatus = mspDto.WorkerCompClaimStatus,
+           HealthServiceProgramAddress_City = mspDto.HealthServiceProgramAddress_City,
+           HealthServiceProgramAddress_State = mspDto.HealthServiceProgramAddress_State,
+           HealthServiceProgramAddress_ZipCode = mspDto.HealthServiceProgramAddress_ZipCode,
+           DVABenifitsStatus = mspDto.DVABenifitsStatus,
+           DVAPaymentAgreementStatus = mspDto.DVAPaymentAgreementStatus,
+           DVAClaimNumber = mspDto.DVAClaimNumber,
+           IllnessOrInjuryDate = mspDto.IllnessOrInjuryDate,
+           WorkerCompPlanName = mspDto.WorkerCompPlanName,
+           WorkerCompPlanAddress_AddressLine1 = mspDto.WorkerCompPlanAddress_AddressLine1,
+           WorkerCompPlanAddress_AddressLine2 = mspDto.WorkerCompPlanAddress_AddressLine2,
+           WorkerCompPlanAddress_City = mspDto.WorkerCompPlanAddress_City,
+           WorkerCompPlanAddress_State = mspDto.WorkerCompPlanAddress_State,
+           WorkerCompPlanAddress_ZipCode = mspDto.WorkerCompPlanAddress_ZipCode,
+           WorkerCompClaimNumber = mspDto.WorkerCompClaimNumber,
+           PatientEmployerName_LastName = mspDto.PatientEmployerName_LastName,
+           PatientEmployerName_FirstName = mspDto.PatientEmployerName_FirstName,
+           PatientEmployerName_MiddleInitial = mspDto.PatientEmployerName_MiddleInitial,
+           PatientEmployerName_Suffix = mspDto.PatientEmployerName_Suffix,
+           PatientEmployerName_Prefix = mspDto.PatientEmployerName_Prefix,
+           PatientEmployerAddress_AddressLine1 = mspDto.PatientEmployerAddress_AddressLine1,
+           PatientEmployerAddress_AddressLine2 = mspDto.PatientEmployerAddress_AddressLine2,
+           PatientEmployerAddress_City = mspDto.PatientEmployerAddress_City,
+           PatientEmployerAddress_State = mspDto.PatientEmployerAddress_State,
+           PatientEmployerAddress_ZipCode = mspDto.PatientEmployerAddress_ZipCode,
+           PatientEmployerPhoneNumber = mspDto.PatientEmployerPhoneNumber,
+           DualEntitlementMedicareDualEntitlement = mspDto.DualEntitlementMedicareDualEntitlement,
+           DualEntitlementMedicareInitialEntitlementOnESRD = mspDto.DualEntitlementMedicareInitialEntitlementOnESRD,
+           DualEntitlementWorkingAgedMSPDisabilityApply = mspDto.DualEntitlementWorkingAgedMSPDisabilityApply,
+           AdmittedToHospitalLast60Days = mspDto.AdmittedToHospitalLast60Days,
+           AdmittedLast60DaysFacilityName = mspDto.AdmittedLast60DaysFacilityName,
+           AdmittedLast60DaysAdmitDate = mspDto.AdmittedLast60DaysAdmitDate,
+           AdmittedLast60DaysDischargeDate = mspDto.AdmittedLast60DaysDischargeDate,
+           HospiceIsPatientHospice = mspDto.HospiceIsPatientHospice,
+           HospiceIsCoveredUnderHospiceProgram = mspDto.HospiceIsCoveredUnderHospiceProgram,
+           Miscellaneouse4 = mspDto.Miscellaneouse4,
+           Miscellaneouse5 = mspDto.Miscellaneouse5,
+           Miscellaneouse6 = mspDto.Miscellaneouse6,
+           Miscellaneouse7 = mspDto.Miscellaneouse7,
+           Miscellaneouse8 = mspDto.Miscellaneouse8,
+           Miscellaneouse9 = mspDto.Miscellaneouse9,
+           EndStageRenalMedicareDueToESRD = mspDto.EndStageRenalMedicareDueToESRD,
+           MedicareEligibilityDisability = mspDto.MedicareEligibilityDisability,
+           EmployerGroupHealthInsuranceSpouse = mspDto.EmployerGroupHealthInsuranceSpouse,
+           PatientEmployedBy100OrMoreEmployees = mspDto.PatientEmployedBy100OrMoreEmployees,
+           Patient20OrMoreEmployees = mspDto.Patient20OrMoreEmployees,
+           AccidentAgentAreaCode = mspDto.AccidentAgentAreaCode,
+           AccidentAgentName = mspDto.AccidentAgentName,
+           AccidentAgentPhoneNumber = mspDto.AccidentAgentPhoneNumber,
+           AccidentAttorneyName = mspDto.AccidentAttorneyName,
+           AccidentAttorneyPhoneNumber = mspDto.AccidentAttorneyPhoneNumber,
+           AccidentAutoInsurance = mspDto.AccidentAutoInsurance,
+           AccidentCarOwnerFirstName = mspDto.AccidentCarOwnerFirstName,
+           AccidentCarOwnerLastName = mspDto.AccidentCarOwnerLastName,
+           AccidentDateTime = mspDto.AccidentDateTime,
+           AccidentDescription = mspDto.AccidentDescription,
+           AccidentLiabilityInsuranceAddress = mspDto.AccidentLiabilityInsuranceAddress,
+           AccidentLiabilityInsuranceCity = mspDto.AccidentLiabilityInsuranceCity,
+           AccidentLiabilityInsuranceClaim = mspDto.AccidentLiabilityInsuranceClaim,
+           AccidentLiabilityInsuranceLastName = mspDto.AccidentLiabilityInsuranceLastName,
+           AccidentLiabilityInsurancePhoneNumber = mspDto.AccidentLiabilityInsurancePhoneNumber,
+           AccidentLiabilityInsuranceState = mspDto.AccidentLiabilityInsuranceState,
+           AccidentLiabilityInsuranceZip = mspDto.AccidentLiabilityInsuranceZip,
+           AccidentLocation = mspDto.AccidentLocation,
+           AccidentNoFaultPremiseHomeownersInsuranceAddress = mspDto.AccidentNoFaultPremiseHomeownersInsuranceAddress,
+           AccidentNoFaultPremiseHomeownersInsuranceAreaCode = mspDto.AccidentNoFaultPremiseHomeownersInsuranceAreaCode,
+           AccidentNoFaultPremiseHomeownersInsuranceAvailable = mspDto.AccidentNoFaultPremiseHomeownersInsuranceAvailable,
+           AccidentNoFaultPremiseHomeownersInsuranceCity = mspDto.AccidentNoFaultPremiseHomeownersInsuranceCity,
+           AccidentNoFaultPremiseHomeownersInsuranceClaimNumber = mspDto.AccidentNoFaultPremiseHomeownersInsuranceClaimNumber,
+           AccidentNoFaultPremiseHomeownersInsuranceCoName = mspDto.AccidentNoFaultPremiseHomeownersInsuranceCoName,
+           AccidentNoFaultPremiseHomeownersInsurancePhoneNumber = mspDto.AccidentNoFaultPremiseHomeownersInsurancePhoneNumber,
+           AccidentNoFaultPremiseHomeownersInsurancePolicyNumber = mspDto.AccidentNoFaultPremiseHomeownersInsurancePolicyNumber,
+           AccidentNoFaultPremiseHomeownersInsuranceState = mspDto.AccidentNoFaultPremiseHomeownersInsuranceState,
+           AccidentNoFaultPremiseHomeownersInsuranceZip = mspDto.AccidentNoFaultPremiseHomeownersInsuranceZip,
+           AccidentNonLiabilityInsuranceAddress = mspDto.AccidentNonLiabilityInsuranceAddress,
+           AccidentNonLiabilityInsuranceCity = mspDto.AccidentNonLiabilityInsuranceCity,
+           AccidentNonLiabilityInsuranceClaim = mspDto.AccidentNonLiabilityInsuranceClaim,
+           AccidentNonLiabilityInsuranceLastName = mspDto.AccidentNonLiabilityInsuranceLastName,
+           AccidentNonLiabilityInsurancePhoneNumber = mspDto.AccidentNonLiabilityInsurancePhoneNumber,
+           AccidentNonLiabilityInsuranceState = mspDto.AccidentNonLiabilityInsuranceState,
+           AccidentNonLiabilityInsuranceZip = mspDto.AccidentNonLiabilityInsuranceZip,
+           AccidentPatientEmployerAddress = mspDto.AccidentPatientEmployerAddress,
+           AccidentPatientEmployerCity = mspDto.AccidentPatientEmployerCity,
+           AccidentPatientEmployerName = mspDto.AccidentPatientEmployerName,
+           AccidentPatientEmployerState = mspDto.AccidentPatientEmployerState,
+           AccidentPatientEmployerZip = mspDto.AccidentPatientEmployerZip,
+           AccidentPersonResponsibleFirstName = mspDto.AccidentPersonResponsibleFirstName,
+           AccidentPersonResponsibleLastName = mspDto.AccidentPersonResponsibleLastName,
+           AccidentSpouseEmployerAddress = mspDto.AccidentSpouseEmployerAddress,
+           AccidentSpouseEmployerCity = mspDto.AccidentSpouseEmployerCity,
+           AccidentSpouseEmployerName = mspDto.AccidentSpouseEmployerName,
+           AccidentSpouseEmployerState = mspDto.AccidentSpouseEmployerState,
+           AccidentSpouseEmployerZip = mspDto.AccidentSpouseEmployerZip,
+           AccidentTimeOfAccidentEmployerAddress = mspDto.AccidentTimeOfAccidentEmployerAddress, 
+           AccidentTimeOfAccidentEmployerCity = mspDto.AccidentTimeOfAccidentEmployerCity, 
+           AccidentTimeOfAccidentEmployerClaimNumber = mspDto.AccidentTimeOfAccidentEmployerClaimNumber, 
+           AccidentTimeOfAccidentEmployerName = mspDto.AccidentTimeOfAccidentEmployerName,
+           AccidentTimeOfAccidentEmployerState = mspDto.AccidentTimeOfAccidentEmployerState, 
+           AccidentTimeOfAccidentEmployerZip = mspDto.AccidentTimeOfAccidentEmployerZip, 
+           BeneficiaryInfoDateReceived = mspDto.BeneficiaryInfoDateReceived,
+           BeneficiaryInfoDCN = mspDto.BeneficiaryInfoDCN,
+           BeneficiaryInfoMedicare = mspDto.BeneficiaryInfoMedicare,
+           BeneficiaryInfoName = mspDto.BeneficiaryInfoName,
+           BeneficiaryInfoPatientAccount = mspDto.BeneficiaryInfoPatientAccount,
+           BeneficiaryInfoProviderNumber = mspDto.BeneficiaryInfoProviderNumber,
+           BeneficiaryInfoProviderRepName = mspDto.BeneficiaryInfoProviderRepName,
+           BeneficiaryInfoRelationshipCode = mspDto.BeneficiaryInfoRelationshipCode,
+           BeneficiaryInfoRelationshipDescription = mspDto.BeneficiaryInfoRelationshipDescription,
+           BeneficiaryInfoServiceDate = mspDto.BeneficiaryInfoServiceDate,
+           BeneficiaryInfoSSN = mspDto.BeneficiaryInfoSSN,
+           CurrentlyWorkingPatient = mspDto.CurrentlyWorkingPatient,
+           CurrentlyWorkingSpouse = mspDto.CurrentlyWorkingSpouse,
+           DVAAuthorizedToPay = mspDto.DVAAuthorizedToPay,
+           DVAAuthorizedToPayText = mspDto.DVAAuthorizedToPayText,
+           DVAContactWarnerMessage = mspDto.DVAContactWarnerMessage,
+           DVAIsPatientEntitledToBenefits = mspDto.DVAIsPatientEntitledToBenefits,
+           EmployeeStatus = mspDto.EmployeeStatus,
+           ESRDs = ESRDs,
+           EverWorkedPatient = mspDto.EverWorkedPatient,
+           EverWorkedSpouse = mspDto.EverWorkedSpouse,
+           FamilyMemberEmployerAddress_ZipCode = mspDto.FamilyMemberEmployerAddress_ZipCode,
+           FederalBlackLungDateBenefitsBegan = mspDto.FederalBlackLungDateBenefitsBegan,
+           FederalBlackLungEligible = mspDto.FederalBlackLungEligible,
+           IDNumber = mspDto.IDNumber,
+           MedicalInsurance = mspDto.MedicalInsurance,
+           MedicareReplacementPolicy = mspDto.MedicareReplacementPolicy,
+           PatientAge65 = mspDto.PatientAge65,
+           Payload = mspDto.XML,
+           PlanName = mspDto.PlanName,
+           PublicHealthServicesName = mspDto.PublicHealthServicesName,
+           PublicHealthServicesPaidByGovnment = mspDto.PublicHealthServicesPaidByGovnment,
+           ResultOfAccident = mspDto.ResultOfAccident,
+           ResultOfAccidentDescription = mspDto.ResultOfAccidentDescription,
+           RetirementDatePatient = mspDto.RetirementDatePatient,
+           TypeOfAccident = mspDto.TypeOfAccident,
+           WorkersCompAddress = mspDto.WorkersCompAddress,
+           WorkersCompCity = mspDto.WorkersCompCity,
+           WorkersCompClaimNumber = mspDto.WorkersCompClaimNumber,
+           WorkersCompDateOfIllness = mspDto.WorkersCompDateOfIllness,
+           WorkersCompEmployerAddress = mspDto.WorkersCompEmployerAddress,
+           WorkersCompEmployerCity = mspDto.WorkersCompEmployerCity,
+           WorkersCompEmployerName = mspDto.WorkersCompEmployerName,
+           WorkersCompEmployerState = mspDto.WorkersCompEmployerState,
+           WorkersCompEmployerZip = mspDto.WorkersCompEmployerZip,
+           WorkersCompIllnessCovered = mspDto.WorkersCompIllnessCovered,
+           WorkersCompNameOfWCPlan = mspDto.WorkersCompNameOfWCPlan,
+           WorkersCompPolicyNumber = mspDto.WorkersCompPolicyNumber,
+           WorkersCompState = mspDto.WorkersCompState,
+           WorkersCompZip = mspDto.WorkersCompZip,
+           WorkingAgedOrDisabilityMSPStatus = mspDto.WorkingAgedOrDisabilityMSPStatus,
+           WorkRelatedAccident = mspDto.WorkRelatedAccident,
+           FamilyMemberEmployedBy100OrMoreEmployees = mspDto.FamilyMemberEmployedBy100OrMoreEmployees,
+           LargeGroupHealthInsuranceFamilyMember = mspDto.LargeGroupHealthInsuranceFamilyMember,
+           EndStageRenalPatientHadKidneyTransplant = mspDto.EndStageRenalPatientHadKidneyTransplant,
+           EndStageRenalPatientDateOfKidneyTransplant = mspDto.EndStageRenalPatientDateOfKidneyTransplant,
+           EndStageRenalMaintenanceDialysis = mspDto.EndStageRenalMaintenanceDialysis,
+           EndStageRenalDateOfFirstMaintenanceDialysis = mspDto.EndStageRenalDateOfFirstMaintenanceDialysis,
+           EndStageRenalStartDateSelfDialysisTraining = mspDto.EndStageRenalStartDateSelfDialysisTraining,
+           EndStageRenalIsPatientIn30DayCOBPeriod = mspDto.EndStageRenalIsPatientIn30DayCOBPeriod,
+           EndStageRenalGroupHealthThruEmployer = mspDto.EndStageRenalGroupHealthThruEmployer,
+           EndStageRenalGroupHealthInsuranceName = mspDto.EndStageRenalGroupHealthInsuranceName,
+           EndStageRenalGroupHealthPhoneNUmber = mspDto.EndStageRenalGroupHealthPhoneNUmber,
+           EndStageRenalGroupHealthAddress = mspDto.EndStageRenalGroupHealthAddress,
+           EndStageRenalGroupHealthCity = mspDto.EndStageRenalGroupHealthCity,
+           EndStageRenalGroupHealthState = mspDto.EndStageRenalGroupHealthState,
+           EndStageRenalGroupHealthZip = mspDto.EndStageRenalGroupHealthZip,
+           EndStageRenalGroupHealthPolicyNumber = mspDto.EndStageRenalGroupHealthPolicyNumber,
+           EndStageRenalGroupHealthGroupNumber = mspDto.EndStageRenalGroupHealthGroupNumber,
+           EndStageRenalGroupHealthSubscriberName = mspDto.EndStageRenalGroupHealthSubscriberName,
+           EndStageRenalRelationshipCode = mspDto.EndStageRenalRelationshipCode,
+           EndStageRenalRelationshipDescription = mspDto.EndStageRenalRelationshipDescription,
+           EndStageRenalGroupHealthSubscriberEmployerName = mspDto.EndStageRenalGroupHealthSubscriberEmployerName,
+
+        };
+    }
+
+
+}
