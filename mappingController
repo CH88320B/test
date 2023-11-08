@@ -1,0 +1,22 @@
+using System.Reflection;
+using Mapster;
+
+namespace EH.Shared.XpmToSdocConverter.Mapping.Controllers
+{
+    public class MappingConfigController
+    {
+        public static void AddConfigs()
+        {
+            if (TypeAdapterConfig.GlobalSettings.RuleMap.Count == 0)
+            {
+                // Mapping Configs to be applied to Mapster.TypeAdapterConfig GlobalSettings.
+                // Any configs with IRegister will be imported to TypeAdapterConfig, current location for these is Mapping/Configs.
+                TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
+            }
+
+            // Add default settings for configs, IgnoreNonMapped does not seem to work at this level.
+            TypeAdapterConfig.GlobalSettings.Default.IgnoreNullValues(true);
+            TypeAdapterConfig.GlobalSettings.Default.PreserveReference(true);
+        }
+    }
+}
