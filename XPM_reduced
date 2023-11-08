@@ -1,0 +1,312 @@
+{                                                                                           EncounterID,Metadata,PatientVisit,Event,Person, ReceivedTimestamp,EncounterTimeStamp,OrderManagers,Order
+     "Encounter": [
+        {
+            "EncounterID": null,
+            "Metadata": {
+                "EPin": {
+                    "EncounterId": ""
+                }
+            },
+            "PatientVisit": {
+                "PatientClass": "O",
+                "AssignedLocation": "UPW",
+                "RoomType": null,
+                "BedType": null,
+                "PatientFacility": "",
+                "LocationStatus": null,
+                "Cal_ComprehensiveLocationIdentifier": null,
+                "AdmissionType": "EL",
+                "PreadmitNumber": null,
+                "Physician": [
+                    {
+                        "DocPhysicianID": "MCNKMCIP,NAME",
+                        "DocFamilyName": "MCNKMCIP,NAME",
+                        "DocGivenName": "KATIE",
+                        "DocMiddleName": "MIDDLE",
+                        "DocNameSuffix": null,
+                        "DocPrefix": null,
+                        "DocDegree": "",
+                        "DocSourceTable": "",
+                        "ProviderCode": null
+                    },
+                    {
+                        "DocPhysicianID": "",
+                        "DocFamilyName": "GAIMAN",
+                        "DocGivenName": "NEILWAYNE",
+                        "DocMiddleName": "MIDDLE",
+                        "DocNameSuffix": null,
+                        "DocPrefix": null,
+                      
+                    },
+                    
+                    {
+                        "DocPhysicianID": "",
+                        "DocFamilyName": null,
+                        "DocGivenName": null,
+                        "DocMiddleName": null,
+                        "DocNameSuffix": null,
+                 
+                    }
+                ],
+                "HospitalServiceCode": null,
+                "TemporaryLocation": null,
+                "PreAdmitTestIndicator": null,
+                "ReadmissionIndicator": null,
+                "AdmitSource": "PR",
+                "BadDebtAgencyCode": null,
+                "Financials": {
+                    "BadDebtTransferAmount": "0",
+                    "BadDebtRecoveryAmount": "0",
+                    "CurrentPatientBalance": "0",
+                    "TotalCharges": "0",
+                    "TotalAdjustments": "0",
+                    "TotalPayments": "0"
+                },
+                "DeleteAccountIndicator": null,
+                "ServiceEpisodeIdentifier": null,
+                "Calculated": {
+                    "MedicalAssistanceResourceCode": "",
+                    "AdmitURN": null,
+                    "OverrideInsuranceAddress": "",
+                    "AccidentDate": "1/1/0001 12:00:00 AM"
+                },
+                "PriorPendingLocation": null,
+                "AccommodationCode": null,
+                "AdmissionReason": "US-RRENAL-FLANKPAIN,HEMATURIA",
+               
+                "ClaimMonetaryAmount": "0",
+                "UBData": {
+                    "Ub82ValueAmountAndCode": "SOMEAMT",
+                    "Ub82OccurenceCodes": null,
+                    "Ub82OccurenceDates": null,
+                    "Ub92OccurenceCodes": null,
+                    "UB92Locator57-National": null,
+                    "UB92Locator78-State": null
+                },
+                "ProcedureCodes": [],
+                "Cal_AdmitURN": null,
+                "Cal_AdmissionType_DDSO": null,
+                "Cal_IsSelfPay": "False",
+                "Cal_AuthFacilityID": null,
+                "Cal_ReferralID": null,
+               
+                "Cal_QueueManagerUserDefinedFields19": null,
+                "Cal_QueueManagerUserDefinedFields20": null,
+                "Cal_ProcedureCharge1": "0",
+                "Cal_ProcedureCharge2": "0",
+                "Cal_ProcedureCharge3": "0",
+                "Cal_ProcedureCharge4": "0",
+                "Cal_ProcedureCharge5": "0",
+                "Cal_ProcedureCharge6": "0",
+                "Cal_ProcedureCharge7": "0",
+                "Cal_ProcedureCharge8": "0",
+                "Cal_ServiceCode": null,
+                "PVCalculated": null,
+                "PatientMerge": [],
+                "OrganDonorCode2": null,
+                "Accident": {
+                    "AccidentDateTime": "",
+                    "Code": null,
+                    "Location": null,
+                    "AutoAccidentState": null,
+                    "JobRelatedIndicator": null,
+                    "DeathIndicator": null,
+                  
+                    "InsuranceAgentName_Suffix": "",
+                    "InsuranceAgentName_Prefix": "",
+                    "InsuranceAgentPhoneNumber": ""
+                },
+                "Disability": null,
+                "AdvanceDirectiveCode2": null,
+                "DeathandAutopsy": {
+                    "DeathCauseCode": null,
+                    "DeathLocation": null,
+                    "DeathCertifiedIndicator": null,
+                    "DeathCertificateSignedDateTime": null,
+                    "DeathCertifiedBy": null,
+                    "AutopsyIndicator": null,
+                    "AutopsyStartandEndDateTime": null,
+                    "AutopsyPerformedBy": null,
+                    "CoronerIndicator": null
+                },
+                "Cal_ControlNumbers": null,
+                "Workplace": [
+                    {
+                        "Wp_PlanName": "",
+                        "Wp_IDNumber": "",
+                        "Wp_EmployeeStatus": "",
+                        "Wp_WorkRelatedAccident": "",
+                        "Wp_TypeOfAccident": "",
+                     
+                        "Wp_DiagnosisListedStatus": ""
+                    }
+                ],
+                "Cal_PreventativeServiceCodeQualifier": "",
+                "Cal_PreventativeServicePlaceOfService": null,
+                "Cal_ServicingLocationName": null,
+                "Cal_ReferringLocationName": null,
+                "InfoGivenByCompleteQuestionnaire": "",
+                "InfoGivenByLastName": "",
+                "InfoGivenByFirstName": "",
+               
+            },
+            "Event": {
+                "EventTypeCode": null,
+                "RecordedDateTime": null,
+                "DateTimePlannedEvent": null,
+                "EventReasonCode": null,
+                "OperatorId": "262109",
+                "EventOccurred": null,
+                "EventFacility": null,
+                "Source": null,
+                "Destination": null,
+                "SendTimestamp": null,
+                "ReceivedTimestamp": null,
+                "MessageType": null,
+                "TP_Identifier": "0",
+                "WrapperMetadata": {
+                    "AdminLogBillableTransaction": null,
+                    "StrainCorrelationIdentifier": null,
+                    "IntelliBatch": null,
+                    "LogInstructions": null
+                },
+                "Payload": "",
+                "SequenceID": "0",
+                "MessageHeader": {
+                    "FieldSeparator": null,
+                    "EncodingCharacters": null,
+                    "SystemName": "HNAM",
+                    "ClientSpecifiedClientID": "0",
+                  
+                    "intelliAvResponse_NextPayerCode": ""
+                },
+                "SystemID": null,
+                "Globaltxid": null,
+                "Software": [],
+                "Cal_IpsMessageId": "0",
+                
+                "Cal_RequestType": null,
+                "Cal_OriginalTriggeredUser ": "",
+                "ResponseEvent": null
+            },
+            "Person": {
+                "Patient": {
+                    "Identifier": {
+                        "PatientID": null,
+                        "MedicalRecordNumber": "10003322544Z",
+                        "AccountNumber": null
+                    },
+                    "Demographics": {
+                        "LastName": "VADER",
+                        "Race": "W",
+                        "Address": {
+                            "Address1": null,
+                            "Address2": null,
+                            "City": null,
+                       
+                        },
+                        "Phone": {
+                            "HomePhoneNumber": null,
+                            "HomePhoneUseCode": null,
+                            "AreaCityCode": null,
+                        
+                        },
+                        "EmailAddress": "",
+                        "Language": "",
+                       
+                        "Cal_PatientAge65": ""
+                    },
+                    "UserRole": [],
+                    "Allergy": [],
+                    "AccessRestriction": []
+                },
+                "Diagnoses": [
+                    {
+                        "MajorDiagnosticCategory": null,
+                        "DiagnosisDescription": null,
+                       "DrgDiagnosisDeterminationStatus": null,
+                        "PresentOnAdmissionPOAIndicator": null
+                    }
+                ],
+                "Guarantor": [
+                    {
+                        "NameSuffix": "",
+                        "LastName": "MCLOUD",
+                        "MiddleName": "M",
+                        "Address2": "",
+                        "ClientRelationshipToPatient": "18",
+                        "Cal_GuarantorAge": "0",
+                        "Cal_PassportRelationshipToPatientCode": null,
+                        "GuarantorEmployeeID": null
+                    }
+                ],
+                "NextofKin": [],
+                "Insurance": [
+                    {
+                        "IN1ID": "0",
+                        "ClientPlanID": null,
+                        "ClientCompanyID": null,
+                        "PayerName": null,
+                        "CertificationExpireDate": null,
+                        "Subscriber": {
+                            "GroupEmployerIDNumber": null,
+                            "sub_OrganizationName": null,
+                            "sub_LastName": "MCLOUD",
+                            "InsuredsEmployerPhoneNumber": "",
+                            "InsuredsPhoneNumberHome": ""
+                        },
+                        "Calculated": null,
+                        "PlanNumber": "",
+                        "HcfaPatientRelationshipToInsured": null,
+                        "CertificationExpireDate": null,
+                        "Subscriber": {
+                            "GroupEmployerIDNumber": null,
+                            "sub_OrganizationName": null,
+                            "sub_LastName": "VADER",
+                            "sub_FirstName": "DARTH",
+                            "InsuredsEmployerPhoneNumber": "",
+                            "InsuredsPhoneNumberHome": ""
+                        },
+                        "Calculated": null,
+                        "PlanNumber": "",
+                        "MedicareLifetimeSignatureAuthLocation": "",
+                        "PayerID": "",
+                        "PolicyNumber": null,
+                        "InfoProviderNumber": "",
+                        "InfoProviderRepName": ""
+                    }
+                ],
+                "FamilyMember": [
+                    {
+                        "Fm_Employees100OrMoreStatus": "",
+                        "Fm_EmployerLastName": null,
+                        "Fm_EmployerFirstName": null,
+                        "Fm_GHPEmployees20OrMoreStatus": ""
+                    }
+                ],
+                "Spouse": [
+                    {
+                        "Sp_EmploymentStatus": "",
+                        "Sp_EmploymentEverWorked": "",
+                        "Sp_EmploymentStopDate": "",
+                        "Sp_Employees20OrMoreStatus": null,
+                        "Sp_EmployerPreviousStatus": "",
+                        "Sp_GHPEmployees20OrMoreStatus": ""
+                    }
+                ],
+                "MSP_ESRD": [
+                    {
+                        "MedicareDueToESRD": "",
+                        "PatientHadKidneyTransplant": "",
+                        "PatientDateOfKidneyTransplant": "",
+                        "AccidentNonLiabilityInsuranceFirstName": null
+                    }
+                ]
+            },
+            "ReceivedTimestamp": "",
+            "EncounterTimeStamp": null,
+            "OrderManagers": [],
+            "Order": null
+        }
+    ]
+}
