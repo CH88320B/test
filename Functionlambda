@@ -1,0 +1,47 @@
+using System.Net;
+using Amazon.Lambda.APIGatewayEvents;
+using Amazon.Lambda.Core;
+using EH.Shared.XpmToSdocConverter;
+using Newtonsoft.Json;
+
+
+// Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
+[assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
+
+namespace EH.Shared.XpmToSdocConverterLambda;
+
+public class Function
+{
+
+    /// <summary>
+    /// A simple function that takes a string and does a ToUpper
+    /// </summary>
+    /// <param name="XpmJson"></param>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    /// 
+
+    public APIGatewayProxyResponse FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
+    {
+        var XpmJson = request.Body;
+        var serializedJsonSdoc= string.Empty;
+
+        LambdaLogger.Log($"Beginning - XpmToJsonSdoc Mapper");
+
+        var JsonDoc = RootMapper.Map(XpmJson);
+
+        serializedJsonSdoc = JsonConvert.SerializeObject(JsonDoc);
+        LambdaLogger.Log( $"Complete - XpmToJsonSdoc Mapper" );
+
+        return new APIGatewayProxyResponse
+        {
+            StatusCode = ( int )HttpStatusCode.OK,
+            Body = serializedJsonSdoc,
+            Headers = new Dictionary<string, string>
+            {
+                { "Content-Type", "application/json" },
+                { "Access-Control-Allow-Origin", "*" }
+            }
+        };
+    }
+}
