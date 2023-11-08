@@ -1,0 +1,30 @@
+using EH.Models.Xpm;
+using EH.Shared.SdocAdapter;
+using EH.Shared.XpmToSdocConverter.Mapping.Controllers;
+using Mapster;
+
+namespace EH.Shared.XpmToSdocConverter
+{
+    public class RootMapper 
+    {
+        public static Xpm Map(string XpmJson)
+        {
+            // Add all the mapping configs to the Mapster.TypeAdapterConfig GlobalSettings.
+            // XPM Mappings Confluence Page: https://confluence.experianhealth.com/display/SP/XPM+Mappings
+            // Mapster Mapper: https://github.com/MapsterMapper/Mapster/wiki
+            MappingConfigController.AddConfigs();
+
+            var sDocument = new Root(XpmJson);
+
+            var xpm = new Xpm
+            {
+                Encounters = new List<Encounter>
+                {
+                    sDocument.Adapt<Encounter>()
+                }
+            };
+
+            return xpm;
+        }
+    }
+}
