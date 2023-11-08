@@ -1,0 +1,276 @@
+{
+    "SDoc_Root": {                                                        
+        "Alerts": null,
+        "Authentication": {
+            "ClientMnemonic": "100001",
+            "ClientSpecifiedClientID": "100001",
+            "ClientSpecifiedUserID": null,
+            "ConfigClientID": 0,
+              "SystemID": null,
+            "TradingPartnerID": 0,
+            "TriggeredUser": null,
+            "UserMnemonic": "262109"
+        },
+        "FaxDocuments": null,
+        "Guarantor": {
+            "Address_AddressType": "ALS",
+            "Address_Country": null,
+            "Address_CountyOrParishCode": null,
+            "Address1": "1230NSpringSt",
+            "Address2": "",
+             "StreetName": null,
+            "StreetNumber": null,
+            "WorkPhone": null,
+            "Zip": "37130",
+            "ZipExtension": null
+        },
+        "IncludeSnTData": false,
+        "Insurances": [
+            {
+                "AccidentDate": "0001-01-01T00:00:00",
+                "Address1": null,
+                "Address2": null,
+                "AssignmentOfBenefits": "",
+                "BadPlanCodeIncorrectPlanCode": null,
+         
+                "RQA_PayerMappingCode": null,
+                "RQA_PayerMappingDescription": null,
+                "SemiPrivateRoomRate": "",
+                "SetID": 0,
+                "State": null,
+                "Subscriber": {
+                    "Address_AddressType": null,
+                    "Address_Country": null,
+                    "Address_CountyOrParishCode": null,
+                    "StreetNumber": null,
+                    "SubscriberID": "U4132636001",
+                    "SubscriberPersonMasterIndexNum": null,
+                    "WorkPhone": null,
+                    "Zip": "37130",
+                    "ZipExtension": null
+                },
+                "SystemOrder": 0,
+                "TermDate": "0001-01-01T00:00:00",
+                "TriggeredIns": false,
+                "TXID": null,
+                "TypeOfAgreementCode": "AZ",
+                "UserAdded": false,
+                "VerificationBy": "pdwyer",
+                "VerificationStatus": "VERIFIED",
+                "Zip": null
+            },
+            {
+                "AccidentDate": "0001-01-01T00:00:00",
+                "Address1": null,
+                "Address2": null,
+                "AssignmentOfBenefits": "",
+                "BadPlanCodeIncorrectPlanCode": null,
+                "RQA_PayerMappingDescription": null,
+                "SemiPrivateRoomRate": "",
+                "SetID": 0,
+                "State": null,
+                "Subscriber": {
+                    "Address_AddressType": null,
+                    "Address_Country": null,
+                    "Address_CountyOrParishCode": null,
+                    "Address1": "",
+                  "SubscriberPersonMasterIndexNum": null,
+                    "WorkPhone": null,
+                    "Zip": "",
+                    "ZipExtension": null
+                },
+                "SystemOrder": 0,
+                "TermDate": "0001-01-01T00:00:00",
+                "TriggeredIns": false,
+                "TXID": null,
+                "TypeOfAgreementCode": "",
+                "UserAdded": false,
+                "VerificationBy": "",
+                "VerificationStatus": "",
+                "Zip": null
+            }
+        ],
+        "MessageEvent": {
+            "AddresstoValidate": null,
+            "BatchBINNumber": 0,
+            "BatchFileName": null,
+             "SubmitterIdentificationNumber": null,
+            "TestMode": null,
+            "UpdateIPS_TempAccount": false,
+            "UseForHL7PostbackTemplateOnly": false,
+            "UserTriggered": false,
+            "UseSelectedServiceType": false,
+            "ValidHL7PostbackTemplate": false
+        },
+        "MessageHeader": {
+            "AdminTxGUID": null,
+            "AllowDemoSearch_ClientMasterPatientID": false,
+            "AllowNewRequests": null,
+            "BatchTxGUID": null,
+            "ClientAdminTimeZone": null,
+            "ClientNPI": null,
+           "VendorID": 0,
+            "VendorRequestedOverride": null,
+            "VendorRequestID": null
+        },
+        "Msp": null,
+        "NextOfKin": [
+            {
+                "Address_City": "PLYMOUTH",
+                "Address_OtherDesignation": "OTR",
+                "Address_State": "MA",
+                "Address_StreetAddress": "28EELRIVERCIRCLE",
+                "Address_Zip": "02360",
+                "PhoneNumber_PhoneNumberString": "123-123-1234",
+                "Relationship_Identifier": "W",
+                "Relationship_Text": "WIFE",
+                "SetID": "1"
+            },
+            {
+                "Address_City": "Murfreesboro",
+                "Address_OtherDesignation": "",
+                "Address_State": "TN",
+                "Address_StreetAddress": "1230NSpringSt",
+                 "Relationship_Text": "WIFE",
+                "SetID": "2"
+            },
+            {
+                "Address_City": "Murfreesboro",
+                "Address_OtherDesignation": "",
+                "Address_State": "TN",
+                "Address_StreetAddress": "1230NSpringSt",
+                "Relationship_Text": "BROTHER",
+                "SetID": "3"
+            }
+        ],
+        "NOAs": null,
+        "OrderManagers": null,
+        "Orders": [
+            {
+                "Diagnoses": [
+                    {
+                        "Code": "",
+                        "Description": "BAM",
+                        "OrderSequence": 0,
+                        "Version": 0
+                    }
+                ],
+                "FillerOrderNumber": null,
+                "Notes": null,
+                "Observations": [
+                    {
+                        "ActivityTime": "12:00:00AM",
+                        "Code": "ADMPATCL",
+                        "Description": "Phone/Pre-RegComplete?",
+                        "InterpretationCode": null,
+                        "Value": "Y^Yes"
+                    },
+                    {
+                        "ActivityTime": "12:00:00AM",
+                        "Code": "ADM-CTRY",
+                        "Description": "Pt'scountryofpermanentresidence:",
+                        "InterpretationCode": null,
+                        },
+                    {
+                        "ActivityTime": "12:00:00AM",
+                        "Code": "ADM-HCPROX",
+                       "Value": "N^No"
+                    },
+                    {
+                        "ActivityTime": "12:00:00AM",
+                        "Units": null,
+                        "Value": "N"
+                    },
+                    {
+                        "ActivityTime": "12:00:00AM",
+                        "Code": "ADM-LANG",
+                        "Units": null,
+                        "Value": "E^English"
+                    },
+                    {
+                        "ActivityTime": "12:00:00AM",
+                        "Code": "ADM-LANG2",
+                        "Units": null,
+                        "Value": "E^English"
+                    },
+                    {
+                        "ActivityTime": "12:00:00AM",
+                        "Code": "ADM-LANG3",
+                        "Units": null,
+                        "Value": "E^English"
+                    },
+                    {
+                        "ActivityTime": "12:00:00AM",
+                        "Code": "ADM-PRIVAC",
+                         "Value": "Y^Yes"
+                    },
+                    {
+                        "ActivityTime": "12:00:00AM",
+                        "Code": "ADM-PRIVDT",
+                        "Units": null,
+                        "Value": "20030625"
+                    },
+                    {
+                        "ActivityTime": "12:00:00AM",
+                        "Code": "ADM-PXGIVE",
+                         "Units": null,
+                        "Value": "Y"
+                    },
+                    {
+                        "ActivityTime": "12:00:00AM",
+                        "Code": "ADM-PXNO",
+                        "Units": null,
+                        "Value": "NI^NotInterested"
+                    },
+                    {
+                        "ActivityTime": "12:00:00AM",
+                        "Units": null,
+                        "Value": "20140506"
+                    }
+                ],
+                "OrderControl": null,
+                "ServiceType": null
+            }
+        ],
+        "Patient": {
+            "Address_AddressType": "MMP",
+            "Address_Country": "USA",
+            "Address_CountyOrParishCode": null,
+            "Address1": "1230NSpringSt",
+     
+            "Zip": "37130",
+            "ZipExtension": null
+        },
+        "PatientVisit": {
+            "AccidentCode": null,
+            "AccidentDateTime": "12:00:00AM",
+            "AccidentLocation": null,
+            "AccidentState": null,
+           "VerifiedName": null,
+            "VIPIndicator": null,
+            "VisitArrivalMode": null,
+            "VisitDescription": null,
+            "VisitID": null,
+            "VisitIDNumber": null,
+            "VisitIndicatorName": null,
+            "VisitPriorityCode": null,
+            "VisitPublicityCode": null,
+            "VisitTime": "12:00:00AM",
+            "VisitTypeDescription": null,
+            "VisitTypeID": null,
+            "WalkIn": false,
+            "X12_ServiceTypeCode": null,
+            "Zip": null
+        },
+        "Roles": null,
+        "UBData": {
+            "ConditionCode": "CONDCODE",
+            "Occurrence_OccurrenceCodes": null,
+            "Occurrence_OccurrenceDates": null,
+            "OccurrenceCodeAndDate_OccurrenceCodes": null,
+            "OccurrenceCodeAndDate_OccurrenceDates": null,
+            "OtherConditionCode": "",
+            "ValueAmountAndCode": "SOMEAMT"
+        }
+    }
+} 
