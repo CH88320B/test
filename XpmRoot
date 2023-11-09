@@ -1,0 +1,29 @@
+public class XpmRoot
+{
+    public List<Encounter> Encounter { get; set; }
+}
+
+public class Encounter
+{
+    public string EncounterID { get; set; }
+    public Metadata Metadata { get; set; }
+    public PatientVisit PatientVisit { get; set; }
+    public Event Event { get; set; }
+    public Person Person { get; set; }
+    public string ReceivedTimestamp { get; set; }
+    public object EncounterTimeStamp { get; set; }
+    public List<object> OrderManagers { get; set; }
+    public object Order { get; set; }
+}
+
+public class Metadata
+{
+    public EPin EPin { get; set; }
+}
+
+public class EPin
+{
+    public string EncounterId { get; set; }
+}
+
+// Define las otras clases (PatientVisit, Event, Person) según la estructura del JSON...
