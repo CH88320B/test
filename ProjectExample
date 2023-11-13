@@ -45,49 +45,16 @@ namespace JsonMappingExample
 }
 
 
-using System;
-using Mapster;
-using Newtonsoft.Json;
+<Project Sdk="Microsoft.NET.Sdk">
 
-namespace JsonMappingExample
-{
-    public class XpmInputModel
-    {
-        public string Property1 { get; set; }
-        // Otras propiedades anidadas y necesarias
-    }
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
 
-    public class SdocOutputModel
-    {
-        public string PropertyA { get; set; }
-        // Otras propiedades anidadas y necesarias
-    }
+  <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
 
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            // Configuración de Mapster
-            TypeAdapterConfig<XpmInputModel, SdocOutputModel>
-                .ForType()
-                .Map(dest => dest.PropertyA, src => src.Property1);
-                // Mapea otras propiedades según sea necesario
-
-            // Función de mapeo
-            Func<string, SdocOutputModel> mapJson = (inputJson) =>
-            {
-                var xpmInput = JsonConvert.DeserializeObject<XpmInputModel>(inputJson);
-                var sdocOutput = xpmInput.Adapt<SdocOutputModel>();
-                return sdocOutput;
-            };
-
-            // Uso de la función de mapeo
-            var inputJson = "{\"Property1\":\"Value1\"}";
-            var result = mapJson(inputJson);
-
-            // Imprimir resultado
-            Console.WriteLine($"PropertyA: {result.PropertyA}");
-        }
-    }
-}
-
+</Project>
