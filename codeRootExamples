@@ -1,28 +1,15 @@
-var patientVisitToken = documentRoot[SDocKey.PatientVisit];
-
-if (patientVisitToken is JArray patientVisitArray)
+if (documentRoot[SDocKey.PatientVisit] is JArray patientVisitArray)
 {
-    // Es un array, toma el primer elemento si existe
-    var firstElement = patientVisitArray.FirstOrDefault();
-    if (firstElement != null)
-    {
-        PatientVisit = firstElement.ToObject<SdocPatientVisit>();
-    }
-    else
-    {
-        // Maneja el caso en que el array esté vacío
-    }
+    // Handle array case as needed
+    PatientVisit = MapList<SdocPatientVisit>(patientVisitArray);
 }
-else if (patientVisitToken is JObject patientVisitObject)
+else if (documentRoot[SDocKey.PatientVisit] is JObject patientVisitObject)
 {
-    // Es un objeto, puedes convertirlo directamente
-    PatientVisit = patientVisitObject.ToObject<SdocPatientVisit>();
+    // Handle object case as needed
+    PatientVisit = MapClass<SdocPatientVisit>(patientVisitObject);
 }
 else
 {
-    // Maneja otros casos según tus requisitos
-    // Puede ser nulo, estar ausente o en otro formato inesperado
-    // Por ejemplo:
-    // PatientVisit = new SdocPatientVisit(); // o
-    // throw new InvalidOperationException("Formato inesperado para PatientVisit");
+    // Handle other cases or throw an exception
+    throw new InvalidOperationException("Unexpected type for PatientVisit");
 }
