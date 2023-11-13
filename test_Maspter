@@ -1,0 +1,192 @@
+using System;
+using System.Collections.Generic;
+
+public class EPin
+{
+    public string EncounterId { get; set; }
+}
+
+public class Metadata
+{
+    public EPin EPin { get; set; }
+}
+
+public class Physician
+{
+    public string DocPhysicianID { get; set; }
+    public string DocFamilyName { get; set; }
+    public string DocGivenName { get; set; }
+    public string DocMiddleName { get; set; }
+    public string DocNameSuffix { get; set; }
+    public string DocPrefix { get; set; }
+    public string DocDegree { get; set; }
+    public string DocSourceTable { get; set; }
+    public string ProviderCode { get; set; }
+}
+
+public class Financials
+{
+    public string BadDebtTransferAmount { get; set; }
+    public string BadDebtRecoveryAmount { get; set; }
+    public string CurrentPatientBalance { get; set; }
+    public string TotalCharges { get; set; }
+    public string TotalAdjustments { get; set; }
+    public string TotalPayments { get; set; }
+}
+
+public class Demographics
+{
+    public string LastName { get; set; }
+    public string Race { get; set; }
+    // Otras propiedades...
+}
+
+public class Address
+{
+    public string Address1 { get; set; }
+    public string Address2 { get; set; }
+    public string City { get; set; }
+    // Otras propiedades...
+}
+
+public class Phone
+{
+    public string HomePhoneNumber { get; set; }
+    public string HomePhoneUseCode { get; set; }
+    public string AreaCityCode { get; set; }
+    // Otras propiedades...
+}
+
+public class Patient
+{
+    public class Identifier
+    {
+        public string PatientID { get; set; }
+        public string MedicalRecordNumber { get; set; }
+        public string AccountNumber { get; set; }
+    }
+
+    public Identifier PatientId { get; set; }
+    public Demographics Demographics { get; set; }
+    public List<string> UserRole { get; set; }
+    public List<string> Allergy { get; set; }
+    public List<string> AccessRestriction { get; set; }
+}
+
+public class Diagnosis
+{
+    public string MajorDiagnosticCategory { get; set; }
+    public string DiagnosisDescription { get; set; }
+    public string DrgDiagnosisDeterminationStatus { get; set; }
+    public string PresentOnAdmissionPOAIndicator { get; set; }
+}
+
+public class Guarantor
+{
+    public string NameSuffix { get; set; }
+    public string LastName { get; set; }
+    public string MiddleName { get; set; }
+    public string Address2 { get; set; }
+    public string ClientRelationshipToPatient { get; set; }
+    public string Cal_GuarantorAge { get; set; }
+    public string Cal_PassportRelationshipToPatientCode { get; set; }
+    public string GuarantorEmployeeID { get; set; }
+}
+
+public class Insurance
+{
+    public class Subscriber
+    {
+        public string GroupEmployerIDNumber { get; set; }
+        public string sub_OrganizationName { get; set; }
+        public string sub_LastName { get; set; }
+        public string sub_FirstName { get; set; }
+        public string InsuredsEmployerPhoneNumber { get; set; }
+        public string InsuredsPhoneNumberHome { get; set; }
+    }
+
+    public string IN1ID { get; set; }
+    public string ClientPlanID { get; set; }
+    public string ClientCompanyID { get; set; }
+    public string PayerName { get; set; }
+    public string CertificationExpireDate { get; set; }
+    public Subscriber Subscriber { get; set; }
+    public string PlanNumber { get; set; }
+    // Otras propiedades...
+}
+
+public class FamilyMember
+{
+    public string Fm_Employees100OrMoreStatus { get; set; }
+    public string Fm_EmployerLastName { get; set; }
+    // Otras propiedades...
+}
+
+public class Spouse
+{
+    public string Sp_EmploymentStatus { get; set; }
+    // Otras propiedades...
+}
+
+public class MSP_ESRD
+{
+    public string MedicareDueToESRD { get; set; }
+    // Otras propiedades...
+}
+
+public class PatientVisit
+{
+    public string PatientClass { get; set; }
+    public string AssignedLocation { get; set; }
+    public string RoomType { get; set; }
+    public string BedType { get; set; }
+    public string PatientFacility { get; set; }
+    public string LocationStatus { get; set; }
+    public string Cal_ComprehensiveLocationIdentifier { get; set; }
+    public string AdmissionType { get; set; }
+    public string PreadmitNumber { get; set; }
+    public List<Physician> Physician { get; set; }
+    public string HospitalServiceCode { get; set; }
+    // Otras propiedades...
+}
+
+public class RootClass
+{
+    public class Encounter
+    {
+        public string EncounterID { get; set; }
+        public Metadata Metadata { get; set; }
+        public PatientVisit PatientVisit { get; set; }
+        public List<Diagnosis> Diagnoses { get; set; }
+        public List<Guarantor> Guarantor { get; set; }
+        public List<Insurance> Insurance { get; set; }
+        public List<FamilyMember> FamilyMember { get; set; }
+        public List<Spouse> Spouse { get; set; }
+        public List<MSP_ESRD> MSP_ESRD { get; set; }
+    }
+
+    public List<Encounter> Encounters { get; set; }
+}
+
+class Program
+{
+    static void Main()
+    {
+        // Deserializar el JSON y mapearlo a las clases C#
+        var json = "tu JSON aquí";
+        var rootClass = json.Adapt<RootClass>();
+
+        // Acceder a los datos mapeados
+        if (rootClass != null && rootClass.Encounters != null && rootClass.Encounters.Count > 0)
+        {
+            var encounter = rootClass.Encounters[0];
+            Console.WriteLine($"EncounterID: {encounter.EncounterID}");
+
+            // Acceder a otras propiedades y listas...
+        }
+        else
+        {
+            Console.WriteLine("Error en el mapeo del JSON.");
+        }
+    }
+}
