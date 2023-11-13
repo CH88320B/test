@@ -1,40 +1,28 @@
-public class Root
+var patientVisitToken = documentRoot[SDocKey.PatientVisit];
+
+if (patientVisitToken is JArray patientVisitArray)
 {
-    // ... Otros miembros de la clase
-
-    public Root(string sdocXml)
+    // Es un array, toma el primer elemento si existe
+    var firstElement = patientVisitArray.FirstOrDefault();
+    if (firstElement != null)
     {
-        var documentObject = GetJsonFromXml(sdocXml);
-
-        if (documentObject[SDocKey.Root] == null)
-            throw new InvalidDataException("SDoc XML did not map properly, unable to continue");
-
-        var documentRoot = documentObject[SDocKey.Root];
-
-        if (documentRoot[SDocKey.PatientVisit] is JArray patientVisitArray)
-        {
-            // El valor en PatientVisit es un array
-            if (patientVisitArray.Count > 0)
-            {
-                // Accede al primer elemento del array
-                PatientVisit = MapClass<SdocPatientVisit>(patientVisitArray[0]);
-            }
-            else
-            {
-                // El array está vacío
-                // Puedes manejarlo según tus requisitos
-                // Por ejemplo, asignar un valor predeterminado o lanzar una excepción
-                // Dependiendo de lo que sea más adecuado para tu lógica
-            }
-        }
-        else
-        {
-            // El valor en PatientVisit no es un array
-            // Puedes manejarlo según tus requisitos
-            // Por ejemplo, asignar un valor predeterminado o lanzar una excepción
-            // Dependiendo de lo que sea más adecuado para tu lógica
-        }
+        PatientVisit = firstElement.ToObject<SdocPatientVisit>();
     }
-
-    // ... Otros miembros de la clase
+    else
+    {
+        // Maneja el caso en que el array esté vacío
+    }
+}
+else if (patientVisitToken is JObject patientVisitObject)
+{
+    // Es un objeto, puedes convertirlo directamente
+    PatientVisit = patientVisitObject.ToObject<SdocPatientVisit>();
+}
+else
+{
+    // Maneja otros casos según tus requisitos
+    // Puede ser nulo, estar ausente o en otro formato inesperado
+    // Por ejemplo:
+    // PatientVisit = new SdocPatientVisit(); // o
+    // throw new InvalidOperationException("Formato inesperado para PatientVisit");
 }
