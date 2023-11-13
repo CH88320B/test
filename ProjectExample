@@ -43,3 +43,51 @@ namespace JsonMappingExample
         }
     }
 }
+
+
+using System;
+using Mapster;
+using Newtonsoft.Json;
+
+namespace JsonMappingExample
+{
+    public class XpmInputModel
+    {
+        public string Property1 { get; set; }
+        // Otras propiedades anidadas y necesarias
+    }
+
+    public class SdocOutputModel
+    {
+        public string PropertyA { get; set; }
+        // Otras propiedades anidadas y necesarias
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Configuración de Mapster
+            TypeAdapterConfig<XpmInputModel, SdocOutputModel>
+                .ForType()
+                .Map(dest => dest.PropertyA, src => src.Property1);
+                // Mapea otras propiedades según sea necesario
+
+            // Función de mapeo
+            Func<string, SdocOutputModel> mapJson = (inputJson) =>
+            {
+                var xpmInput = JsonConvert.DeserializeObject<XpmInputModel>(inputJson);
+                var sdocOutput = xpmInput.Adapt<SdocOutputModel>();
+                return sdocOutput;
+            };
+
+            // Uso de la función de mapeo
+            var inputJson = "{\"Property1\":\"Value1\"}";
+            var result = mapJson(inputJson);
+
+            // Imprimir resultado
+            Console.WriteLine($"PropertyA: {result.PropertyA}");
+        }
+    }
+}
+
