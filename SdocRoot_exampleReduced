@@ -37,3 +37,49 @@ public class MapperExample
         return sdocRoot;
     }
 }
+
+
+
+    public APIGatewayProxyResponse FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
+    {
+        var XpmJson = request.Body;
+        var serializedJsonSdoc= string.Empty;
+
+        LambdaLogger.Log($"Beginning - XpmToJsonSdoc Mapper");
+
+        //var JsonDoc = RootMapper.Map(XpmJson);
+ 
+        var intermidieclass = JsonConvert.DeserializeObject<XpmRoot>(XpmJson);
+        var rootClass = intermidieclass.Adapt<XpmRoot>();
+
+        Console.WriteLine(XpmJson);
+        Console.WriteLine(rootClass.Encounter.Length);
+
+        // Acceder a los datos mapeados
+        if (rootClass != null && rootClass.Encounter != null && rootClass.Encounter.Length > 0)
+        {
+            var encounter = rootClass.Encounter[0];
+            Console.WriteLine($"EncounterID: {encounter.EncounterID}");
+            Console.WriteLine($"AssignedLocation: {encounter.XpmPatientVisit.AssignedLocation}");
+            // Acceder a otras propiedades y listas...
+        }
+        else
+        {
+            Console.WriteLine("Error en el mapeo del JSON.");
+        }
+
+        //serializedJsonSdoc = JsonConvert.SerializeObject(JsonDoc);
+        LambdaLogger.Log( $"Complete - XpmToJsonSdoc Mapper" );
+
+        return new APIGatewayProxyResponse
+        {
+            StatusCode = ( int )HttpStatusCode.OK,
+            Body = serializedJsonSdoc,
+            Headers = new Dictionary<string, string>
+            {
+                { "Content-Type", "application/json" },
+                { "Access-Control-Allow-Origin", "*" }
+            }
+        };
+    }
+}
