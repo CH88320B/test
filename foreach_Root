@@ -1,0 +1,62 @@
+foreach  Root
+
+
+using EH.Shared.SdocAdapter;
+using Microsoft.VisualBasic;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace EH.Shared.SdocAdapter
+
+
+{
+    public class XpmRoot
+    {
+        public Encounter[] Encounter { get; set; }
+   
+    }
+
+    public class Encounter
+    {
+        public string EncounterID { get; set; }
+        public Metadata Metadata { get; set; }
+
+        [JsonProperty("PatientVisit")]
+        public XpmPatientVisit XpmPatientVisit { get; set; }
+    
+    }
+
+    public class Metadata
+    {
+        public EPin EPin { get; set; }
+    }
+
+    public class EPin
+    {
+        public string EncounterId { get; set; }
+    }
+
+
+    public class XpmPatientVisit
+    {
+        public string? PatientClass { get; set; }
+
+        public string? AssignedLocation { get; set; }
+
+        public string? RoomType { get; set; }
+
+        public string? BedType { get; set; }
+
+        public string? PatientFacility { get; set; }
+
+        public string? LocationStatus { get; set; }
+
+        public string? Cal_ComprehensiveLocationIdentifier { get; set; }
+
+        public string? AdmissionType { get; set; }
+
+        public string? PreadmitNumber { get; set; }
