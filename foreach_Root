@@ -1,5 +1,53 @@
 foreach  Root
 
+
+
+
+using EH.Shared.SdocAdapter;
+using EH.Shared.XpmToSdocConverter.Mapping.Tools;
+using Mapster;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Mapster;
+
+namespace EH.Shared.XpmToSdocConverter.Mapping.Configs
+{ 
+public class SdocMappingConfig {
+    public SdocRoot MapXpmtoSdoc(Encounter xpmEncounter)
+    {
+        var config = new TypeAdapterConfig();
+
+            config.ForType<XpmPatientVisit, PatientVisit>()
+                .Map(dest => dest.ComprehensiveLocationIdentifier, src => src.Cal_ComprehensiveLocationIdentifier)
+                .Map(dest => dest.PatientClass, src => src.PatientClass)
+                .Map(dest => dest.RoomType, src => src.RoomType)
+                .Map(dest => dest.BedType, src => src.BedType)
+                .Map(dest => dest.PatientFacility, src => src.PatientFacility)
+                .Map(dest => dest.LocationStatus, src => src.LocationStatus)
+                .Map(dest => dest.AdmissionType, src => src.AdmissionType)
+                .Map(dest => dest.PreadmitNumber, src => src.PreadmitNumber)
+                .Map(dest => dest.BedType, src => src.BedType)
+                .IgnoreNonMapped(true);
+
+
+            config.ForType<Encounter, SdocRoot>()
+                 .Map(dest => dest.PatientVisit, src => src.XpmPatientVisit);
+
+             var sdocRoot = xpmEncounter?.Adapt<SdocRoot>(config);
+
+            return sdocRoot;
+    }
+   }
+}
+
+/****************************************************************************************************/
+
+
+
+
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
