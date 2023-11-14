@@ -1,5 +1,62 @@
 foreach  Root
 
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace EH.Shared.SdocAdapter
+{
+    public class SdocRoot
+    {
+  
+
+   /* public List<FamilyMember> FamilyMembers { get; set; }
+    public FaxDocument FaxDocuments { get; set; }
+    public List<Spouse> Spouses { get; set; }
+    public Patient Patient { get; set; }
+    public MSP MSP { get; set; }*/
+    public PatientVisit PatientVisit { get; set; }
+        /* public MessageEvent MessageEvent { get; set; }
+         public MessageHeader MessageHeader { get; set; }
+         public NOA NOAs { get; set; }
+         public Guarantor Guarantor { get; set; }
+         public Authentication Authentication { get; set; }
+         public UBData UBData { get; set; }
+         public Alert Alerts { get; set; }
+         public List<Insurance> Insurances { get; set; }
+         public List<NextOfKin> NextOfKins { get; set; }
+         public List<Order> Orders { get; set; }
+         public Order Order { get; set; }
+         public List<OrderManager> OrderManagers { get; set; }*/
+
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+******************************************************************************/
 
 using EH.Shared.SdocAdapter;
 using Microsoft.VisualBasic;
