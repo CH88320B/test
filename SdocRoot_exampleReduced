@@ -14,3 +14,26 @@
 		    }
 	}	}		
 		
+
+
+using Mapster;
+
+public class MapperExample
+{
+    public SdocRoot MapXpmToSdoc(XpmEncounter xpmEncounter)
+    {
+        var config = new TypeAdapterConfig();
+
+        config.ForType<XpmPatientVisit, PatientVisit>()
+            .MapToConstructor(dest => dest.ComprehensiveLocationIdentifier,
+                              src => src.Cal_ComprehensiveLocationIdentifier);
+
+        config.ForType<XpmEncounter, SdocRoot>()
+            .MapToConstructor(dest => dest.PatientVisit,
+                              src => src.Encounters?[0]?.PatientVisit);
+
+        var sdocRoot = xpmEncounter?.Adapt<SdocRoot>(config);
+
+        return sdocRoot;
+    }
+}
