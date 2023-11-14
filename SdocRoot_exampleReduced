@@ -1,0 +1,16 @@
+{                                                                                          
+      "SDoc_Root": { 
+	  "PatientVisit": {
+	            "PatientEncounterID": null,
+                "PatientClass": "O",
+                "AssignedLocation": "UPW",
+                "RoomType": null,
+                "BedType": null,
+                "PatientFacility": "",
+                "LocationStatus": null,
+                "ComprehensiveLocationIdentifier": null,
+                "AdmissionType": "EL",
+                "PreadmitNumber": null
+		    }
+	}	}		
+		
