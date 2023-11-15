@@ -1,0 +1,149 @@
+using EH.Shared.SdocAdapter;
+using EH.Shared.XpmToSdocConverter.Mapping.Tools;
+using Mapster;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Mapster;
+using Newtonsoft.Json;
+using SdocPatientVisit = EH.Ecn.LegacyModels.SDoc.Models.PatientVisit;
+using EH.Shared.SdocAdapter.Enums;
+using System.Xml.Serialization;
+using System.Runtime.CompilerServices;
+
+namespace EH.Shared.XpmToSdocConverter.Mapping.Configs
+{
+    public class SdocMappingConfig {
+        public string MapXpmtoSdoc(Encounter xpmEncounter)
+        {
+
+            var config = new TypeAdapterConfig();
+
+            config.ForType<XpmPatientVisit, PatientVisit>()
+                .Map(dest => dest.ComprehensiveLocationIdentifier, src => src.Cal_ComprehensiveLocationIdentifier)
+                .Map(dest => dest.PatientClass, src => src.PatientClass)
+                .Map(dest => dest.RoomType, src => src.RoomType)
+                .Map(dest => dest.BedType, src => src.BedType)
+                .Map(dest => dest.PatientFacility, src => src.PatientFacility)
+                .Map(dest => dest.LocationStatus, src => src.LocationStatus)
+                .Map(dest => dest.AdmissionType, src => src.AdmissionType)
+                .Map(dest => dest.PreadmitNumber, src => src.PreadmitNumber)
+                .Map(dest => dest.BedType, src => src.BedType)
+                .IgnoreNonMapped(true);
+
+
+
+            TypeAdapterConfig<Physician, (SdocAdapter.PatientVisit PatientVisit, PhysicianType PhysicianType)>.ForType()
+           .Map(dest => dest.PatientVisit.AssigningFacility, src => src.DocAssigningFacility)
+           .Map(dest => dest.PatientVisit.CodeIdentifyingTheCheckDigitSchemeEmployed, src => src.DocCheckDigitScheme)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocAddress1, src => GetAddress(src, PhysicianType.Admitting))
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocAddress1, src => src.DocAddress1)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocAddress2, src => src.DocAddress2)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocAddress2, src => src.DocAddress2)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocCity, src => src.DocCity)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocCity, src => src.DocCity)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocDegree, src => src.DocDegree)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocDegree, src => src.DocDegree)
+           .Map(dest => dest.PatientVisit.PatientConsultingDocDegree, src => src.DocDegree)
+           .Map(dest => dest.PatientVisit.PatientReferringDocDegree, src => src.DocDegree)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocFamilyName, src => src.DocFamilyName)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocFamilyName, src => src.DocFamilyName)
+           .Map(dest => dest.PatientVisit.PatientConsultingDocFamilyName, src => src.DocFamilyName)
+           .Map(dest => dest.PatientVisit.PatientReferringDocFamilyName, src => src.DocFamilyName)
+           .Map(dest => dest.PatientVisit.FirstName, src => src.DocFamilyName)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocFaxNumber, src => src.DocFaxNumber)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocFaxNumber, src => src.DocFaxNumber)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocGivenName, src => GetDocGivenname(src, PhysicianType.Admitting))
+           .Map(dest => dest.PatientVisit.PatientAttendingDocGivenName, src => GetDocGivenname(src, PhysicianType.Attending))
+           .Map(dest => dest.PatientVisit.PatientConsultingDocGivenName, src => src.DocGivenName)
+           .Map(dest => dest.PatientVisit.PatientReferringDocGivenName, src => src.DocGivenName)
+           .Map(dest => dest.PatientVisit.MiddleName, src => src.DocGivenName)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocMiddleName, src => src.DocMiddleName)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocMiddleName, src => src.DocMiddleName)
+           .Map(dest => dest.PatientVisit.PatientConsultingDocMiddleName, src => src.DocMiddleName)
+           .Map(dest => dest.PatientVisit.PatientReferringDocMiddleName, src => src.DocMiddleName)
+           .Map(dest => dest.PatientVisit.LastName, src => src.DocMiddleName)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocNPI, src => src.DocNPI)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocNPI, src => src.DocNPI)
+           .Map(dest => dest.PatientVisit.Department, src => src.DocNameRepresentationCodeAssigningAgencyOrDepartment)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocPhoneNumber, src => src.DocPhoneNumber)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocPhoneNumber, src => src.DocPhoneNumber)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocPhysicianID, src => src.DocPhysicianID)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocPhysicianID, src => src.DocPhysicianID)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocSpecialty, src => src.DocSpecialty)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocSpecialty, src => src.DocSpecialty)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocState, src => src.DocState)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocState, src => src.DocState)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocTaxonomyCode, src => src.DocTaxonomyCode)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocTaxonomyCode, src => src.DocTaxonomyCode)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocZip, src => src.DocTaxonomyCode)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocZip, src => src.DocZip)
+           .Map(dest => dest.PatientVisit.FacilityZip, src => src.DocZip)
+           .Map(dest => dest.PatientVisit.FacilityZip, src => src.DocZip)
+           .Map(dest => dest.PhysicianType, src => src.PhysicianType)
+           .Map(dest => dest.PhysicianType, src => src.PhysicianType)
+           .Map(dest => dest.PatientVisit.Ordinality, src => src.DocOrdinality)
+           .Map(dest => dest.PatientVisit.Order, src => src.DocOrder)
+           .Map(dest => dest.PatientVisit.Order, src => src.DocOrder)
+           .Map(dest => dest.PatientVisit.Order, src => src.DocOrder)
+           .Map(dest => dest.PatientVisit.IDNumber, src => src.DocPhysicianID)
+           .Map(dest => dest.PatientVisit.SourceTable, src => src.DocSourceTable)
+           .Map(dest => dest.PatientVisit.AssigningAuthority, src => src.DocAssigningAuthority)
+           .Map(dest => dest.PatientVisit.NameTypeCode, src => src.DocNameTypeCode)
+           .Map(dest => dest.PatientVisit.IdentifierCheckDigit, src => src.DocIdentifierCheckDigit)
+           .Map(dest => dest.PatientVisit.IdentifierTypeCode, src => src.DocIdentifierTypeCode)
+           .Map(dest => dest.PatientVisit.NameRepresentationCode, src => src.DocNameRepresentationCode)
+           .Map(dest => dest.PatientVisit.EffectiveDate, src => src.DocEffectiveDate)
+           .Map(dest => dest.PatientVisit.ExpirationDate, src => src.DocExpirationDate)
+           .Map(dest => dest.PatientVisit.NameAssemblyOrder, src => src.DocNameAssemblyOrder)
+           .Map(dest => dest.PatientVisit.NameContext, src => src.DocNameContext)
+           .Map(dest => dest.PatientVisit.NameValidityRange, src => src.DocNameValidityRange)
+           .IgnoreNonMapped(true);
+
+
+            config.ForType<Encounter, SdocRoot>()
+                     .Map(dest => dest.PatientVisit, src => src.PatientVisit);
+
+            var sdocRoot = xpmEncounter?.Adapt<SdocRoot>(config);
+
+            var resultDirect = new Dictionary<string, object>
+            {
+                { "SDoc_Root",sdocRoot}
+            };
+
+            var SeriarlizedResult = JsonConvert.SerializeObject(resultDirect, Formatting.Indented);
+
+            return SeriarlizedResult;
+
+        }
+
+            public string GetAddress(Physician src, PhysicianType physicianType)
+            {
+
+                return physicianType switch
+                {
+                    PhysicianType.Admitting => src.DocAddress1,
+                    PhysicianType.Attending => src.DocAddress1,
+                    PhysicianType.Consulting => src.DocAddress1,
+                    PhysicianType.Referring => src.DocAddress1,
+
+                };
+
+            }
+
+            public string GetDocGivenname(Physician src, PhysicianType physicianType)
+            {
+
+                return physicianType switch
+                {
+                    PhysicianType.Admitting => src.DocGivenName,
+                    PhysicianType.Attending => src.DocGivenName
+                };
+
+            }
+
+        
+    }
+}
