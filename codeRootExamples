@@ -13,3 +13,23 @@ else
     // Handle other cases or throw an exception
     throw new InvalidOperationException("Unexpected type for PatientVisit");
 }
+
+
+
+config.ForType<Physician, SdocAdapter.PatientVisit>()
+    .Map(dest => dest.PatientAdmittingDocAddress1, src => Enum.TryParse(src.PhysicianType, out PhysicianType physicianType) && physicianType == PhysicianType.Admitting ? src.DocAddress1 : null)
+    .Map(dest => dest.PatientAdmittingDocAddress2, src => Enum.TryParse(src.PhysicianType, out PhysicianType physicianType) && physicianType == PhysicianType.Admitting ? src.DocAddress2 : null)
+    .Map(dest => dest.PatientAdmittingDocCity, src => Enum.TryParse(src.PhysicianType, out PhysicianType physicianType) && physicianType == PhysicianType.Admitting ? src.DocCity : null)
+    .Map(dest => dest.PatientAdmittingDocDegree, src => Enum.TryParse(src.PhysicianType, out PhysicianType physicianType) && physicianType == PhysicianType.Admitting ? src.DocDegree : null)
+    .Map(dest => dest.PatientAdmittingDocFamilyName, src => Enum.TryParse(src.PhysicianType, out PhysicianType physicianType) && physicianType == PhysicianType.Admitting ? src.DocFamilyName : null)
+    // ... Otras asignaciones para Admitting
+
+    .Map(dest => dest.PatientAttendingDocAddress1, src => Enum.TryParse(src.PhysicianType, out PhysicianType physicianType) && physicianType == PhysicianType.Attending ? src.DocAddress1 : null)
+    .Map(dest => dest.PatientAttendingDocAddress2, src => Enum.TryParse(src.PhysicianType, out PhysicianType physicianType) && physicianType == PhysicianType.Attending ? src.DocAddress2 : null)
+    .Map(dest => dest.PatientAttendingDocCity, src => Enum.TryParse(src.PhysicianType, out PhysicianType physicianType) && physicianType == PhysicianType.Attending ? src.DocCity : null)
+    .Map(dest => dest.PatientAttendingDocDegree, src => Enum.TryParse(src.PhysicianType, out PhysicianType physicianType) && physicianType == PhysicianType.Attending ? src.DocDegree : null)
+    .Map(dest => dest.PatientAttendingDocFamilyName, src => Enum.TryParse(src.PhysicianType, out PhysicianType physicianType) && physicianType == PhysicianType.Attending ? src.DocFamilyName : null)
+    // ... Otras asignaciones para Attending
+
+    // Repite este patrón para otros tipos de médicos
+    .IgnoreNonMapped(true);
