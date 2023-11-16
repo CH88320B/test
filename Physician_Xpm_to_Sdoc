@@ -1,0 +1,62 @@
+Encounter 
+ 
+ "PatientVisit": {
+                "PatientClass": "O",
+                "AssignedLocation": "UPW",
+                "RoomType": null,
+                "BedType": null,
+                "PatientFacility": "",
+                "LocationStatus": null,
+                "Cal_ComprehensiveLocationIdentifier": null,
+                "AdmissionType": "EL",
+                "PreadmitNumber": null,
+                "Physician": [
+                    {
+                        "DocPhysicianID": "MCNKMCIP,NAME",
+                        "DocFamilyName": "MCNKMCIP,NAME",
+                        "DocGivenName": "KATIE",
+                        "PhysicianType": "Attending",
+                      
+                    },
+                    {
+                        "DocPhysicianID": "",
+                        "DocFamilyName": "GAIMAN",
+                        "DocGivenName": "NEILWAYNE",
+                        "PhysicianType": "Admitting",
+                        "ProviderCode": null
+                    },
+                    {
+                        "DocPhysicianID": "",
+                        "DocFamilyName": null,
+                        "DocGivenName": null,
+                        "PhysicianType": "Consulting",
+                        "ProviderCode": null
+                    },
+                    {
+                        "DocPhysicianID": "",
+                        "DocFamilyName": null,
+                        "DocGivenName": null,
+                        "PhysicianType": "Referring",
+                     }
+                ]
+				
+     }
+	 
+	 Sod_root 
+	  "SDoc_Root": {
+	   "PatientVisit": {
+	     "PatientAdmittingDocGivenName": "NEILWAYNE"
+		 "PatientAdmittingDocFamilyName": "GAIMAN",
+            "PatientAdmittingDocFaxNumber": null,
+            "PatientAdmittingDocGivenName": "NEILWAYNE",
+             "PatientAdmittingDocPhoneNumber": null,
+            "PatientAdmittingDocPhysicianID": "",
+            "PatientAttendingDocFamilyName": "MCNKMCIP,NAME",
+            "PatientAttendingDocFaxNumber": null,
+            "PatientAttendingDocGivenName": "KATIE",
+            "PatientAttendingDocPhysicianID": "MCNKMCIP,NAME",
+            "PatientConsultingDocFamilyName": null,
+            "PatientConsultingDocGivenName": null,
+            "PatientConsultingDocIDNumber": null,
+            "PatientConsultingDocMiddleName": null
+         }  
