@@ -1,204 +1,87 @@
---here  Xpm
-"Physician": [
+ 
+entrada
+ 
+ "PatientVisit": {
+                 "Physician": [
                     {
                         "DocPhysicianID": "MCNKMCIP,NAME",
                         "DocFamilyName": "MCNKMCIP,NAME",
                         "DocGivenName": "KATIE",
-                        "DocMiddleName": "MIDDLE",
-                        "DocNameSuffix": null,
-                        "DocPrefix": null,
-                        "DocDegree": "",
-                        "DocSourceTable": "",
-                        "DocAssigningAuthority": "",
-                        "DocNameTypeCode": "",
-                        "DocIdentifierCheckDigit": "",
-                        "DocCheckDigitScheme": "",
-                        "DocIdentifierTypeCode": "",
-                        "DocAssigningFacility": "",
-                        "DocNPI": "",
-                        "DocNameRepresentationCode": "",
-                        "DocNameContext": "",
-                        "DocNameValidityRange": "",
-                        "DocNameAssemblyOrder": "",
-                        "DocEffectiveDate": "",
-                        "DocExpirationDate": "",
-                        "DocProfessionalSuffix": null,
-                        "DocNameRepresentationCodeAssigningAgencyOrDepartment": null,
-                        "DocAddress1": null,
-                        "DocAddress2": null,
-                        "DocCity": null,
-                        "DocState": null,
-                        "DocZip": null,
-                        "DocTaxonomyCode": null,
-                        "DocSpecialty": null,
-                        "DocFaxNumber": null,
-                        "DocPhoneNumber": null,
-                        "DocOrdinality": "0",
-                        "DocPhysicianTypeDescription": "",
-                        "DocOrder": "0",
                         "PhysicianType": "Attending",
-                        "ProviderCode": null
+                      
                     },
                     {
                         "DocPhysicianID": "",
                         "DocFamilyName": "GAIMAN",
                         "DocGivenName": "NEILWAYNE",
-                        "DocMiddleName": "MIDDLE",
-                        "DocNameSuffix": null,
-                        "DocPrefix": null,
-                        "DocDegree": "",
-                        "DocSourceTable": "",
-                        "DocAssigningAuthority": "",
-                        "DocNameTypeCode": "",
-                        "DocIdentifierCheckDigit": "",
-                        "DocCheckDigitScheme": "",
-                        "DocIdentifierTypeCode": "",
-                        "DocAssigningFacility": "",
-                        "DocNPI": "",
-                        "DocNameRepresentationCode": "",
-                        "DocNameContext": "",
-                        "DocNameValidityRange": "",
-                        "DocNameAssemblyOrder": "",
-                        "DocEffectiveDate": "",
-                        "DocExpirationDate": "",
-                        "DocProfessionalSuffix": null,
-                        "DocNameRepresentationCodeAssigningAgencyOrDepartment": null,
-                        "DocAddress1": null,
-                        "DocAddress2": null,
-                        "DocCity": null,
-                        "DocState": null,
-                        "DocZip": null,
-                        "DocTaxonomyCode": null,
-                        "DocSpecialty": null,
-                        "DocFaxNumber": null,
-                        "DocPhoneNumber": null,
-                        "DocOrdinality": "0",
-                        "DocPhysicianTypeDescription": "",
-                        "DocOrder": "0",
                         "PhysicianType": "Admitting",
                         "ProviderCode": null
-                    },
-                    {
-                        "DocPhysicianID": "",
-                        "DocFamilyName": null,
-                        "DocGivenName": null,
-                        "DocMiddleName": null,
-                        "DocNameSuffix": null,
-                        "DocPrefix": null,
-                        "DocDegree": null,
-                        "DocSourceTable": "",
-                        "DocAssigningAuthority": "",
-                        "DocNameTypeCode": "",
-                        "DocIdentifierCheckDigit": "",
-                        "DocCheckDigitScheme": "",
-                        "DocIdentifierTypeCode": "",
-                        "DocAssigningFacility": "",
-                        "DocNPI": null,
-                        "DocNameRepresentationCode": "",
-                        "DocNameContext": "",
-                        "DocNameValidityRange": "",
-                        "DocNameAssemblyOrder": "",
-                        "DocEffectiveDate": "",
-                        "DocExpirationDate": "",
-                        "DocProfessionalSuffix": null,
-                        "DocNameRepresentationCodeAssigningAgencyOrDepartment": null,
-                        "DocAddress1": null,
-                        "DocAddress2": null,
-                        "DocCity": null,
-                        "DocState": null,
-                        "DocZip": null,
-                        "DocTaxonomyCode": null,
-                        "DocSpecialty": null,
-                        "DocFaxNumber": null,
-                        "DocPhoneNumber": null,
-                        "DocOrdinality": "0",
-                        "DocPhysicianTypeDescription": "",
-                        "DocOrder": "0",
-                        "PhysicianType": "Consulting",
-                        "ProviderCode": null
-                    },
-                    {
-                        "DocPhysicianID": "",
-                        "DocFamilyName": null,
-                        "DocGivenName": null,
-                        "DocMiddleName": null,
-                        "DocNameSuffix": null,
-                        "DocPrefix": null,
-                        "DocDegree": null,
-                        "DocSourceTable": "",
-                        "DocAssigningAuthority": "",
-                        "DocNameTypeCode": "",
-                        "DocIdentifierCheckDigit": "",
-                        "DocCheckDigitScheme": "",
-                        "DocIdentifierTypeCode": "",
-                        "DocAssigningFacility": "",
-                        "DocNPI": null,
-                        "DocNameRepresentationCode": "",
-                        "DocNameContext": "",
-                        "DocNameValidityRange": "",
-                        "DocNameAssemblyOrder": "",
-                        "DocEffectiveDate": "",
-                        "DocExpirationDate": "",
-                        "DocProfessionalSuffix": null,
-                        "DocNameRepresentationCodeAssigningAgencyOrDepartment": null,
-                        "DocAddress1": null,
-                        "DocAddress2": null,
-                        "DocCity": null,
-                        "DocState": null,
-                        "DocZip": null,
-                        "DocTaxonomyCode": null,
-                        "DocSpecialty": null,
-                        "DocFaxNumber": null,
-                        "DocPhoneNumber": null,
-                        "DocOrdinality": "0",
-                        "DocPhysicianTypeDescription": "",
-                        "DocOrder": "0",
-                        "PhysicianType": "Referring",
-                        "ProviderCode": null
                     }
+                    
+                ]
+				
+     }
 
---Here  Sdoc
+salida 	 
+ 
+	  "SDoc_Root": {
+	   "PatientVisit": {
+	    "PatienttAdmittingDocPhysicianID": "MCNKMCIP,NAME",
+	     "PatientAdmittingDocGivenName": "NEILWAYNE"
+		 "PatientAdmittingDocFamilyName": "GAIMAN",
+         "PatientAttendingDocFamilyName": "MCNKMCIP,NAME",
+         "PatientAttendingDocGivenName": "KATIE",
+         "PatientAttendingDocPhysicianID": "MCNKMCIP,NAME",
+        
+         }  
+		 
+		 
+		 
+		 
+public class XpmPatientVisit
+ {
+    
+     public List<Physician>? Physician { get; set; }
+}
 
-    "PatientAdmittingDoc": null,
-            "PatientAdmittingDocAddress1": null,
-            "PatientAdmittingDocAddress2": null,
-            "PatientAdmittingDocCity": null,
-            "PatientAdmittingDocDegree": "",
-            "PatientAdmittingDocFamilyName": "GAIMAN",
-            "PatientAdmittingDocFaxNumber": null,
-            "PatientAdmittingDocGivenName": "NEILWAYNE",
-            "PatientAdmittingDocMiddleName": "MIDDLE",
-            "PatientAdmittingDocNPI": "",
-            "PatientAdmittingDocPhoneNumber": null,
-            "PatientAdmittingDocPhysicianID": "",
-            "PatientAdmittingDocSpecialty": null,
-            "PatientAdmittingDocState": null,
-            "PatientAdmittingDocTaxonomyCode": null,
-            "PatientAdmittingDocZip": null,
-            "PatientAttendingDoc": null,
-            "PatientAttendingDocAddress1": null,
-            "PatientAttendingDocAddress2": null,
-            "PatientAttendingDocCity": null,
-            "PatientAttendingDocDegree": "",
-            "PatientAttendingDocFamilyName": "MCNKMCIP,NAME",
-            "PatientAttendingDocFaxNumber": null,
-            "PatientAttendingDocGivenName": "KATIE",
-            "PatientAttendingDocMiddleName": "MIDDLE",
-            "PatientAttendingDocNPI": "",
-            "PatientAttendingDocPhoneNumber": null,
-            "PatientAttendingDocPhysicianID": "MCNKMCIP,NAME",
-            "PatientAttendingDocSpecialty": null,
-            "PatientAttendingDocState": null,
-            "PatientAttendingDocTaxonomyCode": null,
-            "PatientAttendingDocZip": null,
-             "PatientConsultingDocDegree": null,
-            "PatientConsultingDocFamilyName": null,
-            "PatientConsultingDocGivenName": null,
-            "PatientConsultingDocIDNumber": null,
-            "PatientConsultingDocMiddleName": null,
-            "PatientReferringDocDegree": null,
-            "PatientReferringDocFamilyName": null,
-            "PatientReferringDocGivenName": null,
-            "PatientReferringDocIDNumber": null,
-            "PatientReferringDocMiddleName": null,
-            "Physicians": null,
+
+public Physician {
+ public class Physician
+ {
+
+     public string? DocPhysicianID { get; set; }
+
+     public string? DocFamilyName { get; set; }
+
+     public string? DocGivenName { get; set; }
+   
+     public string? PhysicianType { get; set; }
+
+
+
+}
+
+
+
+public class PatientVisit {
+public string PatientAdmittingDocFamilyName { get; set; }
+public string PatientAdmittingDocGivenName { get; set; }
+public string PatientAdmittingDocPhysicianID { get; set; }
+public string PatientAttendingDocFamilyName { get; set; }
+public string PatientAttendingDocGivenName { get; set; }
+public string PatientAttendingDocPhysicianID { get; set; }
+}
+
+
+
+            TypeAdapterConfig<Physician, (PatientVisit PatientVisit, PhysicianType PhysicianType)>.ForType()
+			
+		   .Map(dest => dest.PatientVisit.PatientAdmittingDocGivenName, src => src.PhysicianType == "Admitting" ? src.DocPhysicianID : null)
+           .Map(dest => dest.PatientVisit.PatientAdmittingDocGivenName, src => src.PhysicianType == "Admitting" ? src.DocGivenName : null)
+		   .Map(dest => dest.PatientVisit.PatientAdmittingDocFamilyName, src => src.PhysicianType == "Admitting" ? src.DocFamilyName : null)
+		   
+		   .Map(dest => dest.PatientVisit.PatientAttendingDocGivenName, src => src.PhysicianType == "Attending" ? src.DocPhysicianID : null)
+           .Map(dest => dest.PatientVisit.PatientAttendingDocGivenName, src => src.PhysicianType == "Attending" ? src.DocGivenName : null)
+		   .Map(dest => dest.PatientVisit.PatientAttendingDocFamilyName, src => src.PhysicianType == "Attending" ? src.DocFamilyName : null)
+		   
+		
