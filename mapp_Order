@@ -1,0 +1,14 @@
+TypeAdapterConfig<Encounter, SdocadapterNote>.ForType()
+            .Map(dest => dest.Comment, src => string.Join(Environment.NewLine, src.Order.Notes.Select(note => note.NoteText)));
+
+        var encounter = new Encounter
+        {
+            Order = new XpmOrder
+            {
+                Notes = new List<XpmNote>
+                {
+                    new XpmNote { NoteText = "Note 1" },
+                    new XpmNote { NoteText = "Note 2" }
+                }
+            }
+        };
