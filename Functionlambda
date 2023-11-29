@@ -1,14 +1,22 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Net.Mime;
+using System.Net.NetworkInformation;
+using System.Reflection.PortableExecutable;
+using System.Xml;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
-using EH.Shared.XpmToSdocConverter;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+
 
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
-namespace EH.Shared.XpmToSdocConverterLambda;
+namespace EH.Shared.SdocJsonToXpmConverterLambda;
 
 public class Function
 {
@@ -16,27 +24,93 @@ public class Function
     /// <summary>
     /// A simple function that takes a string and does a ToUpper
     /// </summary>
-    /// <param name="XpmJson"></param>
+    /// <param name="sdocJson"></param>
     /// <param name="context"></param>
     /// <returns></returns>
     /// 
 
-    public APIGatewayProxyResponse FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
+      public APIGatewayProxyResponse FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
     {
-        var XpmJson = request.Body;
-        var serializedJsonSdoc= string.Empty;
+        var sdocxpm = request.Body;
+        var ooheabders = request.Headers;
+        var ContentType = string.Empty;
+        bool IsdocJson = Is_JSON(sdocxpm);
+        bool IsdocXml = Is_XML(sdocxpm);
 
-        LambdaLogger.Log($"Beginning - XpmToJsonSdoc Mapper");
+        LambdaLogger.Log($"is - before");
 
-        var JsonDoc = RootMapper.Map(XpmJson);
+        if (Is_JSON(sdocxpm))
+        {
 
-        serializedJsonSdoc = JsonConvert.SerializeObject(JsonDoc);
-        LambdaLogger.Log( $"Complete - XpmToJsonSdoc Mapper" );
+            Console.WriteLine("IS Json");
+        }  
+        else if(Is_XML(sdocxpm)){
+            Console.WriteLine("IS XML");
+                    }
+        
+        if (request.Headers != null && request.Headers.ContainsKey("Content-Type"))
+        {
+            string ContenType = request.Headers["Content-Type"];
+
+            LambdaLogger.Log($"is - Test");
+
+            if (ContenType.Contains("application/json"))
+            {
+                LambdaLogger.Log($"is - SDocJsonToXpm Mapper");
+            }
+  
+        }
+        var serializedXpm = string.Empty;
+
+
+        static bool Is_JSON(string sdocxpm) {
+            try
+            {
+                Newtonsoft.Json.JsonConvert.DeserializeObject(sdocxpm);
+                 return true;
+            }
+            catch(Newtonsoft.Json.JsonReaderException) {
+                return false;
+            }
+       
+        }
+
+        static bool Is_XML(string sdocxpm)
+        {
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(sdocxpm);
+               
+                return true;
+            }
+            catch (XmlException)
+            {
+                return false;
+            }
+
+        }
+
+        if (IsdocJson == true)
+        {
+            ContentType = "application/json";
+        }
+        else {
+            ContentType = "application/xml";
+        }
+
+        LambdaLogger.Log($"Beginning - SDocJsonToXpm Mapper");
+        // LambdaLogger.Log(request.Headers["Content-Type"]);
+
+       var xpm = RootMapper.Map(sdocxpm,ContentType);
+
+        serializedXpm = JsonConvert.SerializeObject( xpm );
+        LambdaLogger.Log( $"Complete - SDocJsonToXpm Mapper" );
 
         return new APIGatewayProxyResponse
         {
             StatusCode = ( int )HttpStatusCode.OK,
-            Body = serializedJsonSdoc,
+            Body = serializedXpm,
             Headers = new Dictionary<string, string>
             {
                 { "Content-Type", "application/json" },
