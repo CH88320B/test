@@ -1,0 +1,11 @@
+
+            var sdocRoots = xpmEncounter.Adapt<SdocRoot>(config);
+
+            var resultDirect = new Dictionary<string, object>
+            {
+                { "SDoc_Root",sdocRoots}
+            };
+
+            var SeriarlizedResult = JsonConvert.SerializeObject(resultDirect);
+
+            return SeriarlizedResult;
