@@ -1,0 +1,30 @@
+System.Exception: Error deserializing the input JSON to type APIGatewayProxyRequest
+   at Amazon.Lambda.TestTool.Runtime.LambdaExecutor.BuildParameters(ExecutionRequest request, ILambdaContext context) in C:\build\Tools\LambdaTestTool\src\Amazon.Lambda.TestTool\Runtime\LambdaExecutor.cs:line 258
+   at Amazon.Lambda.TestTool.Runtime.LambdaExecutor.ExecuteAsync(ExecutionRequest request) in C:\build\Tools\LambdaTestTool\src\Amazon.Lambda.TestTool\Runtime\LambdaExecutor.cs:line 68
+---------------- Inner 1 Exception ------------
+System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Span`1& arguments, Signature sig, Boolean constructor, Boolean wrapExceptions)
+   at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+   at Amazon.Lambda.TestTool.Runtime.LambdaExecutor.BuildParameters(ExecutionRequest request, ILambdaContext context) in C:\build\Tools\LambdaTestTool\src\Amazon.Lambda.TestTool\Runtime\LambdaExecutor.cs:line 228
+---------------- Inner 2 Exception ------------
+Amazon.Lambda.Serialization.SystemTextJson.JsonSerializerException: Error converting the Lambda event JSON payload to type Amazon.Lambda.APIGatewayEvents.APIGatewayProxyRequest: '&' is an invalid escapable character within a JSON string. The string should be correctly escaped. Path: $.body | LineNumber: 1 | BytePositionInLine: 199.
+   at Amazon.Lambda.Serialization.SystemTextJson.AbstractLambdaJsonSerializer.Deserialize[T](Stream requestStream)
+---------------- Inner 3 Exception ------------
+System.Text.Json.JsonException: '&' is an invalid escapable character within a JSON string. The string should be correctly escaped. Path: $.body | LineNumber: 1 | BytePositionInLine: 199.
+   at System.Text.Json.ThrowHelper.ReThrowWithPath(ReadStack& state, JsonReaderException ex)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
+   at System.Text.Json.JsonSerializer.ReadFromSpan[TValue](ReadOnlySpan`1 utf8Json, JsonTypeInfo jsonTypeInfo, Nullable`1 actualByteCount)
+   at System.Text.Json.JsonSerializer.Deserialize[TValue](ReadOnlySpan`1 utf8Json, JsonSerializerOptions options)
+   at Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer.InternalDeserialize[T](Byte[] utf8Json)
+   at Amazon.Lambda.Serialization.SystemTextJson.AbstractLambdaJsonSerializer.Deserialize[T](Stream requestStream)
+---------------- Inner 4 Exception ------------
+System.Text.Json.JsonReaderException: '&' is an invalid escapable character within a JSON string. The string should be correctly escaped. LineNumber: 1 | BytePositionInLine: 199.
+   at System.Text.Json.ThrowHelper.ThrowJsonReaderException(Utf8JsonReader& json, ExceptionResource resource, Byte nextByte, ReadOnlySpan`1 bytes)
+   at System.Text.Json.Utf8JsonReader.ConsumeStringAndValidate(ReadOnlySpan`1 data, Int32 idx)
+   at System.Text.Json.Utf8JsonReader.ConsumeString()
+   at System.Text.Json.Utf8JsonReader.ConsumeValue(Byte marker)
+   at System.Text.Json.Utf8JsonReader.ReadSingleSegment()
+   at System.Text.Json.Utf8JsonReader.Read()
+   at System.Text.Json.Serialization.Converters.ObjectDefaultConverter`1.OnTryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value)
+   at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, JsonSerializerOptions options, ReadStack& state)
