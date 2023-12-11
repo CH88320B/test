@@ -1,18 +1,65 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Mime;
+using System.Net.NetworkInformation;
+using System.Reflection.PortableExecutable;
+using System.Xml;
+using Amazon.Lambda.APIGatewayEvents;
+using Amazon.Lambda.Core;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using EH.Shared.SdocJsonToXpmConverter.Mapping.Configs;
+using EH.Shared.SdocJsonAdapter;
+using Mapster;
+using Mapster.Adapters;
+using System.Linq.Expressions;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
+
+
+
+
+// Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
+[assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
+
+namespace EH.Shared.SdocJsonToXpmConverterLambda;
+
+public class Function
+{
+
+    /// <summary>
+    /// A simple function that takes a string and does a ToUpper
+    /// </summary>
+    /// <param name="sdocJson"></param>
+    /// <param name="context"></param>
+    /// <returns></returns>
+    /// 
+
       public APIGatewayProxyResponse FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
     {
         var sdocxpm = request.Body;
         var ooheabders = request.Headers;
         var ContentType = string.Empty;
         var serializedXpm = string.Empty;
-        bool isEncounter;
-        bool isSDoc_Root;
+       // var serializedXpm = string.Empty;
+
+        bool isEncounter = false;
+        bool isSDoc_Root = false;
 
         if (Is_JSON(sdocxpm))
         {
 
-             var json = JObject.Parse(sdocxpm);
-             isEncounter = json.ContainsKey("Encounter");
-             isSDoc_Root = json.ContainsKey("SDoc_Root");
+            var json = JObject.Parse(sdocxpm);
+            isEncounter = json.ContainsKey("Encounter");
+            isSDoc_Root = json.ContainsKey("SDoc_Root");
+        }
+        else if (Is_XML(sdocxpm)) {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(sdocxpm);
+            isEncounter = xmlDoc.SelectSingleNode( "//Encounter") != null;
+            isSDoc_Root = xmlDoc.SelectSingleNode("//SDoc_Root") != null;
+
         }
 
         LambdaLogger.Log($"is - before");
@@ -21,6 +68,7 @@
         {
             bool IsdocJson = Is_JSON(sdocxpm);
             bool IsdocXml = Is_XML(sdocxpm);
+
             if (Is_JSON(sdocxpm))
             {
 
@@ -44,10 +92,6 @@
 
             }
 
-
-
-           
-
             if (IsdocJson == true)
             {
                 ContentType = "application/json";
@@ -67,56 +111,105 @@
         else if(isEncounter)
             {
             LambdaLogger.Log($"Beginning - Encounter Mapper");
+            try
+            {    
+                var intermidieclass = JsonConvert.DeserializeObject<XpmRoot>(sdocxpm);
+                var rootClass = intermidieclass?.Adapt<XpmRoot>();
 
-            var intermidieclass = JsonConvert.DeserializeObject<XpmRoot>(sdocxpm);
-            var rootClass = intermidieclass.Adapt<XpmRoot>();
+                var fisrtencounter = rootClass?.Encounter[0];
+                var mapperSdoc = new SdocMappingConfig();
+                var sdoRoot = mapperSdoc.MapXpmtoSdoc(fisrtencounter);
+                serializedXpm = JsonConvert.SerializeObject(sdoRoot);
+            }
+            catch (Exception ex)
+            {
 
-             var fisrtencounter = rootClass.Encounter[0];
-            var mapperSdoc = new SdocMappingConfig();
-            var sdoRoot = mapperSdoc.MapXpmtoSdoc(fisrtencounter);
-            serializedXpm = JsonConvert.SerializeObject(sdoRoot);
+                Console.Error.WriteLine($"Error:{ex.Message}, trace={ex.StackTrace}");
+
+                 var errorObject = new {
+                 error = $"Errors:{ex.Message}",
+                trace =ex.StackTrace,
+                //lineNumber = ex.LineNumber,
+                // lineposition = ex.LinePosition
+
+                //
+                };
+                
+                 serializedXpm = JsonConvert.SerializeObject(errorObject);
+
+                return new APIGatewayProxyResponse
+                {
+                    StatusCode =400,
+                    Body = serializedXpm,
+                      Headers = new Dictionary<string, string>
+                {
+                  { "Content-Type", "application/json" },
+                  { "Access-Control-Allow-Origin", "*" }
+                }
+                };
+              
+
+
+            }
+
+
+
+
+
+
+
         }
+          
         LambdaLogger.Log( $"Complete - SDocJsonToXpm Mapper" );
 
         static bool Is_JSON(string sdocxpm)
         {
-            try
-            {
+           // try
+            //{
                 Newtonsoft.Json.JsonConvert.DeserializeObject(sdocxpm);
                 return true;
-            }
+            /*}
             catch (Newtonsoft.Json.JsonReaderException)
             {
                 return false;
-            }
+            }*/
 
         }
 
         static bool Is_XML(string sdocxpm)
         {
-            try
-            {
+           // try
+            //{
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(sdocxpm);
 
                 return true;
-            }
-            catch (XmlException)
-            {
-                return false;
-            }
+            //}
+           // catch (XmlException)
+           // //{
+               // return false;
+           // }
 
         }
+       
 
-        return new APIGatewayProxyResponse
-        {
-            StatusCode = ( int )HttpStatusCode.OK,
-            Body = serializedXpm,
-            Headers = new Dictionary<string, string>
+       // try
+        //{
+
+            return new APIGatewayProxyResponse
+            {
+                StatusCode = (int)HttpStatusCode.OK,
+                Body = serializedXpm,
+                Headers = new Dictionary<string, string>
             {
                 { "Content-Type", "application/json" },
                 { "Access-Control-Allow-Origin", "*" }
             }
-        };
+            };
+
+
+
+
     }
+
 }
