@@ -151,3 +151,45 @@ namespace EH.Shared.SdocJsonToXpmConverterLambda
         }
     }
 }
+
+
+
+
+
+catch (JsonReaderException ex)
+{
+    Console.Error.WriteLine($"Error de deserialización JSON: {ex.Message}");
+    Console.Error.WriteLine($"Línea: {ex.LineNumber}, Posición: {ex.LinePosition}");
+
+    var errorObject = new
+    {
+        error = $"Error de deserialización JSON: {ex.Message}",
+        trace = ex.StackTrace,
+        lineNumber = ex.LineNumber,
+        linePosition = ex.LinePosition,
+        jsonSnippet = GetJsonSnippet(sdocxpm, ex.LineNumber, ex.LinePosition)
+    };
+
+    serializedXpm = JsonConvert.SerializeObject(errorObject);
+
+    return new APIGatewayProxyResponse
+    {
+        StatusCode = 400,
+        Body = serializedXpm,
+        Headers = new Dictionary<string, string>
+        {
+            { "Content-Type", "application/json" },
+            { "Access-Control-Allow-Origin", "*" }
+        }
+    };
+}
+
+// Función para obtener un fragmento de JSON alrededor de la línea y posición especificadas
+private static string GetJsonSnippet(string json, int lineNumber, int linePosition)
+{
+    const int snippetLength = 50; // Ajusta la longitud según tus necesidades
+    int start = Math.Max(0, linePosition - snippetLength / 2);
+    int end = Math.Min(json.Length, linePosition + snippetLength / 2);
+
+    return json.Substring(start, end - start);
+}
