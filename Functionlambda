@@ -1,215 +1,153 @@
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Mime;
-using System.Net.NetworkInformation;
-using System.Reflection.PortableExecutable;
-using System.Xml;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using EH.Shared.SdocJsonToXpmConverter.Mapping.Configs;
-using EH.Shared.SdocJsonAdapter;
-using Mapster;
-using Mapster.Adapters;
-using System.Linq.Expressions;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
-
-
-
+using System.Xml;
 
 // Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
 [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
-namespace EH.Shared.SdocJsonToXpmConverterLambda;
-
-public class Function
+namespace EH.Shared.SdocJsonToXpmConverterLambda
 {
-
-    /// <summary>
-    /// A simple function that takes a string and does a ToUpper
-    /// </summary>
-    /// <param name="sdocJson"></param>
-    /// <param name="context"></param>
-    /// <returns></returns>
-    /// 
-
-      public APIGatewayProxyResponse FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
+    public class Function
     {
-        var sdocxpm = request.Body;
-        var ooheabders = request.Headers;
-        var ContentType = string.Empty;
-        var serializedXpm = string.Empty;
-       // var serializedXpm = string.Empty;
-
-        bool isEncounter = false;
-        bool isSDoc_Root = false;
-
-        if (Is_JSON(sdocxpm))
+        public APIGatewayProxyResponse FunctionHandler(APIGatewayProxyRequest request, ILambdaContext context)
         {
+            var sdocxpm = request.Body;
+            var serializedXpm = string.Empty;
 
-            var json = JObject.Parse(sdocxpm);
-            isEncounter = json.ContainsKey("Encounter");
-            isSDoc_Root = json.ContainsKey("SDoc_Root");
-        }
-        else if (Is_XML(sdocxpm)) {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(sdocxpm);
-            isEncounter = xmlDoc.SelectSingleNode( "//Encounter") != null;
-            isSDoc_Root = xmlDoc.SelectSingleNode("//SDoc_Root") != null;
-
-        }
-
-        LambdaLogger.Log($"is - before");
-
-        if (isSDoc_Root)
-        {
-            bool IsdocJson = Is_JSON(sdocxpm);
-            bool IsdocXml = Is_XML(sdocxpm);
+            bool isEncounter = false;
+            bool isSDoc_Root = false;
 
             if (Is_JSON(sdocxpm))
             {
-
-                Console.WriteLine("IS Json");
+                var json = JObject.Parse(sdocxpm);
+                isEncounter = json.ContainsKey("Encounter");
+                isSDoc_Root = json.ContainsKey("SDoc_Root");
             }
             else if (Is_XML(sdocxpm))
             {
-                Console.WriteLine("IS XML");
-            }
-
-            if (request.Headers != null && request.Headers.ContainsKey("Content-Type"))
-            {
-                string ContenType = request.Headers["Content-Type"];
-
-                LambdaLogger.Log($"is - Test");
-
-                if (ContenType.Contains("application/json"))
-                {
-                    LambdaLogger.Log($"is - SDocJsonToXpm Mapper");
-                }
-
-            }
-
-            if (IsdocJson == true)
-            {
-                ContentType = "application/json";
-            }
-            else
-            {
-                ContentType = "application/xml";
-            }
-
-            LambdaLogger.Log($"Beginning - SDocJsonToXpm Mapper");
-            // LambdaLogger.Log(request.Headers["Content-Type"]);
-
-            var xpm = RootMapper.Map(sdocxpm, ContentType);
-
-            serializedXpm = JsonConvert.SerializeObject(xpm);
-        }
-        else if(isEncounter)
-            {
-            LambdaLogger.Log($"Beginning - Encounter Mapper");
-            try
-            {    
-                var intermidieclass = JsonConvert.DeserializeObject<XpmRoot>(sdocxpm);
-                var rootClass = intermidieclass?.Adapt<XpmRoot>();
-
-                var fisrtencounter = rootClass?.Encounter[0];
-                var mapperSdoc = new SdocMappingConfig();
-                var sdoRoot = mapperSdoc.MapXpmtoSdoc(fisrtencounter);
-                serializedXpm = JsonConvert.SerializeObject(sdoRoot);
-            }
-            catch (Exception ex)
-            {
-
-                Console.Error.WriteLine($"Error:{ex.Message}, trace={ex.StackTrace}");
-
-                 var errorObject = new {
-                 error = $"Errors:{ex.Message}",
-                trace =ex.StackTrace,
-                //lineNumber = ex.LineNumber,
-                // lineposition = ex.LinePosition
-
-                //
-                };
-                
-                 serializedXpm = JsonConvert.SerializeObject(errorObject);
-
-                return new APIGatewayProxyResponse
-                {
-                    StatusCode =400,
-                    Body = serializedXpm,
-                      Headers = new Dictionary<string, string>
-                {
-                  { "Content-Type", "application/json" },
-                  { "Access-Control-Allow-Origin", "*" }
-                }
-                };
-              
-
-
-            }
-
-
-
-
-
-
-
-        }
-          
-        LambdaLogger.Log( $"Complete - SDocJsonToXpm Mapper" );
-
-        static bool Is_JSON(string sdocxpm)
-        {
-           // try
-            //{
-                Newtonsoft.Json.JsonConvert.DeserializeObject(sdocxpm);
-                return true;
-            /*}
-            catch (Newtonsoft.Json.JsonReaderException)
-            {
-                return false;
-            }*/
-
-        }
-
-        static bool Is_XML(string sdocxpm)
-        {
-           // try
-            //{
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.LoadXml(sdocxpm);
+                isEncounter = xmlDoc.SelectSingleNode("//Encounter") != null;
+                isSDoc_Root = xmlDoc.SelectSingleNode("//SDoc_Root") != null;
+            }
 
-                return true;
-            //}
-           // catch (XmlException)
-           // //{
-               // return false;
-           // }
+            LambdaLogger.Log("is - before");
 
-        }
-       
+            if (isSDoc_Root)
+            {
+                bool IsdocJson = Is_JSON(sdocxpm);
+                bool IsdocXml = Is_XML(sdocxpm);
 
-       // try
-        //{
+                if (Is_JSON(sdocxpm))
+                {
+                    Console.WriteLine("IS Json");
+                }
+                else if (Is_XML(sdocxpm))
+                {
+                    Console.WriteLine("IS XML");
+                }
+
+                if (request.Headers != null && request.Headers.TryGetValue("Content-Type", out var contentType))
+                {
+                    LambdaLogger.Log("is - Test");
+
+                    if (string.Equals(contentType, "application/json", StringComparison.OrdinalIgnoreCase))
+                    {
+                        LambdaLogger.Log("is - SDocJsonToXpm Mapper");
+                    }
+                }
+
+                if (IsdocJson == true)
+                {
+                    serializedXpm = JsonConvert.SerializeObject(RootMapper.Map(sdocxpm, "application/json"));
+                }
+                else
+                {
+                    serializedXpm = JsonConvert.SerializeObject(RootMapper.Map(sdocxpm, "application/xml"));
+                }
+
+                LambdaLogger.Log("Complete - SDocJsonToXpm Mapper");
+            }
+            else if (isEncounter)
+            {
+                LambdaLogger.Log("Beginning - Encounter Mapper");
+                try
+                {
+                    var intermidieclass = JsonConvert.DeserializeObject<XpmRoot>(sdocxpm);
+                    var rootClass = intermidieclass?.Adapt<XpmRoot>();
+
+                    var fisrtencounter = rootClass?.Encounter[0];
+                    var mapperSdoc = new SdocMappingConfig();
+                    var sdoRoot = mapperSdoc.MapXpmtoSdoc(fisrtencounter);
+                    serializedXpm = JsonConvert.SerializeObject(sdoRoot);
+                }
+                catch (Exception ex)
+                {
+                    context.Logger.LogLine($"Error: {ex.Message}, StackTrace: {ex.StackTrace}");
+
+                    var errorObject = new
+                    {
+                        error = $"Errors:{ex.Message}",
+                        trace = ex.StackTrace
+                    };
+
+                    serializedXpm = JsonConvert.SerializeObject(errorObject);
+
+                    return new APIGatewayProxyResponse
+                    {
+                        StatusCode = 400,
+                        Body = serializedXpm,
+                        Headers = new Dictionary<string, string>
+                        {
+                            { "Content-Type", "application/json" },
+                            { "Access-Control-Allow-Origin", "*" }
+                        }
+                    };
+                }
+            }
 
             return new APIGatewayProxyResponse
             {
                 StatusCode = (int)HttpStatusCode.OK,
                 Body = serializedXpm,
                 Headers = new Dictionary<string, string>
-            {
-                { "Content-Type", "application/json" },
-                { "Access-Control-Allow-Origin", "*" }
-            }
+                {
+                    { "Content-Type", "application/json" },
+                    { "Access-Control-Allow-Origin", "*" }
+                }
             };
+        }
 
+        static bool Is_JSON(string sdocxpm)
+        {
+            try
+            {
+                Newtonsoft.Json.JsonConvert.DeserializeObject(sdocxpm);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
-
-
+        static bool Is_XML(string sdocxpm)
+        {
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(sdocxpm);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
     }
-
 }
