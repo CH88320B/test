@@ -12,3 +12,14 @@ private static FaxDocument MapFaxDocuments(JToken? objectToken)
 
     return objectToken.ToObject<FaxDocument>();
 }
+
+
+private static T MapClass<T>(JToken? objectToken, Func<T> handleNullOrEmpty)
+{
+    if (objectToken == null || (objectToken.Type == JTokenType.Array && !objectToken.HasValues))
+    {
+        return handleNullOrEmpty();
+    }
+
+    return objectToken.ToObject<T>();
+}
