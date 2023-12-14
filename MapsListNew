@@ -1,0 +1,14 @@
+private static FaxDocument MapFaxDocuments(JToken? objectToken)
+{
+    if (objectToken == null)
+    {
+        return null; // or create an instance of FaxDocument as needed
+    }
+
+    if (objectToken.Type == JTokenType.Array && !objectToken.HasValues)
+    {
+        return null; // or create an instance of FaxDocument as needed
+    }
+
+    return objectToken.ToObject<FaxDocument>();
+}
