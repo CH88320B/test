@@ -23,3 +23,11 @@ private static T MapClass<T>(JToken? objectToken, Func<T> handleNullOrEmpty)
 
     return objectToken.ToObject<T>();
 }
+
+
+private static List<T> MapList<T>(JToken? objectToken)
+{
+    if (objectToken == null) return new List<T>();
+
+    return objectToken.Children().Select(child => MapClass<T>(child)).ToList();
+}
