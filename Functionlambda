@@ -193,3 +193,12 @@ private static string GetJsonSnippet(string json, int lineNumber, int linePositi
 
     return json.Substring(start, end - start);
 }
+
+
+Hi  all, 
+
+At this moment I am attending to some fixes for additional test scenarios of the ECN Team for Sdoc to Xpm. These scenarios are additional, according to the email sent by Bayron previously, the tests were already passed.
+
+I have already completed the fixes to add the Json error details for Sdoc to Xpm in CloudWatch, these will be deployed in Splunk according to tickets requested from the AWS Team.
+
+I am working on the fixes to add the cloudwatch log of Json errors for XPm to Sdoc.
