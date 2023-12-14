@@ -31,3 +31,5 @@ private static List<T> MapList<T>(JToken? objectToken)
 
     return objectToken.Children().Select(child => MapClass<T>(child)).ToList();
 }
+
+
