@@ -1,706 +1,186 @@
-using EH.Shared.SdocJsonAdapter;
-using EH.Shared.SdocJsonAdapter.Enums;
-using Mapster;
-using System.Globalization;
-using Beneficiary = EH.Shared.SdocJsonAdapter.Beneficiary;
-using Insurance = EH.Shared.SdocJsonAdapter.Insurance;
-using Order = EH.Shared.SdocJsonAdapter.Order;
-using PatientVisit = EH.Shared.SdocJsonAdapter.PatientVisit;
+ public static List<Models.Xpm.Insurance> MapInsurances(Root root)
+ {
+     var insurances = new List<Models.Xpm.Insurance>();
 
-namespace EH.Shared.SdocJsonToXpmConverter.Mapping.Tools
-{
-    public class MappingHelpers
-    {
-        // Helper methods for mapping.
-        public static Models.Xpm.Calculated MapCalculatedForPatientVisit(Root root)
-        {
-            return (root.Insurances.Count > 0 ? root.Insurances.FirstOrDefault() : new Insurance(), root).Adapt<Models.Xpm.Calculated>();
-        }
+     if (root.Insurances.Count <= 0) return insurances;
 
-        public static List<Models.Xpm.Diagnosis> MapDiagnoses(PatientVisit patientVisit)
-        {
-            var diagnoses = new List<Models.Xpm.Diagnosis>
-            {
-                patientVisit.Adapt<Models.Xpm.Diagnosis>()
-            };
+     foreach (var ins in root.Insurances)
+     {
+         var insurance = new Models.Xpm.Insurance
+         {
+             Subscriber = new Models.Xpm.Subscriber
+             {
+                 Address1 = ins.Subscriber?.Address1,
+                 Address2 = ins.Subscriber?.Address2,
+                 City = ins.Subscriber?.City,
+                 ClientRelationshipToPatient = ins.Subscriber?.ClientRelationshipToPatient,
+                 DateOfBirth = ins.Subscriber?.DateOfBirth.ToString(CultureInfo.InvariantCulture),
+                 EmployeeId = ins.Subscriber?.EmployeeID,
+                 EmployerName = ins.Subscriber?.EmployerName,
+                 EmploymentStatus = ins.Subscriber?.EmploymentStatus,
+                 FirstName = ins.Subscriber?.FirstName,
+                 InsuredsPhoneNumberHome = ins.Subscriber?.SubscriberHomePhone,
+                 InsuredsEmployerPhoneNumber = ins.Subscriber?.SubscriberWorkPhone,
+                 GroupEmployerId = ins.Subscriber?.InsuredsGroupEmpID,
+                 GroupEmpName = ins.Subscriber?.InsuredsGroupEmpName,
+                 GuarantorsRelationshipToInsured = ins.Subscriber?.GuarantorsRelationshipToInsured,
+                 HicNumber = ins.Subscriber?.HICNumber,
+                 InsuredIdNumber = ins.Subscriber?.InsuredIDNumber,
+                 LastName = ins.Subscriber?.LastName,
+                 MedicareHealthInsCardNumber = ins.Subscriber?.MedicaidID,
+                 MiddleName = ins.Subscriber?.MiddleName,
+                 NameSuffix = ins.Subscriber?.NameSuffix,
+                 OrganizationName = ins.Subscriber?.InsuredsGroupEmpOrganizationName,
+                 OriginalRelationshipToPatientCode = ins.Subscriber?.OriginalRelationshipToPatientCode,
+                 Sex = ins.Subscriber?.Sex,
+                 Ssn = ins.Subscriber?.SSN,
+                 State = ins.Subscriber?.State,
+                 SubscriberId = ins.Subscriber?.SubscriberID,
+                 Zip = ins.Subscriber?.Zip,
 
-            return diagnoses;
-        }
+             },
+             AccidentDate = ins?.AccidentDate.ToString(CultureInfo.InvariantCulture),
+             AssignmentOfBenefits = ins?.AssignmentOfBenefits,
+             BadPlanCodeIncorrectPlanCode = ins?.BadPlanCodeIncorrectPlanCode,
+             BadPlanCodeMessage = ins?.BadPlanCodeMessage,
+             BadPlanCodeRecommendedPlanCode = ins?.BadPlanCodeRecommendedPlanCode,
+             BillingStatus = ins?.BillingStatus,
+             Branch = ins?.Branch,
+             BypassPayerCodeMapping = ins?.BypassPayerCodeMapping.ToString(CultureInfo.InvariantCulture),
+             CardControlNumber = ins?.CardControlNumber,
+             CardNumber = ins?.CardNumber,
+             CDProcId = ins?.CDProcID.ToString(CultureInfo.InvariantCulture),
+             CDReqId = ins?.CDReqID.ToString(CultureInfo.InvariantCulture),
+             CertificationBeginDate = ins?.CertificationBeginDate.ToString(CultureInfo.InvariantCulture),
+             CertificationEndDate = ins?.CertificationEndDate.ToString(CultureInfo.InvariantCulture),
+             CertificationNumber = ins?.InsurancePrimaryAuthorization,
+             ChainedBatchRecordId = ins?.ChainedBatchRecordID,
+             ClientPayerMnemonic = ins?.ClientPayerMnemonic,
+             CompanyPlanCode = ins?.CompanyPlanCode,
+             CoordinationOfBenefits = ins?.CoordinationOfBenefits,
+             CoordOfBenPriority = ins?.CoordOfBenPriority,
+             DateRun = ins?.DateRun.ToString(CultureInfo.InvariantCulture),
+             DisplayWorkcenter = ins?.DisplayWorkcenter,
+             DLPVId = ins?.DLPVID.ToString(CultureInfo.InvariantCulture),
+             DSId = ins?.DSID.ToString(CultureInfo.InvariantCulture),
+             EffectiveDate = ins?.EffectiveDate.ToString(CultureInfo.InvariantCulture),
+             FacilityNetworkIdentificationNumber = ins?.FacilityNetworkIdentificationNumber,
+             GenericResponseTypeDescription = ins?.GenericResponseTypeDescription,
+             GenericResponseTypeId = ins?.GenericResponseTypeID,
+             GHPCoverageStatus = root?.MSP.ESRDs.GHPCoverageStatus,
+             GHPInsuranceAddressAddressLine1 = ins?.InsuranceCompanyAddress_StreetAddress,
+             GHPInsuranceAddressAddressLine2 = ins?.InsuranceCompanyAddress_OtherDesignation,
+             GHPInsuranceAddressCity = ins?.InsuranceCompanyAddress_City,
+             GHPInsuranceAddressState = ins?.InsuranceCompanyAddress_State,
+             GHPInsuranceGroupNumber = root.MSP?.ESRDs?.GHPInsuranceGroupNumber,
+             GHPInsuranceName = root.MSP?.ESRDs?.GHPInsuranceName,
+             GHPInsurancePhoneNumber = root.MSP?.ESRDs?.GHPInsurancePhoneNumber,
+             GHPInsurancePolicyHolderNameFirstName = root.MSP?.ESRDs?.GHPInsurancePolicyHolderName_FirstName,
+             GHPInsurancePolicyHolderNameLastName = root.MSP?.ESRDs?.GHPInsurancePolicyHolderName_LastName,
+             GHPInsurancePolicyHolderNameMiddleInitial = root.MSP?.ESRDs?.GHPInsurancePolicyHolderName_MiddleInitial,
+             GHPInsurancePolicyHolderNamePrefix = root.MSP?.ESRDs?.GHPInsurancePolicyHolderName_Prefix,
+             GHPInsurancePolicyHolderNameSuffix = root.MSP?.ESRDs?.GHPInsurancePolicyHolderName_Suffix,
+             GHPInsurancePolicyNumber = root.MSP?.ESRDs?.GHPInsurancePolicyNumber,
+             GHPInsuredRelationshipRelationshipCode = root.MSP?.ESRDs?.GHPInsuredRelationship_RelationshipCode,
+             GHPInsuredRelationshipRelationshipDescription = root.MSP?.ESRDs?.GHPInsuredRelationship_RelationshipDescription,
+             GroupName = ins?.GroupName,
+             GroupNumber = ins?.GroupNumber,
+             HospitalEffectiveDate = ins?.HospitalEffectiveDate.ToString(CultureInfo.InvariantCulture),
+             In1SetId = ins?.InsuranceID.ToString(CultureInfo.InvariantCulture),
+             InsCompanyCity = ins?.City,
+             InsCompanyOtherDesignation = ins?.Address2,
+             InsCompanyPhoneNumber = ins?.InsuranceCoPhoneNumber,
+             InsCompanyState = ins?.State,
+             InsCompanyStreetAddress = ins?.Address1,
+             InsCompanyZip = ins?.Zip,
+             InsCompanyZipExtension = ins?.InsuranceCompanyAddress_Zip,
+             InsEmployerGroupHealthInsurance = root.MSP?.EmployerGroupHealthInsurancePatient,
+             InsLargeGroupHealthInsurance = root.MSP?.LargeGroupHealthInsurancePatient,
+             InsuranceAuthorizationInformation = ins?.InsuranceAuthorizationInformation,
+             InsuranceOrdinality = ins?.Ordinality.ToString(CultureInfo.InvariantCulture),
+             InsuranceType = ins?.InsuranceType,
+             IsDupe = ins.IsDupe,
+             IsPrimary = ins.IsPrimary,
+             IsTermed = ins.IsTermed,
+             MajorMedicalFlag = ins?.MajorMedicalFlag,
+             MajorMedicalPresentLoc = ins?.MajorMedicalPresentLoc,
+             MasterPolicyNumber = ins?.MasterPolicyNumber,
+             MedicalAssistanceBenefitPackage = ins?.MedicalAssistanceBenefitPackage,
+             MedicalAssistanceProgramStatus = ins?.MedicalAssistanceProgramStatus,
+             MedicalAssistanceResourceCode = ins?.MedicalAssistanceResourceCode,
+             MedicalInsurance = root.MSP?.MedicalInsurance,
+             MedicareEligibilityDisability = root.MSP?.MedicareEligibilityDisability,
+             MedicareEligibilityDisabilityDate = root.MSP?.MedicareEligibilityDisabilityDate,
+             MedicareLifetimeSignatureAuthDate = ins?.MedicareLifetimeSignatureAuthDate.ToString(CultureInfo.InvariantCulture),
+             MedicareLifetimeSignatureAuthLocation = ins?.MedicareLifetimeSignatureAuthLocation,
+             NoticeOfAdmissionDate = ins?.NOAAdmissionDate.ToString(CultureInfo.InvariantCulture),
+             OverrideInsuranceAddress = ins?.OverrideInsuranceAddress,
+             OverrideInsuranceCity = ins?.OverrideInsuranceCity,
+             OverrideInsuranceName = ins?.OverrideInsuranceName,
+             OverrideInsuranceState = ins?.OverrideInsuranceState,
+             OverrideInsuranceZip = ins?.OverrideInsuranceZip,
+             PassportPayerDescription = ins?.PassportPayerDescription,
+             PassportPayerMnemonic = ins?.PassportPayerMnemonic,
+             PassportPayerMnemonicOverride = ins?.PassportPayerMnemonicOverride,
+             PatientMemberNumber = ins?.PatientMemberNumber_IDNumber,
+             PayerCost = ins?.PayerCost.ToString(CultureInfo.InvariantCulture),
+             PayerId = ins?.ClientCompanyID,
+             PayerName = ins?.ClientPayerDescription,
+             PlanId = ins?.ClientPlanID,
+             PlanIdentifier = ins?.PlanIdentifier,
+             PlanNumber = ins?.PlanNumber,
+             PlanType = ins?.InsurancePlanType,
+             PoqFinal = ins?.POQFinal.ToString(CultureInfo.InvariantCulture),
+             PPOIndicator = ins?.PPOIndicator,
+             PreAdmitCertPac = ins?.PreAdmitCertPAC,
+             ProfeeAddress = ins?.ProfeeAddress,
+             ProfeeCity = ins?.ProfeeCity,
+             ProfeeMailTo = ins?.ProfeeMailTo,
+             ProfeePhoneNumber = ins?.ProfeePhoneNumber,
+             ProfeeState = ins?.ProfeeState,
+             ProfeeZip = ins?.ProfeeZip,
+             PropertyAndCasualtyClaimNumber = ins?.PropertyAndCasualtyClaimNumber,
+             RanByUserId = ins?.RanByUserID.ToString(CultureInfo.InvariantCulture),
+             ReAddedInsurance = ins?.ReAddedInsurance.ToString(CultureInfo.InvariantCulture),
+             ReleaseInformationCode = ins?.ReleaseInformationCode,
+             ReportOfEligibilityFlag = ins?.ReportofEligibilityFlag,
+             RequestedServiceType = ins?.RequestedServiceType,
+             Response271 = ins?.Response_271,
+             ResponseCount = ins?.ResponseCount.ToString(CultureInfo.InvariantCulture),
+             ResponseHiDefXml = ins?.Response_HiDefXML,
+             ResponseHtml = ins?.Response_HTML,
+             ResponseRaw = ins?.Response_Raw,
+             ResponseText = ins?.Response_Text,
+             RetirementDate = ins?.RetirementDate.ToString(CultureInfo.InvariantCulture),
+             RoomRatePrivate = ins?.PrivateRoomRate,
+             RoomRateSemiPrivate = ins?.SemiPrivateRoomRate,
+             SystemOrder = ins?.SystemOrder.ToString(CultureInfo.InvariantCulture),
+             TermDate = ins?.TermDate.ToString(CultureInfo.InvariantCulture),
+             TriggeredIns = ins?.TriggeredIns.ToString(CultureInfo.InvariantCulture),
+             TXId = ins?.TXID,
+             TypeOfAgreementCode = ins?.TypeOfAgreementCode,
+             UserAdded = ins?.UserAdded,
+             VerificationBy = ins?.VerificationBy,
+             VerificationStatus = ins?.VerificationStatus,
+             
+             NoaRawMessage278 = root.NOAs?.FirstOrDefault()?.RawMessage278,
+             NoaPreviousAdminRefNumber = root.NOAs?.FirstOrDefault()?.PreviousAdminRefNumber,
+             NoaIcd10DiagCode1 = root.NOAs?.FirstOrDefault().ICD10DiagCode1,
+             NoaMessage = root.NOAs?.FirstOrDefault()?.Message,
+             NoaResponseType = root.NOAs?.FirstOrDefault()?.ResponseType.ToString(CultureInfo.InvariantCulture),
+             NoaReferenceNumber = root.NOAs?.FirstOrDefault()?.NOAReferenceNumber,
+             NoaResponseReceived = root.NOAs?.FirstOrDefault()?.ResponseReceived,
+             NoaGenericResponseTypeDescription = root.NOAs?.FirstOrDefault()?.GenericResponseTypeDescription,
+             NoaTXId = root.NOAs?.FirstOrDefault()?.TXID,
+             NoaReviewIdentificationNumber = root.NOAs?.FirstOrDefault()?.ReviewIdentificationNumber,
+             NoaCertificationAction = root.NOAs?.FirstOrDefault()?.CertificationAction,
+             NoaClientPayerMnemonic = root.NOAs?.FirstOrDefault()?.ClientPayerMnemonic,
+             NoaInsuranceIndex = root.NOAs?.FirstOrDefault()?.InsuranceIndex.ToString(CultureInfo.InvariantCulture),
+             NoaInsuranceId = root.NOAs?.FirstOrDefault()?.InsuranceID.ToString(CultureInfo.InvariantCulture),
 
-        public static List<Models.Xpm.Guarantor> MapGuarantors(Root root)
-        {
-            var guarantors = new List<Models.Xpm.Guarantor>
-            {
-                root.Guarantor.Adapt<Models.Xpm.Guarantor>()
-            };
+         };
 
-            return guarantors;
-        }
+         insurances.Add(insurance);
 
-
-        public static List<Models.Xpm.NextOfKin> MapNextOfKins(Root root)
-        {
-            var nextOfKins = new List<Models.Xpm.NextOfKin>();
-
-            if (root.NextOfKins.Count <= 0) return nextOfKins;
-
-            nextOfKins.AddRange(root.NextOfKins.Select(nextOfKin => nextOfKin.Adapt<Models.Xpm.NextOfKin>()));
-
-            return nextOfKins;
-        }
-
-
-        public static List<Models.Xpm.Note> MapNotes(List<Order> orders)
-        {
-            var notes = new List<Models.Xpm.Note>();
-
-            if (orders.Count <= 0) return notes;
-
-            notes.AddRange(from order in orders where order.Notes.Count > 0 from note in order.Notes select note.Adapt<Models.Xpm.Note>());
-
-            return notes;
-        }
-
-        public static List<Models.Xpm.Procedure> MapProcedures(List<Order> orders)
-        {
-            var procedures = new List<Models.Xpm.Procedure>();
-
-            if (orders.Count <= 0) return procedures;
-
-            procedures.AddRange(from order in orders where order.Procedures.Count > 0 from note in order.Procedures select note.Adapt<Models.Xpm.Procedure>());
-
-            return procedures;
-        }
-
-        public static List<Models.Xpm.Observation> MapObservations(List<Order> orders)
-        {
-            var observations = new List<Models.Xpm.Observation>();
-
-            if (orders.Count <= 0) return observations;
-
-            foreach (var order in orders.Where(order => order.Observations.Count > 0))
-            {
-                observations.AddRange(order.Observations.Select(observation => observation.Adapt<Models.Xpm.Observation>()));
-            }
-
-            return observations;
-        }
-
-        public static List<Models.Xpm.Physician> MapPhysician(PatientVisit patientVisit)
-        {
-            var physician = new List<Models.Xpm.Physician>();
-
-            physician.AddRange((from PhysicianType physicianType in Enum.GetValues(typeof(PhysicianType)) select (patientVisit, physicianType).Adapt<Models.Xpm.Physician>()).ToList());
-
-            return physician;
-        }
-
-        public static Models.Xpm.Accident MapAccident(Root root)
-        {
-            var accident = new Models.Xpm.Accident
-            {
-                Description = root.MSP?.AccidentDescription,
-                ResponsiblePartyName_LastName = root.MSP?.AccidentPersonResponsibleLastName,
-                ResponsiblePartyName_FirstName = root.MSP?.AccidentPersonResponsibleFirstName,
-                AutomobileOwnerName_LastName = root.MSP?.AccidentCarOwnerLastName,
-                AutomobileOwnerName_FirstName = root.MSP?.AccidentCarOwnerFirstName,
-                AutoInsuranceName = root.MSP?.AccidentAutoInsurance,
-                InsuranceAgentName_LastName = root.MSP?.AccidentAgentName,
-                InsuranceAgentPhoneNumber = root.MSP?.AccidentAgentPhoneNumber,
-                LiabilityInsuranceName = root.MSP?.AccidentLiabilityInsuranceLastName,
-                LiabilityInsuranceAddress_AddressLine1 = root.MSP?.AccidentLiabilityInsuranceAddress,
-                LiabilityInsuranceAddress_City = root.MSP?.AccidentLiabilityInsuranceCity,
-                LiabilityInsuranceAddress_State = root.MSP?.AccidentLiabilityInsuranceState,
-                LiabilityInsuranceAddress_ZipCode = root.MSP?.AccidentLiabilityInsuranceZip,
-                LiabilityInsurancePhoneNumber = root.MSP?.AccidentLiabilityInsurancePhoneNumber,
-                LiabilityInsuranceClaimNumber = root.MSP?.AccidentLiabilityInsuranceClaim,
-                NonLiabilityInsuranceName = root.MSP?.AccidentNonLiabilityInsuranceLastName,
-                NonLiabilityInsuranceAddress_AddressLine1 = root.MSP?.AccidentNonLiabilityInsuranceAddress,
-                NonLiabilityInsuranceAddress_City = root.MSP?.AccidentNonLiabilityInsuranceCity,
-                NonLiabilityInsuranceAddress_State = root.MSP?.AccidentNonLiabilityInsuranceState,
-                NonLiabilityInsuranceAddress_ZipCode = root.MSP?.AccidentNonLiabilityInsuranceZip,
-                NonLiabilityInsurancePhoneNumber = root.MSP?.AccidentNonLiabilityInsurancePhoneNumber,
-                NonLiabilityInsuranceClaimNumber = root.MSP?.AccidentNonLiabilityInsuranceClaim,
-                AttorneyName = root.MSP?.AccidentAttorneyName,
-                AttorneyPhoneNumber = root.MSP?.AccidentAttorneyPhoneNumber,
-                HomeownersInsuranceAvailable = root.MSP?.AccidentNoFaultPremiseHomeownersInsuranceAvailable,
-                HomeownersInsuranceCoName = root.MSP?.AccidentNoFaultPremiseHomeownersInsuranceCoName,
-                HomeownersInsuranceAddress = root.MSP?.AccidentNoFaultPremiseHomeownersInsuranceAddress,
-                HomeownersInsuranceCity = root.MSP?.AccidentNoFaultPremiseHomeownersInsuranceCity,
-                HomeownersInsuranceState = root.MSP?.AccidentNoFaultPremiseHomeownersInsuranceState,
-                HomeownersInsuranceZip = root.MSP?.AccidentNoFaultPremiseHomeownersInsuranceZip,
-                HomeownersInsuranceAreaCode = root.MSP?.AccidentNoFaultPremiseHomeownersInsuranceAreaCode,
-                HomeownersInsurancePhoneNumber = root.MSP?.AccidentNoFaultPremiseHomeownersInsurancePhoneNumber,
-                HomeownersInsurancePolicyNumber = root.MSP?.AccidentNoFaultPremiseHomeownersInsurancePolicyNumber,
-                HomeownersInsuranceClaimNumber = root.MSP?.AccidentNoFaultPremiseHomeownersInsuranceClaimNumber,
-                IllnessOrInjuryNonWorkRelated = root.MSP?.NoFaultLiabilityInsurance?.IllnessOrInjuryNonWorkRelated,
-                AccidentDateTime = root.MSP?.NoFaultLiabilityInsurance?.AccidentDate,
-                NonLiabilityInsuranceStatus = root.MSP?.NoFaultLiabilityInsurance?.NoFaultInsuranceStatus,
-                NonLiabilityInsuranceAddress_AddressLine2 = root.MSP?.NoFaultLiabilityInsurance?.NoFaultInsuranceAddress_AddressLine2,
-                NonLiabilityInsurancePolicyNumber = root.MSP?.NoFaultLiabilityInsurance?.NoFaultInsurancePolicyNumber,
-                PolicyHolderName_LastName = root.MSP?.NoFaultLiabilityInsurance?.PolicyHolderName_LastName,
-                PolicyHolderName_FirstName = root.MSP?.NoFaultLiabilityInsurance?.PolicyHolderName_FirstName,
-                PolicyHolderName_MiddleInitial = root.MSP?.NoFaultLiabilityInsurance?.PolicyHolderName_MiddleInitial,
-                PolicyHolderName_Suffix = root.MSP?.NoFaultLiabilityInsurance?.PolicyHolderName_Suffix,
-                PolicyHolderName_Prefix = root.MSP?.NoFaultLiabilityInsurance?.PolicyHolderName_Prefix,
-                PolicyHolderAddress_AddressLine1 = root.MSP?.NoFaultLiabilityInsurance?.PolicyHolderAddress_AddressLine1,
-                PolicyHolderAddress_AddressLine2 = root.MSP?.NoFaultLiabilityInsurance?.PolicyHolderAddress_AddressLine2,
-                PolicyHolderAddress_City = root.MSP?.NoFaultLiabilityInsurance?.PolicyHolderAddress_City,
-                PolicyHolderAddress_State = root.MSP?.NoFaultLiabilityInsurance?.PolicyHolderAddress_State,
-                PolicyHolderAddress_ZipCode = root.MSP?.NoFaultLiabilityInsurance?.PolicyHolderAddress_ZipCode,
-                PolicyHolderPhoneNumber = root.MSP?.NoFaultLiabilityInsurance?.PolicyHolderPhoneNumber,
-                LiabilityInsuranceStatus = root.MSP?.NoFaultLiabilityInsurance?.LiabilityInsuranceStatus,
-                LiabilityInsuranceAddress_AddressLine2 = root.MSP?.NoFaultLiabilityInsurance?.LiabilityInsuranceAddress_AddressLine2,
-                LiabilityInsuredName_LastName = root.MSP?.NoFaultLiabilityInsurance?.LiabilityInsuredName_LastName,
-                LiabilityInsuredName_FirstName = root.MSP?.NoFaultLiabilityInsurance?.LiabilityInsuredName_FirstName,
-                LiabilityInsuredName_MiddleInitial = root.MSP?.NoFaultLiabilityInsurance?.LiabilityInsuredName_MiddleInitial,
-                LiabilityInsuredName_Suffix = root.MSP?.NoFaultLiabilityInsurance?.LiabilityInsuredName_Suffix,
-                LiabilityInsuredName_Prefix = root.MSP?.NoFaultLiabilityInsurance?.LiabilityInsuredName_Prefix,
-                ResponsiblePartyStatus = root.MSP?.NoFaultLiabilityInsurance?.ResponsiblePartyStatus,
-                ResponsiblePartyName_MiddleInitial = root.MSP?.NoFaultLiabilityInsurance?.ResponsiblePartyName_MiddleInitial,
-                ResponsiblePartyName_Suffix = root.MSP?.NoFaultLiabilityInsurance?.ResponsiblePartyName_Suffix,
-                ResponsiblePartyName_Prefix = root.MSP?.NoFaultLiabilityInsurance?.ResponsiblePartyName_Prefix,
-                AutomobileOwnerName_MiddleInitial = root.MSP?.NoFaultLiabilityInsurance?.AutomobileOwnerName_MiddleInitial,
-                AutomobileOwnerName_Suffix = root.MSP?.NoFaultLiabilityInsurance?.AutomobileOwnerName_Suffix,
-                AutomobileOwnerName_Prefix = root.MSP?.NoFaultLiabilityInsurance?.AutomobileOwnerName_Prefix,
-                InsuranceAgentName_FirstName = root.MSP?.NoFaultLiabilityInsurance?.InsuranceAgentName_FirstName,
-                InsuranceAgentName_MiddleInitial = root.MSP?.NoFaultLiabilityInsurance?.InsuranceAgentName_MiddleInitial,
-                InsuranceAgentName_Suffix = root.MSP?.NoFaultLiabilityInsurance?.InsuranceAgentName_Suffix,
-                InsuranceAgentName_Prefix = root.MSP?.NoFaultLiabilityInsurance?.InsuranceAgentName_Prefix,
-
-            };
-            return accident;
-        }
-
-        public static List<Models.Xpm.MspEsrd> MapMsp(Root root)
-        {
-            var Msps = new List<Models.Xpm.MspEsrd>();
-            var Msp = new Models.Xpm.MspEsrd
-            {
-                MedicareDueToESRD = root.MSP?.EndStageRenalMedicareDueToESRD,
-                PatientHadKidneyTransplant = root.MSP?.EndStageRenalPatientHadKidneyTransplant,
-                PatientDateOfKidneyTransplant = root.MSP?.EndStageRenalPatientDateOfKidneyTransplant,
-                lMaintenanceDialysis = root.MSP?.EndStageRenalMaintenanceDialysis,
-                DateOfFirstMaintenanceDialysis = root.MSP?.EndStageRenalDateOfFirstMaintenanceDialysis,
-                StartDateSelfDialysisTraining = root.MSP?.EndStageRenalStartDateSelfDialysisTraining,
-                IsPatientIn30DayCOBPeriod = root.MSP?.EndStageRenalIsPatientIn30DayCOBPeriod,
-                lGroupHealthThruEmployer = root.MSP?.EndStageRenalGroupHealthThruEmployer,
-                GroupHealthInsuranceName = root.MSP?.EndStageRenalGroupHealthInsuranceName,
-                GroupHealthPhoneNUmber = root.MSP?.EndStageRenalGroupHealthPhoneNUmber,
-                lGroupHealthAddress = root.MSP?.EndStageRenalGroupHealthAddress,
-                GroupHealthCity = root.MSP?.EndStageRenalGroupHealthCity,
-                GroupHealthState = root.MSP?.EndStageRenalGroupHealthState,
-                GroupHealthZip = root.MSP?.EndStageRenalGroupHealthZip,
-                GroupHealthPolicyNumber = root.MSP?.EndStageRenalGroupHealthPolicyNumber,
-                GroupHealthGroupNumber = root.MSP?.EndStageRenalGroupHealthGroupNumber,
-                GroupHealthSubscriberName = root.MSP?.EndStageRenalGroupHealthSubscriberName,
-                RelationshipCode = root.MSP?.EndStageRenalRelationshipCode,
-                RelationshipDescription = root.MSP?.EndStageRenalRelationshipDescription,
-                GroupHealthSubscriberEmployerName = root.MSP?.EndStageRenalGroupHealthSubscriberEmployerName,
-                KidneyTransplantStatus = root.MSP?.KidneyTransplantStatus,
-                TransplantDate = root.MSP?.TransplantDate,
-                MaintenanceDialysisStatus = root.MSP?.MaintenanceDialysisStatus,
-                DialysisBeginDate = root.MSP?.DialysisBeginDate,
-                SelfDialysisTrainingStatus = root.MSP?.SelfDialysisTrainingStatus,
-                SelfDialysisTrainingDate = root.MSP?.SelfDialysisTrainingDate,
-                ThirtyMonthCOBStatus = root.MSP?.ThirtyMonthCOBStatus,
-                DualEntitlementStatus = root.MSP?.DualEntitlementStatus,
-                InitialEntitlementStatus = root.MSP?.InitialEntitlementStatus,
-                WorkingAgedOrDisabilityMSPStatus = root.MSP?.WorkingAgedOrDisabilityMSPStatus,
-            };
-            Msps.Add(Msp);
-            return Msps;
-        }
-
-        public static Models.Xpm.Demographics MapDemographics(Root root)
-        {
-            var tst = new Models.Xpm.Observation();
-            var demographic = new Models.Xpm.Demographics
-            {
-                AdmittingDoctorHospitalId = root.Patient?.AdmittingDoctorHospitalID,
-                Age = root.Patient?.Age.ToString(CultureInfo.InvariantCulture),
-                ArrivalComment = root.Patient?.ArrivalComment,
-                ArrivalState = root.Patient?.ArrivalState.ToString(CultureInfo.InvariantCulture),
-                ArrivalStatus = root.Patient?.ArrivalStatus.ToString(CultureInfo.InvariantCulture),
-                BirthPlace = root.Patient?.BirthPlace,
-                CernerPatientId = root.Patient?.CernerPatientID,
-                DateOfBirth = root.Patient?.DateOfBirth.ToString(CultureInfo.InvariantCulture),
-                EmailAddress = root.Patient?.EmailAddress,
-                EmergencyContactFirstName = root.Patient?.EmergencyContactFirstName,
-                EmergencyContactLastName = root.Patient?.EmergencyContactLastName,
-                EmergencyContactPhoneNumber = root.Patient?.EmergencyContactPhoneNumber,
-                EmergencyContactRelationship = root.Patient?.EmergencyContactRelationship,
-                Employees20OrMoreStatus = root.MSP?.Patient20OrMoreEmployees,
-                Employer = root.MSP?.AccidentPatientEmployerName,
-                EmployerAddress1 = root.MSP?.AccidentTimeOfAccidentEmployerAddress,
-                EmployerAddress2 = root.MSP?.General?.PatientEmployerAddress_AddressLine2,
-                EmployerCity = root.MSP?.AccidentTimeOfAccidentEmployerCity,
-                EmployerClaimNumber = root.MSP?.AccidentTimeOfAccidentEmployerClaimNumber,
-                EmployerFirstName = root.MSP?.General?.PatientEmployerName_FirstName,
-                EmployerLastName = root.MSP?.General?.PatientEmployerName_LastName,
-                EmployerMiddleInitial = root.MSP?.General?.PatientEmployerName_MiddleInitial,
-                EmployerPhoneNumber = root.MSP?.General?.PatientEmployerPhoneNumber,
-                EmployerPrefix = root.MSP?.General?.PatientEmployerName_Prefix,
-                EmployerState = root.MSP?.AccidentTimeOfAccidentEmployerState,
-                EmployerSuffix = root.MSP?.General?.PatientEmployerName_Suffix,
-                EmployerZip = root.MSP?.AccidentTimeOfAccidentEmployerZip,
-                EmploymentEverWorked = root.MSP?.EverWorkedPatient,
-                EmploymentPreviousStatus = root.MSP?.Age?.PatientPreviousEmploymentStatus,
-                EmploymentStatus = root.MSP?.CurrentlyWorkingPatient,
-                Epi = root.Patient?.EPI,
-                Ethnicity = root.Patient?.Ethnicity,
-                ExistingSystemPatientId = root.Patient?.ExistingSystemPatientId,
-                FirstName = root.Patient?.FirstName,
-                FullName = root.Patient?.FullName,
-                HIPAAReceiptNotificationStatus = root.Patient?.HIPAAReceiptNotificationStatus,
-                HIPPAObtainedCode = root.Patient?.HIPPA_ObtainedCode,
-                HIPPASOFDate = root.Patient?.HIPPA_SOFDate.ToString(CultureInfo.InvariantCulture),
-                HomelessStatus = root.Patient?.HomelessStatus,
-                IncomeSource = root.Patient?.IncomeSource,
-                Language = root.Patient?.Language,
-                LastName = root.Patient?.LastName,
-                MaritalStatus = root.Patient?.MaritalStatus,
-                MedicareStatusByAge = root.MSP?.Entitlement?.MedicareStatusByAge,
-                MedicareStatusByDisability = root.MSP?.Entitlement?.MedicareStatusByDisability,
-                MedicareStatusByESRD = root.MSP?.Entitlement?.MedicareStatusByESRD,
-                MiddleName = root.Patient?.MiddleName,
-                MothersIdentifier = root.Patient?.MothersIdentifier,
-                MothersMaidenNameGivenName = root.Patient?.MothersMaidenName_GivenName,
-                MothersMaidenNameLastName = root.Patient?.MothersMaidenName_FamilyName,
-                NamePrefix = root.Patient?.Name_Prefix,
-                NameSuffix = root.Patient?.NameSuffix,
-                PatientAge65 = root.MSP?.PatientAge65,
-                PatientPersonMasterIndexNum = root.Patient?.PatientPersonMasterIndexNum,
-                PcpFirstName = root.Patient?.PCP_FirstName,
-                PcpIdNumber = root.Patient?.PCP_IDNumber,
-                PcpLastName = root.Patient?.PCP_LastName,
-                PcpMiddleInitialOrName = root.Patient?.PCP_MiddleInitialOrName,
-                PrimaryFacility = root.Patient?.PrimaryFacility,
-                PriorEpi = root.Patient?.PriorEPI,
-                Race = root.Patient?.Race,
-                ReceivedPatientInformation = root.Patient?.ReceivedPatientInformation.ToString(CultureInfo.InvariantCulture),
-                Religion = root.Patient?.Religion,
-                RetirementDate = root.MSP?.RetirementDatePatient,
-                RHIOIndicatorStatus = root.Patient?.RHIOIndicatorStatus,
-                Sex = root.Patient?.Sex,
-                SocialOrganization = root.Patient?.SocialOrganization,
-                Ssn = root.Patient?.SSN,
-                SystemPatientId = root.Patient?.SystemPatientID,
-                TextConsentGivenAsInteger = root.Patient?.TextConsentGivenAsInteger.ToString(CultureInfo.InvariantCulture),
-                Employees100OrMoreStatus = root.MSP?.PatientEmployedBy100OrMoreEmployees,
-                Phone = new Models.Xpm.Phone
-                {
-                    FaxStatus = root.FaxDocuments?.FaxStatus,
-                    FaxDocumentType = root.FaxDocuments?.FaxDocumentType,
-                    FaxTransmitStatus = root.FaxDocuments?.FaxTransmitStatus,
-                    FaxIndexedDate = root.FaxDocuments?.FaxIndexedDate.ToString(CultureInfo.InvariantCulture),
-                    FaxReceivedDate = root.FaxDocuments?.FaxReceivedDate.ToString(CultureInfo.InvariantCulture),
-                    FaxPages = root.FaxDocuments?.Pages.ToString(CultureInfo.InvariantCulture),
-                    FaxCaller = root.FaxDocuments?.Caller,
-                    FaxCalled = root.FaxDocuments?.Called,
-                    FaxId = root.FaxDocuments?.FaxID,
-                    FaxAccountStatus = root.FaxDocuments?.FaxStatus,
-                    FaxAnticipatedDos = root.FaxDocuments?.AnticipatedDOS.ToString(CultureInfo.InvariantCulture),
-                    FaxSchAttempts = root.FaxDocuments?.SCH_Attempts.ToString(CultureInfo.InvariantCulture),
-                },
-                AmountOwed = root.Order?.Observations?.FirstOrDefault()?.ObservingProvider?.AmountOwed,
-                MonthlyIncome = root.Order?.Observations?.FirstOrDefault()?.ObservingProvider?.MonthlyIncome,
-                FamilySize = root.Order?.Observations?.FirstOrDefault()?.ObservingProvider?.FamilySize,
-                Address = new Models.Xpm.Address
-                {
-                    CountyOrParishCode = root.Order?.Observations?.FirstOrDefault()?.ObservingProvider?.CountyOrParishCode,
-                    AddressType = root.Order?.Observations?.FirstOrDefault()?.ObservingProvider?.AddressType,
-                    Country = root.Order?.Observations?.FirstOrDefault()?.ObservingProvider?.Country,
-                    ZipExtension = root.Order?.Observations?.FirstOrDefault()?.ObservingProvider?.Zip,
-                    State = root.Order?.Observations?.FirstOrDefault()?.ObservingProvider?.State,
-                    City = root.Order?.Observations?.FirstOrDefault()?.ObservingProvider?.City,
-                    Address2 = root.Order?.Observations?.FirstOrDefault()?.ObservingProvider?.AddressLine2,
-                    Address1 = root.Order?.Observations?.FirstOrDefault()?.ObservingProvider?.AddressLine1,
-
-                }
-            };
-
-            return demographic;
-        }
-
-
-        public static List<string> MapProcedureCodes(Root root)
-        {
-            var procedureCodes = new List<string>();
-
-            if (string.IsNullOrWhiteSpace(root.PatientVisit.ProcedureCodes)) return procedureCodes;
-
-            var codes = root.PatientVisit.ProcedureCodes.Split(" ").ToList();
-
-            if (codes.Count > 0) procedureCodes.AddRange(codes);
-
-            return procedureCodes;
-        }
-
-        public static List<Beneficiary> MapBeneficiarys(Root root)
-        {
-            var beneficiaries = new List<Beneficiary>();
-            var beneficiary = new Beneficiary
-            {
-                InfoMedicare = root.MSP?.BeneficiaryInfoMedicare,
-                InfoPatientAccount = root.MSP?.BeneficiaryInfoPatientAccount,
-                InfoSSN = root.MSP?.BeneficiaryInfoSSN,
-                InfoDCN = root.MSP?.BeneficiaryInfoDCN,
-                InfoName = root.MSP?.BeneficiaryInfoName,
-                InfoRelationshipCode = root.MSP?.BeneficiaryInfoRelationshipCode,
-                InfoRelationshipDescription = root.MSP?.BeneficiaryInfoRelationshipDescription,
-                InfoDateReceived = root.MSP?.BeneficiaryInfoDateReceived,
-                InfoServiceDate = root.MSP?.BeneficiaryInfoServiceDate,
-                InfoProviderNumber = root.MSP?.BeneficiaryInfoProviderNumber,
-                InfoProviderRepName = root.MSP?.BeneficiaryInfoProviderRepName,
-            };
-
-            beneficiaries.Add(beneficiary);
-            return beneficiaries;
-        }
-
-        public static List<Models.Xpm.Workplace> MapWorkplaces(Root root)
-        {
-            var workplaces = new List<Models.Xpm.Workplace>();
-            var workplace = new Models.Xpm.Workplace
-            {
-                WpMedicareReplacementPolicy = root.MSP?.MedicareReplacementPolicy,
-                WpPlanName = root.MSP?.PlanName,
-                WpIDNumber = root.MSP?.IDNumber,
-                WpEmployeeStatus = root.MSP?.EmployeeStatus,
-                WpWorkRelatedAccident = root.MSP?.WorkRelatedAccident,
-                WpTypeOfAccident = root.MSP?.TypeOfAccident,
-                WpResultOfAccident = root.MSP?.ResultOfAccident,
-                WpResultOfAccidentDescription = root.MSP?.ResultOfAccidentDescription,
-                WpWorkersCompIllnessCovered = root.MSP?.WorkersCompIllnessCovered,
-                WpWorkersCompDateOfIllness = root.MSP?.WorkersCompDateOfIllness,
-                WpWorkersCompClaimNumber = root.MSP?.WorkersCompClaimNumber,
-                WpWorkersCompPlanName = root.MSP?.WorkersCompNameOfWCPlan,
-                WpWorkersCompAddress1 = root.MSP?.WorkersCompAddress,
-                WpWorkersCompCity = root.MSP?.WorkersCompCity,
-                WpWorkersCompState = root.MSP?.WorkersCompState,
-                WpWorkersCompZip = root.MSP?.WorkersCompZip,
-                WpWorkersCompEmployerName = root.MSP?.WorkersCompEmployerName,
-                WpWorkersCompEmployerAddress = root.MSP?.WorkersCompEmployerAddress,
-                WpWorkersCompEmployerCity = root.MSP?.WorkersCompEmployerCity,
-                WpWorkersCompEmployerState = root.MSP?.WorkersCompEmployerState,
-                WpWorkersCompEmployerZip = root.MSP?.WorkersCompEmployerZip,
-                WpWorkersCompPolicyNumber = root.MSP?.WorkersCompPolicyNumber,
-                WpDVAAuthorizedToPay = root.MSP?.DVAAuthorizedToPay,
-                WpDVAAuthorizedToPayText = root.MSP?.DVAAuthorizedToPayText,
-                WpDVAContactWarnerMessage = root.MSP?.DVAContactWarnerMessage,
-                WpDVAClaimNumber = root.MSP?.DVAClaimNumber,
-                WpBlackLungBenefitsStatus = root.MSP?.General?.BlackLungBenefitsStatus,
-                WpBlackLungBenefitsBeginDate = root.MSP?.General?.BenifitsBeginDate,
-                WpDiagnosisListedStatus = root.MSP?.General?.DiagnosisListedStatus,
-                WpHealthServicesProgramPaidByStatus = root.MSP?.General?.PaidByProgramStatus,
-                WpHealthServicesProgramName = root.MSP?.General?.HealthServiceProgramName,
-                WpHealthServicesProgramAddressLine1 = root.MSP?.General?.HealthServiceProgramAddress_AddressLine1,
-                WpHealthServicesProgramAddressLine2 = root.MSP?.General?.HealthServiceProgramAddress_AddressLine2,
-                WpWorkersCompClaimStatus = root.MSP?.General?.WorkerCompClaimStatus,
-                WpHealthServicesProgramCity = root.MSP?.General?.HealthServiceProgramAddress_City,
-                WpHealthServicesProgramState = root.MSP?.General?.HealthServiceProgramAddress_State,
-                WpHealthServicesProgramZip = root.MSP?.General?.HealthServiceProgramAddress_ZipCode,
-                WpDVABenefitsStatus = root.MSP?.General?.DVABenifitsStatus,
-                WpDVAPaymentAgreementStatus = root.MSP?.General?.DVAPaymentAgreementStatus,
-                WpWorkersCompAddress2 = root.MSP?.General?.WorkerCompPlanAddress_AddressLine2,
-            };
-            workplaces.Add(workplace);
-            return workplaces;
-        }
-
-
-        public static List<Models.Xpm.Spouse> MapSpouses(Root root)
-        {
-            var spouses = new List<Models.Xpm.Spouse> { };
-
-            if (root.MSP.ESRDs != null)
-            {
-                var esrd = root.MSP?.ESRDs;
-                var spouse = new Models.Xpm.Spouse
-                {
-                    SpCoverageStatus = esrd?.SpouseGHPCoverageStatus,
-                    SpInsPayerName = esrd?.SpouseGHPInsuranceName,
-                    SpInsCompanyStreetAddress1 = esrd?.SpouseGHPInsuranceAddress_AddressLine1,
-                    SpInsCompanyStreetAddress2 = esrd?.SpouseGHPInsuranceAddress_AddressLine2,
-                    SpLargeGroupHealthInsurance = esrd?.SpouseGHPInsuranceName,
-                    SpInsCompanyCity = esrd?.SpouseGHPInsuranceAddress_City,
-                    SpInsCompanyState = esrd?.SpouseGHPInsuranceAddress_State,
-                    SpInsCompanyZip = esrd?.SpouseGHPInsuranceAddress_ZipCode,
-                    SpInsCompanyPhoneNumber = esrd?.SpouseGHPInsurancePhoneNumber,
-                    SpInsSubscriberPolicyNumber = esrd?.SpouseGHPInsurancePolicyNumber,
-                    SpInsGroupNumber = esrd?.SpouseGHPInsuranceGroupNumber,
-                    SpInsSubscriberLastName = esrd?.SpouseGHPInsurancePolicyHolderName_LastName,
-                    SpInsSubscriberFirstName = esrd?.SpouseGHPInsurancePolicyHolderName_FirstName,
-                    SpInsSubscriberMiddleInitial = esrd?.SpouseGHPInsurancePolicyHolderName_MiddleInitial,
-                    SpInsSubscriberSuffix = esrd?.SpouseGHPInsurancePolicyHolderName_Suffix,
-                    SpInsSubscriberPrefix = esrd?.SpouseGHPInsurancePolicyHolderName_Prefix,
-                    SpInsSubscriberRelationshipToPatientCode = esrd?.SpouseGHPInsuredRelationship_RelationshipCode,
-                    SpInsSubscriberRelationshipToPatient = esrd?.SpouseGHPInsuredRelationship_RelationshipDescription,
-                    SpEmployerLastName = esrd?.SpouseEmployerName_LastName,
-                    SpEmployerFirstName = esrd?.SpouseEmployerName_FirstName,
-                    SpEmployerMiddleInitial = esrd?.SpouseEmployerName_MiddleInitial,
-                    SpEmployerNameSuffix = esrd?.SpouseEmployerName_Suffix,
-                    SpEmployerNamePrefix = esrd?.SpouseEmployerName_Prefix,
-                    SpEmployerStreetAddress2 = esrd?.SpouseEmployerAddress_AddressLine2,
-                    SpEmployerCity = esrd?.SpouseEmployerAddress_City,
-                    SpEmployerAddressState = esrd?.SpouseEmployerAddress_State,
-                    SpEmployerAddressZip = esrd?.SpouseEmployerAddress_ZipCode,
-                    SpEmployerPhoneNumber = esrd?.SpouseEmployerPhoneNumber,
-                    SpEmploymentStatus = root.MSP?.CurrentlyWorkingSpouse,
-                    SpEmploymentEverWorked = root.MSP?.EverWorkedSpouse,
-                    SpEmployerStreetAddress1 = root.MSP?.AccidentSpouseEmployerAddress,
-                    SpEmploymentStopDate = root.MSP?.RetirementDateSpouse,
-                    SpEmployerGroupHealthInsurance = root.MSP?.EmployerGroupHealthInsuranceSpouse,
-                    SpEmployerPreviousStatus = root.MSP?.Age?.SpousePreviousEmploymentStatus,
-                    SpGHPBySelfAndSpouseEmployment = root.MSP?.Age?.GHPBySelfAndSpouseEmployment,
-                    SpGHPBySelf = root.MSP?.Age?.GHPBySelf,
-                    SpGHPBySpouseEmployment = root.MSP?.Age?.GHPBySelfAndSpouseEmployment,
-                    SpGHPEmployees20OrMoreStatus = root.MSP?.Age?.GHPBySelfAndSpouseEmployment,
-                    SpRetirementDate = root.MSP?.RetirementDateSpouse,
-                    SpEmployees100OrMoreStatus = root.MSP?.Disability?.GHPEmployees100OrMoreStatus,
-                    SpInsSubscriberName = root.MSP?.Disability?.FamilyMemberGHPInsuranceName,
-                };
-                spouses.Add(spouse);
-            }
-            return spouses;
-        }
-
-
-        public static List<Models.Xpm.FamilyMember> MapFamilyMembers(Root root)
-        {
-
-            var esrd = root.MSP.ESRDs;
-            var Disability = root.MSP.Disability;
-            var familyMembers = new List<Models.Xpm.FamilyMember>();
-            var familyMember = new Models.Xpm.FamilyMember
-            {
-                FmEmployerAddressZip = esrd?.FamilyMemberEmployerAddress_ZipCode,
-                FmEmployerPhoneNumber = esrd?.FamilyMemberEmployerPhoneNumber,
-                FmEmployerAddressState = esrd?.FamilyMemberEmployerAddress_State,
-                FmInsPayerName = esrd?.FamilyMemberGHPInsuranceName,
-                FmInsCompanyStreetAddress1 = esrd?.FamilyMemberGHPInsuranceAddress_AddressLine1,
-                FmInsCompanyStreetAddress2 = esrd?.FamilyMemberGHPInsuranceAddress_AddressLine2,
-                FmInsCompanyCity = esrd?.FamilyMemberGHPInsuranceAddress_City,
-                FmInsCompanyState = esrd?.FamilyMemberGHPInsuranceAddress_State,
-                FmInsCompanyZip = esrd?.FamilyMemberGHPInsuranceAddress_ZipCode,
-                FmInsCompanyPhoneNumber = esrd?.FamilyMemberGHPInsurancePhoneNumber,
-                FmInsSubscriberPolicyNumber = esrd?.FamilyMemberGHPInsurancePolicyNumber,
-                FmInsGroupNumber = esrd?.FamilyMemberGHPInsuranceGroupNumber,
-                FmInsSubscriberLastName = esrd?.FamilyMemberGHPInsurancePolicyHolderName_LastName,
-                FmInsSubscriberFirstName = esrd?.FamilyMemberGHPInsurancePolicyHolderName_FirstName,
-                FmInsSubscriberMiddleInitial = esrd?.FamilyMemberGHPInsurancePolicyHolderName_MiddleInitial,
-                FmInsSubscriberSuffix = esrd?.FamilyMemberGHPInsurancePolicyHolderName_Suffix,
-                FmInsSubscriberPrefix = esrd?.FamilyMemberGHPInsurancePolicyHolderName_Prefix,
-                FmInsSubscriberRelationshipToPatientCode = esrd?.FamilyMemberGHPInsuredRelationship_RelationshipCode,
-                FmInsSubscriberRelationshipToPatient = esrd?.FamilyMemberGHPInsuredRelationship_RelationshipDescription,
-                FmEmployerLastName = esrd?.FamilyMemberEmployerName_LastName,
-                FmEmployerFirstName = esrd?.FamilyMemberEmployerName_FirstName,
-                FmEmployerMiddleInitial = esrd?.FamilyMemberEmployerName_MiddleInitial,
-                FmEmployerNameSuffix = esrd?.FamilyMemberEmployerName_Suffix,
-                FmEmployerNamePrefix = esrd?.FamilyMemberEmployerName_Prefix,
-                FmEmployerStreetAddress1 = esrd?.FamilyMemberEmployerAddress_AddressLine1,
-                FmEmployerStreetAddress2 = esrd?.FamilyMemberEmployerAddress_AddressLine2,
-                FmEmployerCity = esrd?.FamilyMemberEmployerAddress_City,
-                FmEmployees100OrMoreStatus = root?.MSP?.FamilyMemberEmployedBy100OrMoreEmployees,
-                FmLargeGroupHealthInsurance = root?.MSP?.LargeGroupHealthInsuranceFamilyMember,
-                FmGHPBySelfAndSpouseEmployment = root?.MSP?.Disability?.GHPBySelfAndSpouseEmployment,
-                FmGHPBySelf = root?.MSP?.Disability?.GHPBySelf,
-                FmGHPBySpouseEmployment = root?.MSP?.Disability?.GHPBySpouseEmployment,
-                FmGHPEmployees20OrMoreStatus = root?.MSP?.Disability?.GHPByFamilyMember,
-            };
-            familyMembers.Add(familyMember);
-
-            return familyMembers;
-        }
-
-
-        public static List<Models.Xpm.Insurance> MapInsurances(Root root)
-        {
-            var insurances = new List<Models.Xpm.Insurance>();
-
-            if (root.Insurances.Count <= 0) return insurances;
-
-            foreach (var ins in root.Insurances)
-            {
-                var insurance = new Models.Xpm.Insurance
-                {
-                    Subscriber = new Models.Xpm.Subscriber
-                    {
-                        Address1 = ins.Subscriber?.Address1,
-                        Address2 = ins.Subscriber?.Address2,
-                        City = ins.Subscriber?.City,
-                        ClientRelationshipToPatient = ins.Subscriber?.ClientRelationshipToPatient,
-                        DateOfBirth = ins.Subscriber?.DateOfBirth.ToString(CultureInfo.InvariantCulture),
-                        EmployeeId = ins.Subscriber?.EmployeeID,
-                        EmployerName = ins.Subscriber?.EmployerName,
-                        EmploymentStatus = ins.Subscriber?.EmploymentStatus,
-                        FirstName = ins.Subscriber?.FirstName,
-                        InsuredsPhoneNumberHome = ins.Subscriber?.SubscriberHomePhone,
-                        InsuredsEmployerPhoneNumber = ins.Subscriber?.SubscriberWorkPhone,
-                        GroupEmployerId = ins.Subscriber?.InsuredsGroupEmpID,
-                        GroupEmpName = ins.Subscriber?.InsuredsGroupEmpName,
-                        GuarantorsRelationshipToInsured = ins.Subscriber?.GuarantorsRelationshipToInsured,
-                        HicNumber = ins.Subscriber?.HICNumber,
-                        InsuredIdNumber = ins.Subscriber?.InsuredIDNumber,
-                        LastName = ins.Subscriber?.LastName,
-                        MedicareHealthInsCardNumber = ins.Subscriber?.MedicaidID,
-                        MiddleName = ins.Subscriber?.MiddleName,
-                        NameSuffix = ins.Subscriber?.NameSuffix,
-                        OrganizationName = ins.Subscriber?.InsuredsGroupEmpOrganizationName,
-                        OriginalRelationshipToPatientCode = ins.Subscriber?.OriginalRelationshipToPatientCode,
-                        Sex = ins.Subscriber?.Sex,
-                        Ssn = ins.Subscriber?.SSN,
-                        State = ins.Subscriber?.State,
-                        SubscriberId = ins.Subscriber?.SubscriberID,
-                        Zip = ins.Subscriber?.Zip,
-
-                    },
-                    AccidentDate = ins?.AccidentDate.ToString(CultureInfo.InvariantCulture),
-                    AssignmentOfBenefits = ins?.AssignmentOfBenefits,
-                    BadPlanCodeIncorrectPlanCode = ins?.BadPlanCodeIncorrectPlanCode,
-                    BadPlanCodeMessage = ins?.BadPlanCodeMessage,
-                    BadPlanCodeRecommendedPlanCode = ins?.BadPlanCodeRecommendedPlanCode,
-                    BillingStatus = ins?.BillingStatus,
-                    Branch = ins?.Branch,
-                    BypassPayerCodeMapping = ins?.BypassPayerCodeMapping.ToString(CultureInfo.InvariantCulture),
-                    CardControlNumber = ins?.CardControlNumber,
-                    CardNumber = ins?.CardNumber,
-                    CDProcId = ins?.CDProcID.ToString(CultureInfo.InvariantCulture),
-                    CDReqId = ins?.CDReqID.ToString(CultureInfo.InvariantCulture),
-                    CertificationBeginDate = ins?.CertificationBeginDate.ToString(CultureInfo.InvariantCulture),
-                    CertificationEndDate = ins?.CertificationEndDate.ToString(CultureInfo.InvariantCulture),
-                    CertificationNumber = ins?.InsurancePrimaryAuthorization,
-                    ChainedBatchRecordId = ins?.ChainedBatchRecordID,
-                    ClientPayerMnemonic = ins?.ClientPayerMnemonic,
-                    CompanyPlanCode = ins?.CompanyPlanCode,
-                    CoordinationOfBenefits = ins?.CoordinationOfBenefits,
-                    CoordOfBenPriority = ins?.CoordOfBenPriority,
-                    DateRun = ins?.DateRun.ToString(CultureInfo.InvariantCulture),
-                    DisplayWorkcenter = ins?.DisplayWorkcenter,
-                    DLPVId = ins?.DLPVID.ToString(CultureInfo.InvariantCulture),
-                    DSId = ins?.DSID.ToString(CultureInfo.InvariantCulture),
-                    EffectiveDate = ins?.EffectiveDate.ToString(CultureInfo.InvariantCulture),
-                    FacilityNetworkIdentificationNumber = ins?.FacilityNetworkIdentificationNumber,
-                    GenericResponseTypeDescription = ins?.GenericResponseTypeDescription,
-                    GenericResponseTypeId = ins?.GenericResponseTypeID,
-                    GHPCoverageStatus = root?.MSP.ESRDs.GHPCoverageStatus,
-                    GHPInsuranceAddressAddressLine1 = ins?.InsuranceCompanyAddress_StreetAddress,
-                    GHPInsuranceAddressAddressLine2 = ins?.InsuranceCompanyAddress_OtherDesignation,
-                    GHPInsuranceAddressCity = ins?.InsuranceCompanyAddress_City,
-                    GHPInsuranceAddressState = ins?.InsuranceCompanyAddress_State,
-                    GHPInsuranceGroupNumber = root.MSP?.ESRDs?.GHPInsuranceGroupNumber,
-                    GHPInsuranceName = root.MSP?.ESRDs?.GHPInsuranceName,
-                    GHPInsurancePhoneNumber = root.MSP?.ESRDs?.GHPInsurancePhoneNumber,
-                    GHPInsurancePolicyHolderNameFirstName = root.MSP?.ESRDs?.GHPInsurancePolicyHolderName_FirstName,
-                    GHPInsurancePolicyHolderNameLastName = root.MSP?.ESRDs?.GHPInsurancePolicyHolderName_LastName,
-                    GHPInsurancePolicyHolderNameMiddleInitial = root.MSP?.ESRDs?.GHPInsurancePolicyHolderName_MiddleInitial,
-                    GHPInsurancePolicyHolderNamePrefix = root.MSP?.ESRDs?.GHPInsurancePolicyHolderName_Prefix,
-                    GHPInsurancePolicyHolderNameSuffix = root.MSP?.ESRDs?.GHPInsurancePolicyHolderName_Suffix,
-                    GHPInsurancePolicyNumber = root.MSP?.ESRDs?.GHPInsurancePolicyNumber,
-                    GHPInsuredRelationshipRelationshipCode = root.MSP?.ESRDs?.GHPInsuredRelationship_RelationshipCode,
-                    GHPInsuredRelationshipRelationshipDescription = root.MSP?.ESRDs?.GHPInsuredRelationship_RelationshipDescription,
-                    GroupName = ins?.GroupName,
-                    GroupNumber = ins?.GroupNumber,
-                    HospitalEffectiveDate = ins?.HospitalEffectiveDate.ToString(CultureInfo.InvariantCulture),
-                    In1SetId = ins?.InsuranceID.ToString(CultureInfo.InvariantCulture),
-                    InsCompanyCity = ins?.City,
-                    InsCompanyOtherDesignation = ins?.Address2,
-                    InsCompanyPhoneNumber = ins?.InsuranceCoPhoneNumber,
-                    InsCompanyState = ins?.State,
-                    InsCompanyStreetAddress = ins?.Address1,
-                    InsCompanyZip = ins?.Zip,
-                    InsCompanyZipExtension = ins?.InsuranceCompanyAddress_Zip,
-                    InsEmployerGroupHealthInsurance = root.MSP?.EmployerGroupHealthInsurancePatient,
-                    InsLargeGroupHealthInsurance = root.MSP?.LargeGroupHealthInsurancePatient,
-                    InsuranceAuthorizationInformation = ins?.InsuranceAuthorizationInformation,
-                    InsuranceOrdinality = ins?.Ordinality.ToString(CultureInfo.InvariantCulture),
-                    InsuranceType = ins?.InsuranceType,
-                    IsDupe = ins.IsDupe,
-                    IsPrimary = ins.IsPrimary,
-                    IsTermed = ins.IsTermed,
-                    MajorMedicalFlag = ins?.MajorMedicalFlag,
-                    MajorMedicalPresentLoc = ins?.MajorMedicalPresentLoc,
-                    MasterPolicyNumber = ins?.MasterPolicyNumber,
-                    MedicalAssistanceBenefitPackage = ins?.MedicalAssistanceBenefitPackage,
-                    MedicalAssistanceProgramStatus = ins?.MedicalAssistanceProgramStatus,
-                    MedicalAssistanceResourceCode = ins?.MedicalAssistanceResourceCode,
-                    MedicalInsurance = root.MSP?.MedicalInsurance,
-                    MedicareEligibilityDisability = root.MSP?.MedicareEligibilityDisability,
-                    MedicareEligibilityDisabilityDate = root.MSP?.MedicareEligibilityDisabilityDate,
-                    MedicareLifetimeSignatureAuthDate = ins?.MedicareLifetimeSignatureAuthDate.ToString(CultureInfo.InvariantCulture),
-                    MedicareLifetimeSignatureAuthLocation = ins?.MedicareLifetimeSignatureAuthLocation,
-                    NoticeOfAdmissionDate = ins?.NOAAdmissionDate.ToString(CultureInfo.InvariantCulture),
-                    OverrideInsuranceAddress = ins?.OverrideInsuranceAddress,
-                    OverrideInsuranceCity = ins?.OverrideInsuranceCity,
-                    OverrideInsuranceName = ins?.OverrideInsuranceName,
-                    OverrideInsuranceState = ins?.OverrideInsuranceState,
-                    OverrideInsuranceZip = ins?.OverrideInsuranceZip,
-                    PassportPayerDescription = ins?.PassportPayerDescription,
-                    PassportPayerMnemonic = ins?.PassportPayerMnemonic,
-                    PassportPayerMnemonicOverride = ins?.PassportPayerMnemonicOverride,
-                    PatientMemberNumber = ins?.PatientMemberNumber_IDNumber,
-                    PayerCost = ins?.PayerCost.ToString(CultureInfo.InvariantCulture),
-                    PayerId = ins?.ClientCompanyID,
-                    PayerName = ins?.ClientPayerDescription,
-                    PlanId = ins?.ClientPlanID,
-                    PlanIdentifier = ins?.PlanIdentifier,
-                    PlanNumber = ins?.PlanNumber,
-                    PlanType = ins?.InsurancePlanType,
-                    PoqFinal = ins?.POQFinal.ToString(CultureInfo.InvariantCulture),
-                    PPOIndicator = ins?.PPOIndicator,
-                    PreAdmitCertPac = ins?.PreAdmitCertPAC,
-                    ProfeeAddress = ins?.ProfeeAddress,
-                    ProfeeCity = ins?.ProfeeCity,
-                    ProfeeMailTo = ins?.ProfeeMailTo,
-                    ProfeePhoneNumber = ins?.ProfeePhoneNumber,
-                    ProfeeState = ins?.ProfeeState,
-                    ProfeeZip = ins?.ProfeeZip,
-                    PropertyAndCasualtyClaimNumber = ins?.PropertyAndCasualtyClaimNumber,
-                    RanByUserId = ins?.RanByUserID.ToString(CultureInfo.InvariantCulture),
-                    ReAddedInsurance = ins?.ReAddedInsurance.ToString(CultureInfo.InvariantCulture),
-                    ReleaseInformationCode = ins?.ReleaseInformationCode,
-                    ReportOfEligibilityFlag = ins?.ReportofEligibilityFlag,
-                    RequestedServiceType = ins?.RequestedServiceType,
-                    Response271 = ins?.Response_271,
-                    ResponseCount = ins?.ResponseCount.ToString(CultureInfo.InvariantCulture),
-                    ResponseHiDefXml = ins?.Response_HiDefXML,
-                    ResponseHtml = ins?.Response_HTML,
-                    ResponseRaw = ins?.Response_Raw,
-                    ResponseText = ins?.Response_Text,
-                    RetirementDate = ins?.RetirementDate.ToString(CultureInfo.InvariantCulture),
-                    RoomRatePrivate = ins?.PrivateRoomRate,
-                    RoomRateSemiPrivate = ins?.SemiPrivateRoomRate,
-                    SystemOrder = ins?.SystemOrder.ToString(CultureInfo.InvariantCulture),
-                    TermDate = ins?.TermDate.ToString(CultureInfo.InvariantCulture),
-                    TriggeredIns = ins?.TriggeredIns.ToString(CultureInfo.InvariantCulture),
-                    TXId = ins?.TXID,
-                    TypeOfAgreementCode = ins?.TypeOfAgreementCode,
-                    UserAdded = ins?.UserAdded,
-                    VerificationBy = ins?.VerificationBy,
-                    VerificationStatus = ins?.VerificationStatus,
-                    NoaRawMessage278 = root.NOAs?.RawMessage278,
-                    NoaPreviousAdminRefNumber = root.NOAs?.PreviousAdminRefNumber,
-                    NoaIcd10DiagCode1 = root.NOAs?.ICD10DiagCode1,
-                    NoaMessage = root.NOAs?.Message,
-                    NoaResponseType = root.NOAs?.ResponseType.ToString(CultureInfo.InvariantCulture),
-                    NoaReferenceNumber = root.NOAs?.NOAReferenceNumber,
-                    NoaResponseReceived = root.NOAs?.ResponseReceived,
-                    NoaGenericResponseTypeDescription = root.NOAs?.GenericResponseTypeDescription,
-                    NoaTXId = root.NOAs?.TXID,
-                    NoaReviewIdentificationNumber = root.NOAs?.ReviewIdentificationNumber,
-                    NoaCertificationAction = root.NOAs?.CertificationAction,
-                    NoaClientPayerMnemonic = root.NOAs?.ClientPayerMnemonic,
-                    NoaInsuranceIndex = root.NOAs?.InsuranceIndex.ToString(CultureInfo.InvariantCulture),
-                    NoaInsuranceId = root.NOAs?.InsuranceID.ToString(CultureInfo.InvariantCulture),
-
-                };
-
-                insurances.Add(insurance);
-
-            }
-            return insurances;
-        }
-
-    }
-}
+     }
+     return insurances;
