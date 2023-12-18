@@ -18,3 +18,6 @@ TypeAdapterConfig<SdocAdapter.Root, Event>.ForType()
     .Map(dest => dest.DoNotOverWriteInsurance, src => src.MessageEvent.DoNotOverWriteInsurance)
     // ... otras configuraciones de mapeo ...
     .IgnoreNullValues(true); // Ignorar valores nulos al final para evitar problemas si todas las propiedades son nulas.
+
+
+.Map(dest => dest.AlertCode, src => src.Alerts != null && src.Alerts.Any() ? src.Alerts.First().AlertCode : null, (dest, value) => dest.AlertCode = value as string)
