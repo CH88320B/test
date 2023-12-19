@@ -71,3 +71,11 @@ namespace EH.Shared.SdocToXpmConverter.Mapping.Configs
         }
     }
 }
+
+
+
+        config.ForType<Encounters, SdocRoot>()
+             .Map(dest => dest.Orders.FirstOrDefault().Notes.FirstOrDefault().NoteText, src => src.Order.FirstOrDefault().Note.FirstOrDefault().Comment)
+             .Map(dest => dest.Orders.FirstOrDefault().Notes.FirstOrDefault().Source, src => src.Order.FirstOrDefault().Note.FirstOrDefault().SourceofComment)
+            // .Map(dest => dest.Source, src => src.Order.Note.FirstOrDefault()?.SourceofComment)
+             .IgnoreNonMapped(true);
