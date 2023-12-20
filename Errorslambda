@@ -35,3 +35,7 @@
         { "Access-Control-Allow-Origin", "*" }
       }
       };
+
+********************
+.Map(dest => dest.Orders.Select(o => o.Notes.Select(n => n.NoteText)), src => src.Order.Select(o => o.Note.Select(n => n.Comment)))
+
