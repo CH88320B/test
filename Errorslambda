@@ -37,5 +37,20 @@
       };
 
 ********************
-.Map(dest => dest.Orders.Select(o => o.Notes.Select(n => n.NoteText)), src => src.Order.Select(o => o.Note.Select(n => n.Comment)))
+TypeAdapterConfig<Encounters, XpmRoot>
+    .Map(dest => dest.Orders, src => src.Orders?.Select(order =>
+        new Order
+        {
+            Notes = order.Notes?.Select(note =>
+                new Note
+                {
+                    NoteText = note.Comment,
+                    Source = note.SourceofComment
+                    // Otras propiedades de Note...
+                }).ToList(),
+            // Otras propiedades de Order...
+        }).ToList())
+    // Otras propiedades de XpmRoot...
+    .IgnoreNonMapped(true);
+
 
