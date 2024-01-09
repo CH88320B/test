@@ -15,15 +15,24 @@
 
 
 
+
 config.ForType<Encounters, SdocRoot>()
-    .Map(dest => dest.OrderManagers, src => src.OrderManagers != null && src.OrderManagers.Any()
-        ? new List<OrderManager>
-          {
-              new OrderManager
-              {
-                  OrderStatus = src.OrderManagers.FirstOrDefault()?.OrderStatus
-                  // Otras propiedades de OrderManager que puedas necesitar
-              }
-          }
-        : null)
+    .Map(dest => dest.OrderManagers, src => 
+    {
+        if (src.OrderManagers != null && src.OrderManagers.Any())
+        {
+            return new List<OrderManager>
+            {
+                new OrderManager
+                {
+                    OrderStatus = src.OrderManagers.First().OrderStatus
+                    // Otras propiedades de OrderManager que puedas necesitar
+                }
+            };
+        }
+        else
+        {
+            return null;
+        }
+    })
     .IgnoreNonMapped(true);
