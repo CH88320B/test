@@ -1,0 +1,14 @@
+
+            config.ForType<Encounters, SdocRoot>()
+          .Map(dest => dest.OrderManagers, src => new List<OrderManager>   // incomplete
+
+          {
+
+            new OrderManager
+            {
+             OrderStatus =src.OrderManagers.FirstOrDefault().OrderStatus!= null ? src.OrderManagers.FirstOrDefault().OrderStatus:null
+
+             }
+
+          })
+          .IgnoreNonMapped(true);
