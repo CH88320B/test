@@ -14,13 +14,17 @@
           .IgnoreNonMapped(true);
 
 
+
 config.ForType<Encounters, SdocRoot>()
     .Map(dest => dest.OrderManagers, src =>
     {
-        return src.OrderManagers?.Select(orderManager => new OrderManager
+        if (src.OrderManagers == null)
+            return new List<OrderManager>();
+
+        return src.OrderManagers.Select(orderManager => new OrderManager
         {
-            OrderStatus = orderManager.OrderStatus,
+            OrderStatus = orderManager.OrderStatus
             // Otras propiedades de OrderManager que puedas necesitar
-        }).ToList() ?? new List<OrderManager>();
+        }).ToList();
     })
     .IgnoreNonMapped(true);
