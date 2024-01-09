@@ -16,23 +16,15 @@
 
 
 
+
+
 config.ForType<Encounters, SdocRoot>()
     .Map(dest => dest.OrderManagers, src =>
-    {
-        if (src.OrderManagers != null && src.OrderManagers.Any())
-        {
-            return src.OrderManagers.Select(orderManager => new OrderManager
-            {
-                OrderStatus = orderManager.OrderStatus,
-                // Otras propiedades...
-            }).ToList();
-        }
-        else
-        {
-            // Retorna una lista vacía o nula según tus necesidades
-            return new List<OrderManager>();
-            // O simplemente return null; si quieres que dest.OrderManagers sea nulo en lugar de una lista vacía.
-        }
-    })
+        src.OrderManagers != null && src.OrderManagers.Any()
+            ? src.OrderManagers.Select(orderManager => new OrderManager
+                {
+                    OrderStatus = orderManager.OrderStatus,
+                    // Otras propiedades...
+                }).ToList()
+            : new List<OrderManager>())
     .IgnoreNonMapped(true);
-
