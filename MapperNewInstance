@@ -1,13 +1,12 @@
 
 
 
-.Map(dest => dest.Insurances, src =>
-{
-    var personInsurance = src.Person != null ? src.Person.Insurance : null;
-    return personInsurance != null && personInsurance.Any()
-        ? personInsurance.Select(insurance => new Insurance
-        {
-            // ... lógica ...
-        }).ToList()
-        : new List<Insurance>();
-})
+config.ForType<Encounters, SdocRoot>()
+    .Map(dest => dest.Insurances, src =>
+        src.Person?.Insurance != null && src.Person.Insurance.Any()
+            ? src.Person.Insurance.Select(insurance => new Insurance
+            {
+                // ... lógica ...
+            }).ToList()
+            : new List<Insurance>())
+    .IgnoreNonMapped(true);
