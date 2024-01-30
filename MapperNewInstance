@@ -1,30 +1,24 @@
 
-            config.ForType<Encounters, SdocRoot>()
-          .Map(dest => dest.OrderManagers, src => new List<OrderManager>   // incomplete
-
-          {
-
-            new OrderManager
-            {
-             OrderStatus =src.OrderManagers.FirstOrDefault().OrderStatus!= null ? src.OrderManagers.FirstOrDefault().OrderStatus:null
-
-             }
-
-          })
-          .IgnoreNonMapped(true);
-
-
-
-
 
 
 config.ForType<Encounters, SdocRoot>()
-    .Map(dest => dest.OrderManagers, src =>
-        src.OrderManagers != null && src.OrderManagers.Any()
-            ? src.OrderManagers.Select(orderManager => new OrderManager
-                {
-                    OrderStatus = orderManager.OrderStatus,
-                    // Otras propiedades...
-                }).ToList()
-            : new List<OrderManager>())
+    .Map(dest => dest.Insurances, src =>
+    {
+        // Verificar si Person e Insurance no son nulos antes de intentar acceder a sus propiedades
+        if (src.Person?.Insurance != null && src.Person.Insurance.Any())
+        {
+            return src.Person.Insurance.Select(insurance => new Insurance
+            {
+                // RanByUserID = insurance.Cal_RanByUserID != null ? int.Parse(insurance.Cal_RanByUserID) : 0,
+                InsuranceType = insurance.Cal_InsuranceType,
+                PassportPayerDescription = insurance.Cal_PassportPayerDescription
+                // Otras propiedades...
+            }).ToList();
+        }
+        else
+        {
+            // Devolver una lista vacía si no hay Insurance o está vacía
+            return new List<Insurance>();
+        }
+    })
     .IgnoreNonMapped(true);
