@@ -5,3 +5,20 @@ config.ForType<Encounters, SdocRoot>()
         // Otras propiedades...
     }).ToList() ?? new List<Insurance>())
     .IgnoreNonMapped(true);
+
+
+ config.ForType<Encounters, SdocRoot>()
+.Map(dest => dest.Insurances, src => new List<Insurance>
+
+ {
+
+new Insurance  // incomplete
+{
+    // RanByUserID = src.Person.Insurance.FirstOrDefault().Cal_RanByUserID != null ? int.Parse(src.Person.Insurance.FirstOrDefault().Cal_RanByUserID):0
+     
+   InsuranceType= src.Person.Insurance.FirstOrDefault().Cal_InsuranceType,
+   PassportPayerDescription= src.Person.Insurance.FirstOrDefault().Cal_PassportPayerDescription
+  }
+
+ })
+.IgnoreNonMapped(true);
