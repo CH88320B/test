@@ -1,0 +1,7 @@
+config.ForType<Encounters, SdocRoot>()
+    .Map(dest => dest.Insurances, src => src.Person?.Insurance?.Select(insurance => new Insurance
+    {
+        OrderStatus = insurance.OrderStatus != null ? insurance.OrderStatus : null,
+        // Otras propiedades...
+    }).ToList() ?? new List<Insurance>())
+    .IgnoreNonMapped(true);
