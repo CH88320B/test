@@ -1,24 +1,13 @@
 
 
 
-config.ForType<Encounters, SdocRoot>()
-    .Map(dest => dest.Insurances, src =>
-    {
-        // Verificar si Person e Insurance no son nulos antes de intentar acceder a sus propiedades
-        if (src.Person?.Insurance != null && src.Person.Insurance.Any())
+.Map(dest => dest.Insurances, src =>
+{
+    var personInsurance = src.Person != null ? src.Person.Insurance : null;
+    return personInsurance != null && personInsurance.Any()
+        ? personInsurance.Select(insurance => new Insurance
         {
-            return src.Person.Insurance.Select(insurance => new Insurance
-            {
-                // RanByUserID = insurance.Cal_RanByUserID != null ? int.Parse(insurance.Cal_RanByUserID) : 0,
-                InsuranceType = insurance.Cal_InsuranceType,
-                PassportPayerDescription = insurance.Cal_PassportPayerDescription
-                // Otras propiedades...
-            }).ToList();
-        }
-        else
-        {
-            // Devolver una lista vacía si no hay Insurance o está vacía
-            return new List<Insurance>();
-        }
-    })
-    .IgnoreNonMapped(true);
+            // ... lógica ...
+        }).ToList()
+        : new List<Insurance>();
+})
