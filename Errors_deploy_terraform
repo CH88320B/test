@@ -1,0 +1,34 @@
+Error: creating KMS Key: RequestError: send request failed
+│ caused by: Post "https://kms.us-east-1.amazonaws.com/": dial tcp 67.220.240.83:443: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+│
+│   with aws_kms_key.terraform-bucket-key,
+│   on state.tf line 4, in resource "aws_kms_key" "terraform-bucket-key":
+│    4: resource "aws_kms_key" "terraform-bucket-key" {
+│
+╵
+╷
+│ Error: creating Amazon DynamoDB Table (eec-aws-us-cs-ss-dev-sdoctoxpm-terraform-state): ResourceInUseException: Table already exists: eec-aws-us-cs-ss-dev-sdoctoxpm-terraform-state
+│
+│   with aws_dynamodb_table.terraform-state,
+│   on state.tf line 67, in resource "aws_dynamodb_table" "terraform-state":
+│   67: resource "aws_dynamodb_table" "terraform-state" {
+│
+╵
+╷
+│ Error: creating S3 Bucket (eec-aws-us-cs-ss-dev-terraform-states) ACL: operation error S3: PutBucketAcl, https response error StatusCode: 400, RequestID: XG97CA4G08M89DK0, HostID: unoRmYnXCzo/yqzw0m3hB7O96GMVVZBiertuVki8TBeAA1MevNQgNoOvBZKkXYIDyy76mZ6yCyA=, api error AccessControlListNotSupported: The bucket does not allow ACLs
+│
+│   with aws_s3_bucket_acl.bucket_acl,
+│   on state.tf line 89, in resource "aws_s3_bucket_acl" "bucket_acl":
+│   89: resource "aws_s3_bucket_acl" "bucket_acl" {
+│
+╵
+╷
+│ Error: creating Lambda Function (eec-aws-us-cs-ss-dev-sdoctoxpm): operation error Lambda: CreateFunction, exceeded maximum number of attempts, 25, https response error StatusCode: 0, RequestID: , request send failed, Post "https://lambda.us-east-1.amazonaws.com/2015-03-31/functions": dial tcp 100.25.113.166:443: i/o timeout
+│
+│   with module.lambda.aws_lambda_function.lambda_sdoc_to_xpm_mapper,
+│   on lambda\sdoc_to_xpm.tf line 14, in resource "aws_lambda_function" "lambda_sdoc_to_xpm_mapper":
+│   14: resource "aws_lambda_function" "lambda_sdoc_to_xpm_mapper" {
+│
+╵
+
+C:\Users\C88320B\source\repos\eh.shared.sdocjsontoxpmconverterlambda\Terraform>
