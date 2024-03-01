@@ -1,0 +1,80 @@
+public List<Insurance>? Insurances { get; set; }
+
+public class Insurance
+{
+    public Insurance()
+    {
+     
+
+        RanByUserID = CDReqID = CDProcID = InsuranceID = DLPVID = DSID = Index = SetID = 0;
+
+        PayerCost = Ordinality = SystemOrder = ResponseCount = 0;
+
+    }
+
+
+  
+    public decimal PayerCost { get; set; }
+    public int CDProcID { get; set; }
+    public int CDReqID { get; set; }
+    public int DLPVID { get; set; }
+    public int DSID { get; set; }
+    public int Index { get; set; }
+    public int InsuranceID { get; set; }
+    public int Ordinality { get; set; }
+    public int RanByUserID { get; set; }
+    public int ResponseCount { get; set; }
+    public int SetID { get; set; }
+    public int SystemOrder { get; set; }
+   
+    public Subscriber Subscriber { get; set; }
+   
+}
+
+
+public class Subscriber
+{
+    public Subscriber()
+    {
+        SubscriberID = MedicaidID = EmploymentStatus = EmployerName = InsuredsGroupEmpID = InsuredsGroupEmpOrganizationName =
+        LastName = FirstName = MiddleName = NameSuffix = OriginalRelationshipToPatientCode = ClientRelationshipToPatient =
+        Address1 = Address2 = City = State = Zip = Sex = InsuredIDNumber = EmployeeID = SSN =
+        GuarantorsRelationshipToInsured = InsuredsGroupEmpName = HICNumber = FullName = SubscriberHomePhone = SubscriberWorkPhone = string.Empty;
+
+        SubscriberPersonMasterIndexNum = "0";
+
+        DateOfBirth = DateTime.MinValue;
+    }
+    public DateTime DateOfBirth { get; set; }
+    public string Address1 { get; set; }
+    public string Address2 { get; set; }
+    public string City { get; set; }
+    public string ClientRelationshipToPatient { get; set; }
+
+}
+
+
+
+config.ForType<Encounters, SdocRoot>()
+.Map(dest => dest.Insurances, src =>
+src.Person.Insurance != null && src.Person.Insurance.Any()
+ ? src.Person.Insurance.Select(insurance => new Insurance
+ {
+     InsuranceType = src.Person.Insurance.FirstOrDefault().Cal_InsuranceType,
+    
+     InsuranceID = int.Parse(src.Person.Insurance.FirstOrDefault().Cal_InsuranceID),
+     
+    DLPVID = int.Parse(src.Person.Insurance.FirstOrDefault().Cal_DLPVID),
+     DSID = int.Parse(src.Person.Insurance.FirstOrDefault().Cal_DSID),
+     Index = int.Parse(src.Person.Insurance.FirstOrDefault().Cal_Index),
+     SetID = int.Parse(src.Person.Insurance.FirstOrDefault().Cal_InsuranceID),
+     PayerCost = decimal.Parse(src.Person.Insurance.FirstOrDefault().Cal_PayerCost),
+     Ordinality = int.Parse(src.Person.Insurance.FirstOrDefault().Cal_InsuranceOrdinality),
+     SystemOrder = int.Parse(src.Person.Insurance.FirstOrDefault().Cal_SystemOrder),
+     ResponseCount = int.Parse(src.Person.Insurance.FirstOrDefault().Cal_ResponseCount)
+    
+     
+
+ }).ToList()
+ : new List<Insurance>()) 
+    .IgnoreNonMapped(true);
