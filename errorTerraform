@@ -1,1 +1,54 @@
  Error: creating Lambda Function (eec-aws-us-cs-ss-dev-sdoctoxpm): operation error Lambda: CreateFunction, https response error StatusCode: 403, RequestID: 1b56dedc-c5b5-464c-8b49-0b56f388361f, api error AccessDeniedException: User: arn:aws:iam:::user/r is not authorized to perform: iam:PassRole on resource: arn:aws:iam:::role/RolApiGatewayConverter because no permissions boundary allows the iam:PassRole action
+ {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "ScopeToPrivateApis",
+            "Effect": "Allow",
+            "Action": [
+                "iam:ListRoles",
+                "iam:PassRole",
+                "iam:ListPolicies",
+                "apigateway:PATCH",
+                "apigateway:POST",
+                "apigateway:PUT",
+                "sqs:ListQueues",
+                "cloudwatch:*"
+            ],
+            "Resource": [
+                "arn:aws:apigateway:us-east-1::/restapis",
+                "*"
+            ],
+            "Condition": {
+                "ForAllValues:StringEqualsIfExists": {
+                    "apigateway:Request/EndpointType": "PRIVATE",
+                    "apigateway:Resource/EndpointType": "PRIVATE"
+                }
+            }
+        },
+        {
+            "Sid": "AllowResourcePolicyUpdates",
+            "Effect": "Allow",
+            "Action": [
+                "apigateway:UpdateRestApiPolicy",
+                "sqs:*",
+                "rolesanywhere:*"
+            ],
+            "Resource": [
+                "arn:aws:apigateway:us-east-1::/restapis/*",
+                "*",
+                "*"
+            ]
+        },
+        {
+            "Sid": "Statement1",
+            "Effect": "Allow",
+            "Action": [
+                "s3:*"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
