@@ -1,0 +1,76 @@
+
+module "api" {
+  source                          = "./api"
+  environment                     = var.environment
+  resource_prefix                 = var.resource_prefix
+  allowed_account_id              = var.allowed_account_id
+  aws_lambda_mapper_arn           = module.lambda.aws_lambda_mapper_arn
+  aws_lambda_mapper_function_name = module.lambda.aws_lambda_mapper_function_name
+  depends_on                      = [module.lambda]
+}
+
+module "lambda" {
+  source                 = "./lambda"
+  environment            = var.environment
+  resource_prefix        = var.resource_prefix
+  allowed_account_id     = var.allowed_account_id
+  lambda_role            = var.lambda_role
+}
+
+
+
+resource "aws_apigatewayv2_api" "mapper_api" {
+  name          = "${var.resource_prefix}-${var.environment}-sdoc_xpm_mapper"
+  protocol_type = var.protocol_type
+  description   = "Mapper that will convert SDoc XML to XPM in JSon format"
+}
+
+resource "aws_apigatewayv2_stage" "lambda" {
+  api_id = aws_apigatewayv2_api.mapper_api.id
+
+  name        = var.environment
+  auto_deploy = true
+
+ }
+
+resource "aws_apigatewayv2_integration" "mapper_lambda_integration" {
+  api_id = aws_apigatewayv2_api.mapper_api.id
+
+  integration_uri           = var.aws_lambda_mapper_arn
+  integration_type          = var.integration_type
+  integration_method        = var.integration_method
+}
+
+resource "aws_apigatewayv2_route" "mapper_route" {
+  api_id = aws_apigatewayv2_api.mapper_api.id
+
+  route_key = "POST /map"
+  target    = "integrations/${aws_apigatewayv2_integration.mapper_lambda_integration.id}"
+}
+
+resource "aws_lambda_permission" "api_gw" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = var.aws_lambda_mapper_function_name
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_apigatewayv2_api.mapper_api.execution_arn}/*/*"
+}
+
+
+
+# dev
+terraform {
+  backend "s3" {
+   bucket         = "eec-aws-us-cs-ss-dev-ss-dev-terraform-states"
+   key            = "terraform.tfstate"
+   region         = "us-east-1"
+   encrypt        = true
+   acl            = "private"
+   skip_credentials_validation = true
+   kms_key_id     = "alias/eec-aws-us-cs-ss-dev-sdoctoxpm-state-bucket-keys"
+   dynamodb_table = "eec-aws-us-cs-ss-dev-sdoctoxpm-terraform-state"
+   profile        = "eec-ss-sdoc-dev"
+ }
+}
+
