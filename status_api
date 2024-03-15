@@ -1,0 +1,9 @@
+I am currently working on configuring deployments to the DEV/UAT environments in Terraform on AWS. I'm dealing with an issue related to transitioning from an API Proxy to an API REST, which has proven challenging due to the trial-and-error nature of the support I've received
+
+The API code previously provided is in version NET 6.0. I am now migrating it to NET 8.0. The changes involve updating some Nuget libraries, changing the lambda function calls, and configuring lambda in the AWS console.
+
+
+
+
+
+
