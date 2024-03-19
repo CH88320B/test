@@ -57,25 +57,40 @@ terraform {
 
 
 
+resource "aws_apigatewayv2_api" "jdocjsontoxpm-api2" {
+  name                = "jdocjsontoxpm-api2"
+  description         = "jdocjsontoxpm-api2"
+  apiKeySource        = "HEADER"
+  disable_execute_api_endpoint = true
+  route_key           = "$default"
+
+  endpoint_configuration {
+    types             = ["PRIVATE"]
+    vpc_endpoint_ids = ["vpce-0896c7809aa4af317"]
+  }
+
+  policy = <<POLICY
 {
-    "items": [
-        {
-            "id": "ha39nvkb2g",
-            "name": "jdocjsontoxpm-api2",
-            "description": "jdocjsontoxpm-api2",
-            "createdDate": "2023-07-28T09:46:51-06:00",
-            "apiKeySource": "HEADER",
-            "endpointConfiguration": {
-                "types": [
-                    "PRIVATE"
-                ],
-                "vpcEndpointIds": [
-                    "vpce-0896c7809aa4af317"
-                ]
-            },
-            "policy": "{\\\"Version\\\":\\\"2012-10-17\\\",\\\"Statement\\\":[{\\\"Effect\\\":\\\"Allow\\\",\\\"Principal\\\":\\\"*\\\",\\\"Action\\\":\\\"execute-api:Invoke\\\",\\\"Resource\\\":\\\"arn:aws:execute-api:us-east-1:901763029074:ha39nvkb2g*\\\"},{\\\"Effect\\\":\\\"Deny\\\",\\\"Principal\\\":\\\"*\\\",\\\"Action\\\":\\\"execute-api:Invoke\\\",\\\"Resource\\\":\\\"arn:aws:execute-api:us-east-1:901763029074:ha39nvkb2g*\\\",\\\"Condition\\\":{\\\"StringNotEquals\\\":{\\\"aws:SourceVpce\\\":\\\"vpce-0896c7809aa4af317\\\"}}}]}",
-            "disableExecuteApiEndpoint": true,
-            "rootResourceId": "5gr7w0h8wa"
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "execute-api:Invoke",
+      "Resource": "arn:aws:execute-api:us-east-1:901763029074:${aws_apigatewayv2_api.jdocjsontoxpm-api2.id}/*"
+    },
+    {
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "execute-api:Invoke",
+      "Resource": "arn:aws:execute-api:us-east-1:901763029074:${aws_apigatewayv2_api.jdocjsontoxpm-api2.id}/*",
+      "Condition": {
+        "StringNotEquals": {
+          "aws:SourceVpce": "vpce-0896c7809aa4af317"
         }
-    ]
+      }
+    }
+  ]
+}
+POLICY
 }
