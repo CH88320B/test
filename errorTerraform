@@ -1,39 +1,15 @@
- Error: Missing required argument
+╷
+│ Error: Missing required argument
 │
-│   on api\sdoc_to_xpm.tf line 19, in resource "aws_apigatewayv2_api" "jdocjsontoxpm-api2":
-│   19: resource "aws_apigatewayv2_api" "jdocjsontoxpm-api2" {
+│   on api\sdoc_to_xpm.tf line 1, in resource "aws_apigatewayv2_api" "jdocjsontoxpm-api2":
+│    1: resource "aws_apigatewayv2_api" "jdocjsontoxpm-api2" {
 │
 │ The argument "protocol_type" is required, but no definition was found.
 ╵
 ╷
 │ Error: Unsupported argument
 │
-│   on api\sdoc_to_xpm.tf line 22, in resource "aws_apigatewayv2_api" "jdocjsontoxpm-api2":
-│   22:   apiKeySource        = "HEADER"
+│   on api\sdoc_to_xpm.tf line 4, in resource "aws_apigatewayv2_api" "jdocjsontoxpm-api2":
+│    4:   apiKeySelectionExpression = "$request.header.x-api-key"
 │
-│ An argument named "apiKeySource" is not expected here.
-╵
-╷
-│ Error: Unsupported block type
-│
-│   on api\sdoc_to_xpm.tf line 26, in resource "aws_apigatewayv2_api" "jdocjsontoxpm-api2":
-│   26:   endpoint_configuration {
-│
-│ Blocks of type "endpoint_configuration" are not expected here.
-╵
-╷
-│ Error: Reference to undeclared resource
-│
-│   on api\sdoc_to_xpm.tf line 35, in resource "aws_apigatewayv2_integration" "mapper_lambda_integration":
-│   35:   api_id             = aws_apigatewayv2_api.mapper_api.id
-│
-│ A managed resource "aws_apigatewayv2_api" "mapper_api" has not been declared in module.api.
-╵
-╷
-│ Error: Reference to undeclared resource
-│
-│   on api\sdoc_to_xpm.tf line 54, in resource "aws_lambda_permission" "api_gw":
-│   54:   source_arn    = "${aws_apigatewayv2_api.mapper_api.execution_arn}/*/*"
-│
-│ A managed resource "aws_apigatewayv2_api" "mapper_api" has not been declared in module.api.
-╵
+│ An argument named "apiKeySelectionExpression" is not expected here.
