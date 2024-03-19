@@ -1,96 +1,21 @@
-# Define el recurso VPC Endpoint
-resource "aws_apigatewayv2_vpc_link" "my_vpc_link" {
-  name             = "${var.resource_prefix}-${var.environment}-vpc-link"
-  security_group_ids = ["sg-12345678"] # IDs de los grupos de seguridad que permiten el tráfico de API Gateway
-  subnet_ids       = ["subnet-12345678"]   # IDs de las subredes donde se encuentra el VPCE
-}
-
-# Define la API Gateway
-resource "aws_apigatewayv2_api" "mapper_api" {
-  name = "${var.resource_prefix}-${var.environment}-sdoc_xpm_mapper"
-  target = "REGIONAL"
-  endpoint_configuration {
-    types = ["PRIVATE"]
-    vpc_endpoint_id = aws_apigatewayv2_vpc_link.my_vpc_link.id
-  }
-  description = "Mapper that will convert SDoc XML to XPM in JSON format"
-}
-
-# Define la integración de Lambda con la API Gateway
-resource "aws_apigatewayv2_integration" "mapper_lambda_integration" {
-  api_id             = aws_apigatewayv2_api.mapper_api.id
-  integration_uri    = var.aws_lambda_mapper_arn
-  integration_type   = var.integration_type
-  integration_method = var.integration_method
-}
-
-# Define la ruta de la API Gateway
-resource "aws_apigatewayv2_route" "mapper_route" {
-  api_id    = aws_apigatewayv2_api.mapper_api.id
-  route_key = "POST /map"
-  target    = "integrations/${aws_apigatewayv2_integration.mapper_lambda_integration.id}"
-}
-
-# Define los permisos de Lambda para la API Gateway
-resource "aws_lambda_permission" "api_gw" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = var.aws_lambda_mapper_function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.mapper_api.execution_arn}/*/*"
-}
-
-# Configuración del backend de Terraform (backend S3)
-terraform {
-  backend "s3" {
-    bucket                         = "eec-aws-us-cs-ss-dev-ss-dev-terraform-states"
-    key                            = "terraform.tfstate"
-    region                         = "us-east-1"
-    encrypt                        = true
-    acl                            = "private"
-    skip_credentials_validation    = true
-    kms_key_id                     = "alias/eec-aws-us-cs-ss-dev-sdoctoxpm-state-bucket-keys"
-    dynamodb_table                 = "eec-aws-us-cs-ss-dev-sdoctoxpm-terraform-state"
-    profile                        = "eec-ss-sdoc-dev"
-  }
-}
-
-
-
 resource "aws_apigatewayv2_api" "jdocjsontoxpm-api2" {
   name                = "jdocjsontoxpm-api2"
   description         = "jdocjsontoxpm-api2"
-  apiKeySource        = "HEADER"
-  disable_execute_api_endpoint = true
-  route_key           = "$default"
-
-  endpoint_configuration {
-    types             = ["PRIVATE"]
-    vpc_endpoint_ids = ["vpce-0896c7809aa4af317"]
-  }
-
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": "execute-api:Invoke",
-      "Resource": "arn:aws:execute-api:us-east-1:901763029074:${aws_apigatewayv2_api.jdocjsontoxpm-api2.id}/*"
-    },
-    {
-      "Effect": "Deny",
-      "Principal": "*",
-      "Action": "execute-api:Invoke",
-      "Resource": "arn:aws:execute-api:us-east-1:901763029074:${aws_apigatewayv2_api.jdocjsontoxpm-api2.id}/*",
-      "Condition": {
-        "StringNotEquals": {
-          "aws:SourceVpce": "vpce-0896c7809aa4af317"
-        }
-      }
-    }
-  ]
+  apiKeySelectionExpression = "$request.header.x-api-key"
 }
-POLICY
+
+resource "aws_apigatewayv2_integration" "mapper_lambda_integration" {
+  api_id             = aws_apigatewayv2_api.jdocjsontoxpm-api2.id
+  integration_type   = "AWS_PROXY"
+  integration_method = "POST"
+  integration_uri    = aws_lambda_function.mapper_lambda.invoke_arn
+}
+
+resource "aws_lambda_permission" "api_gw" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.mapper_lambda.function_name
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = aws_apigatewayv2_api.jdocjsontoxpm-api2.execution_arn
 }
