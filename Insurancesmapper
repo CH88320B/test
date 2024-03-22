@@ -1,0 +1,11 @@
+
+            config.ForType<Encounters, SdocRoot>()
+     .Map(dest => dest.Insurances, src =>
+     src.Person.Insurance != null && src.Person.Insurance.Any()
+      ? src.Person.Insurance.Select(insurance => new Insurance
+      {
+          PassportInsuranceFound = src.Person.Insurance.Adapt<Calculated>().ExperianAdded
+
+      }).ToList()
+        : new List<Insurance>())
+           .IgnoreNonMapped(true);
