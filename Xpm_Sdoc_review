@@ -1,0 +1,87 @@
+
+con mapster  pasar con los Json de origen Encounters a destino Sdoc  pero Calculated debe ir Encounter ExperianAdded  con SDoc_Roo BadPlanCodeIncorrectPlanCode
+
+{           
+     "Encounter": [
+        {
+            "EncounterID": null,
+            "Metadata": {
+                "EPin": {
+                    "EncounterId": ""
+                }
+            },
+        ,
+            "Person": {
+                "Insurance": [
+                    {
+                        "IN1ID": "0",
+                        "ClientPlanID": null,
+                        "ClientCompanyID": null,
+                        "PayerName": null,
+                        "CertificationExpireDate": null,
+                        "Subscriber": {
+                            "GroupEmployerIDNumber": null,
+                            "sub_OrganizationName": null,
+                            "sub_LastName": "MCLOUD",
+                            "InsuredsEmployerPhoneNumber": "",
+                            "InsuredsPhoneNumberHome": ""
+                        },
+                        "Calculated":{
+						 "ExperianAdded": ""
+						},
+                        "PlanNumber": "",
+                        "HcfaPatientRelationshipToInsured": null,
+                        "CertificationExpireDate": null,
+                        "Subscriber": {
+                            "GroupEmployerIDNumber": null,
+                            "sub_OrganizationName": null,
+                            "sub_LastName": "VADER",
+                            "sub_FirstName": "DARTH",
+                            "InsuredsEmployerPhoneNumber": "",
+                            "InsuredsPhoneNumberHome": ""
+                        },
+                        "Calculated": null,
+                        "PlanNumber": "",
+                        "MedicareLifetimeSignatureAuthLocation": "",
+                        "PayerID": "",
+                        "PolicyNumber": null,
+                        "InfoProviderNumber": "",
+                        "InfoProviderRepName": ""
+                    }
+                ],
+               
+    ]
+}
+
+
+
+
+{
+    "SDoc_Root": {                                                        
+        "Insurances": [
+            {
+                "AccidentDate": "0001-01-01T00:00:00",
+                "Address1": null,
+                "Address2": null,
+                "AssignmentOfBenefits": "",
+                "BadPlanCodeIncorrectPlanCode": null,
+         
+                "RQA_PayerMappingCode": null,
+                "RQA_PayerMappingDescription": null,
+                "SemiPrivateRoomRate": "",
+                "SetID": 0,
+                "State": null,
+                "Subscriber": {
+                    "Address_AddressType": null,
+                    "Address_Country": null,
+                    "Address_CountyOrParishCode": null,
+                    "StreetNumber": null,
+                    "SubscriberID": "U4132636001",
+                    "SubscriberPersonMasterIndexNum": null,
+                    "WorkPhone": null,
+                    "Zip": "37130",
+                    "ZipExtension": null
+                }
+                
+        ]
+
