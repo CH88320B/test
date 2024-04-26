@@ -12,3 +12,397 @@ resource "aws_iam_role" "lambda" {
     }
   }
 }
+
+
+
+ # data.aws_iam_policy_document.deployment_policy will be read during apply
+  # (config refers to values not yet known)
+ <= data "aws_iam_policy_document" "deployment_policy" {
+      + id   = (known after apply)
+      + json = (known after apply)
+
+      + statement {
+          + actions   = [
+              + "ecr:BatchCheckLayerAvailability",
+              + "ecr:CompleteLayerUpload",
+              + "ecr:CreateRepository",
+              + "ecr:DescribeRepositories",
+              + "ecr:GetAuthorizationToken",
+              + "ecr:InitiateLayerUpload",
+              + "ecr:PutImage",
+              + "ecr:PutLifecyclePolicy",
+              + "ecr:UploadLayerPart",
+              + "eks:AccessKubernetesApi",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + "*",
+            ]
+        }
+      + statement {
+          + actions   = [
+              + "s3:DeleteObject",
+              + "s3:GetObject",
+              + "s3:PutObject",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + "arn:aws:s3:::xpm-converter-901763029074/lambda/*",
+            ]
+        }
+      + statement {
+          + actions   = [
+              + "kms:Decrypt",
+              + "kms:GenerateDataKey",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + "arn:aws:kms:us-east-1:901763029074:key/aa956144-390d-448b-9bc6-30bd9e1e7ebf",
+            ]
+        }
+      + statement {
+          + actions   = [
+              + "lambda:GetFunctionConfiguration",
+              + "lambda:PublishLayerVersion",
+              + "lambda:PublishVersion",
+              + "lambda:UpdateFunctionCode",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + (known after apply),
+            ]
+        }
+    }
+
+  # data.aws_iam_policy_document.pe_invoke_chip_auth will be read during apply
+  # (config refers to values not yet known)
+ <= data "aws_iam_policy_document" "pe_invoke_chip_auth" {
+      + id   = (known after apply)
+      + json = (known after apply)
+
+      + statement {
+          + actions   = [
+              + "lambda:InvokeFunction",
+            ]
+          + effect    = "Allow"
+          + resources = [
+              + (known after apply),
+            ]
+        }
+    }
+
+  # aws_api_gateway_authorizer.pe_chip_auth will be created
+  + resource "aws_api_gateway_authorizer" "pe_chip_auth" {
+      + arn                              = (known after apply)
+      + authorizer_credentials           = (known after apply)
+      + authorizer_result_ttl_in_seconds = 300
+      + authorizer_uri                   = (known after apply)
+      + id                               = (known after apply)
+      + identity_source                  = "method.request.header.authorizationToken"
+      + name                             = "CHIP"
+      + rest_api_id                      = "grv5b09t7j"
+      + type                             = "TOKEN"
+    }
+
+  # aws_api_gateway_deployment.xpmconverter_deployment will be created
+  + resource "aws_api_gateway_deployment" "xpmconverter_deployment" {
+      + created_date      = (known after apply)
+      + execution_arn     = (known after apply)
+      + id                = (known after apply)
+      + invoke_url        = (known after apply)
+      + rest_api_id       = "grv5b09t7j"
+      + stage_description = (known after apply)
+    }
+
+  # aws_api_gateway_integration.xpmconverter_proxy_integration will be created
+  + resource "aws_api_gateway_integration" "xpmconverter_proxy_integration" {
+      + cache_namespace         = (known after apply)
+      + connection_type         = "INTERNET"
+      + credentials             = "arn:aws:iam::901763029074:role/BURoleForAPI-xpm-converter-dev-xpmconverter"
+      + http_method             = "ANY"
+      + id                      = (known after apply)
+      + integration_http_method = "ANY"
+      + passthrough_behavior    = (known after apply)
+      + request_parameters      = {
+          + "integration.request.path.proxy" = "method.request.path.proxy"
+        }
+      + resource_id             = "26km5s"
+      + rest_api_id             = "grv5b09t7j"
+      + timeout_milliseconds    = 29000
+      + type                    = "HTTP_PROXY"
+      + uri                     = "https://services.ecare.com/pfews/api/{proxy}"
+    }
+
+  # aws_api_gateway_method.xpmconverter_proxy_method will be created
+  + resource "aws_api_gateway_method" "xpmconverter_proxy_method" {
+      + api_key_required   = false
+      + authorization      = "CUSTOM"
+      + authorizer_id      = (known after apply)
+      + http_method        = "ANY"
+      + id                 = (known after apply)
+      + request_parameters = {
+          + "method.request.path.proxy" = true
+        }
+      + resource_id        = "26km5s"
+      + rest_api_id        = "grv5b09t7j"
+    }
+
+  # aws_api_gateway_method_settings.api_gateway_to_xpmconverter will be created
+  + resource "aws_api_gateway_method_settings" "api_gateway_to_xpmconverter" {
+      + id          = (known after apply)
+      + method_path = "*/*"
+      + rest_api_id = "grv5b09t7j"
+      + stage_name  = "v1"
+
+      + settings {
+          + cache_data_encrypted                       = (known after apply)
+          + cache_ttl_in_seconds                       = (known after apply)
+          + caching_enabled                            = (known after apply)
+          + data_trace_enabled                         = (known after apply)
+          + logging_level                              = "INFO"
+          + metrics_enabled                            = true
+          + require_authorization_for_cache_control    = (known after apply)
+          + throttling_burst_limit                     = -1
+          + throttling_rate_limit                      = -1
+          + unauthorized_cache_control_header_strategy = (known after apply)
+        }
+    }
+
+  # aws_api_gateway_stage.xpmconverter_deployment_stage will be created
+  + resource "aws_api_gateway_stage" "xpmconverter_deployment_stage" {
+      + arn           = (known after apply)
+      + deployment_id = (known after apply)
+      + execution_arn = (known after apply)
+      + id            = (known after apply)
+      + invoke_url    = (known after apply)
+      + rest_api_id   = "grv5b09t7j"
+      + stage_name    = "v1"
+      + tags_all      = (known after apply)
+      + web_acl_arn   = (known after apply)
+    }
+
+  # aws_iam_policy.deployment_policy will be created
+  + resource "aws_iam_policy" "deployment_policy" {
+      + arn              = (known after apply)
+      + attachment_count = (known after apply)
+      + description      = "Policy for the deployment user for Xpm Converter API"
+      + id               = (known after apply)
+      + name             = "BUPolicyForDeployment-PatientEstimates"
+      + name_prefix      = (known after apply)
+      + path             = "/"
+      + policy           = (known after apply)
+      + policy_id        = (known after apply)
+      + tags_all         = (known after apply)
+    }
+
+  # aws_iam_role.xpmconverter_api_auth will be created
+  + resource "aws_iam_role" "xpmconverter_api_auth" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "apigateway.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "BURoleForAPIAuth-xpm-converter-dev-xpmconverter"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + permissions_boundary  = "arn:aws:iam::901763029074:policy/BUAdminBasePolicy"
+      + tags_all              = (known after apply)
+      + unique_id             = (known after apply)
+
+      + inline_policy {
+          + name   = "BUPolicyForAPIAuth-xpm-converter-dev-xpmconverter"
+          + policy = (known after apply)
+        }
+    }
+
+  # module.lambda_chip_auth.aws_iam_role.lambda will be created
+  + resource "aws_iam_role" "lambda" {
+      + arn                   = (known after apply)
+      + assume_role_policy    = jsonencode(
+            {
+              + Statement = [
+                  + {
+                      + Action    = "sts:AssumeRole"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "lambda.amazonaws.com"
+                        }
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + create_date           = (known after apply)
+      + force_detach_policies = false
+      + id                    = (known after apply)
+      + managed_policy_arns   = (known after apply)
+      + max_session_duration  = 3600
+      + name                  = "BURoleForLambda-xpm-converter-dev-chip-auth"
+      + name_prefix           = (known after apply)
+      + path                  = "/"
+      + permissions_boundary  = "arn:aws:iam::901763029074:policy/BUAdminBasePolicy"
+      + tags_all              = (known after apply)
+      + unique_id             = (known after apply)
+
+      + inline_policy {
+          + name   = "BUPolicyForLambda-xpm-converter-dev-chip-auth"
+          + policy = jsonencode(
+                {
+                  + Statement = [
+                      + {
+                          + Action = [
+                              + "secretsmanager:ListSecretVersionIds",
+                              + "secretsmanager:GetSecretValue",
+                              + "secretsmanager:GetResourcePolicy",
+                              + "secretsmanager:GetRandomPassword",
+                              + "secretsmanager:DescribeSecret",
+                            ]
+                          + Effect = "Allow"
+                        },
+                    ]
+                  + Version   = "2012-10-17"
+                }
+            )
+        }
+    }
+
+  # module.lambda_chip_auth.aws_iam_role_policy_attachment.attach_basic_execution_role will be created
+  + resource "aws_iam_role_policy_attachment" "attach_basic_execution_role" {
+      + id         = (known after apply)
+      + policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+      + role       = "BURoleForLambda-xpm-converter-dev-chip-auth"
+    }
+
+  # module.lambda_chip_auth.aws_lambda_function.lambda_function will be created
+  + resource "aws_lambda_function" "lambda_function" {
+      + architectures                  = [
+          + "arm64",
+        ]
+      + arn                            = (known after apply)
+      + description                    = "CHIP Authentication"
+      + filename                       = "/tmp/lambda_chip-auth.zip"
+      + function_name                  = "xpm-converter-lambda-chip-auth"
+      + handler                        = "EH.Shared.SdocJsonToXpmConverterLambda::EH.Shared.SdocJsonToXpmConverterLambda.Function::FunctionHandler"
+      + id                             = (known after apply)
+      + invoke_arn                     = (known after apply)
+      + last_modified                  = (known after apply)
+      + memory_size                    = 2048
+      + package_type                   = "Zip"
+      + publish                        = false
+      + qualified_arn                  = (known after apply)
+      + qualified_invoke_arn           = (known after apply)
+      + reserved_concurrent_executions = -1
+      + role                           = (known after apply)
+      + runtime                        = "dotnet6"
+      + signing_job_arn                = (known after apply)
+      + signing_profile_version_arn    = (known after apply)
+      + skip_destroy                   = false
+      + source_code_hash               = (known after apply)
+      + source_code_size               = (known after apply)
+      + tags_all                       = (known after apply)
+      + timeout                        = 30
+      + version                        = (known after apply)
+
+      + environment {
+          + variables = {
+              + "ACTION"                   = "execute-api:Invoke"
+              + "AWS_LAMBDA_DOTNET_PREJIT" = "Always"
+              + "RESOURCE"                 = "arn:aws:execute-api:us-east-1:901763029074:grv5b09t7j/*"
+              + "SECRET_REGION"            = "us-east-1"
+              + "VALID_AUDIENCE"           = "ExperianHealth"
+              + "VALID_ISSUER"             = "CentralizedHealthcareIdentityProvider"
+              + "VERSION_STAGE"            = "AWSCURRENT"
+            }
+        }
+    }
+
+  # module.log_group_xpm-converter.aws_cloudwatch_log_group.this will be created
+  + resource "aws_cloudwatch_log_group" "this" {
+      + arn               = (known after apply)
+      + id                = (known after apply)
+      + kms_key_id        = (known after apply)
+      + log_group_class   = (known after apply)
+      + name              = "API-Gateway-Execution-Logs_grv5b09t7j/v1"
+      + name_prefix       = (known after apply)
+      + retention_in_days = 3
+      + skip_destroy      = false
+      + tags_all          = (known after apply)
+    }
+
+  # module.log_group_xpm-converter.aws_kms_key.cloudwatch_logs_key will be created
+  + resource "aws_kms_key" "cloudwatch_logs_key" {
+      + arn                                = (known after apply)
+      + bypass_policy_lockout_safety_check = false
+      + customer_master_key_spec           = "SYMMETRIC_DEFAULT"
+      + description                        = "kms key for API-Gateway-Execution-Logs_grv5b09t7j/v1 log group"
+      + enable_key_rotation                = false
+      + id                                 = (known after apply)
+      + is_enabled                         = true
+      + key_id                             = (known after apply)
+      + key_usage                          = "ENCRYPT_DECRYPT"
+      + multi_region                       = (known after apply)
+      + policy                             = jsonencode(
+            {
+              + Id        = "key-default-1"
+              + Statement = [
+                  + {
+                      + Action    = "kms:*"
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + AWS = "arn:aws:iam::901763029074:root"
+                        }
+                      + Resource  = "*"
+                      + Sid       = "Enable IAM User Permissions"
+                    },
+                  + {
+                      + Action    = [
+                          + "kms:Encrypt*",
+                          + "kms:Decrypt*",
+                          + "kms:ReEncrypt*",
+                          + "kms:GenerateDataKey*",
+                          + "kms:Describe*",
+                        ]
+                      + Effect    = "Allow"
+                      + Principal = {
+                          + Service = "logs.us-east-1.amazonaws.com"
+                        }
+                      + Resource  = "*"
+                    },
+                ]
+              + Version   = "2012-10-17"
+            }
+        )
+      + tags_all                           = (known after apply)
+    }
+
+Plan: 13 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+module.lambda_chip_auth.aws_iam_role.lambda: Creating...
+╷
+│ Error: creating IAM Role (BURoleForLambda-xpm-converter-dev-chip-auth): operation error IAM: CreateRole, https response error StatusCode: 409, RequestID: e25e438e-fd04-4295-8bbf-60fbe1c1e706, EntityAlreadyExists: Role with name BURoleForLambda-xpm-converter-dev-chip-auth already exists.
+│
+│   with module.lambda_chip_auth.aws_iam_role.lambda,
+│   on Modules\lambda\main.tf line 16, in resource "aws_iam_role" "lambda":
+│   16: resource "aws_iam_role" "lambda" {
+│
