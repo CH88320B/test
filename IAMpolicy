@@ -396,13 +396,32 @@ Do you want to perform these actions?
   Terraform will perform the actions described above.
   Only 'yes' will be accepted to approve.
 
-  Enter a value: yes
-
-module.lambda_chip_auth.aws_iam_role.lambda: Creating...
-╷
-│ Error: creating IAM Role (BURoleForLambda-xpm-converter-dev-chip-auth): operation error IAM: CreateRole, https response error StatusCode: 409, RequestID: e25e438e-fd04-4295-8bbf-60fbe1c1e706, EntityAlreadyExists: Role with name BURoleForLambda-xpm-converter-dev-chip-auth already exists.
+  Enter a value: ╷
+│ Error: creating IAM Role (BURoleForLambda-xpm-converter-dev-chip-auth): adding inline policy (BUPolicyForLambda-xpm-converter-dev-chip-auth): operation error IAM: PutRolePolicy, https response error StatusCode: 400, RequestID: f718cd51-43b1-4597-b192-8ceb572007ff, MalformedPolicyDocument: Policy statement must contain resources.
 │
 │   with module.lambda_chip_auth.aws_iam_role.lambda,
-│   on Modules\lambda\main.tf line 16, in resource "aws_iam_role" "lambda":
-│   16: resource "aws_iam_role" "lambda" {
+│   on Modules\lambda\main.tf line 17, in resource "aws_iam_role" "lambda":
+│   17: resource "aws_iam_role" "lambda" {
+│
+data "aws_iam_policy_document" "policy_document" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "sts:AssumeRole",
+    "Resource": [
+                "arn:aws:apigateway:us-east-1::/restapis",
+                "arn:aws:iam::901763029074:role/RolApiGatewayConverter",
+                "*"]
+    ]
+    principals {
+      type = "Service"
+      identifiers = [
+        "lambda.amazonaws.com"
+      ]           
+      } 
+     
+    }
+}
+
+
 │
