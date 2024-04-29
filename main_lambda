@@ -1,0 +1,76 @@
+data "aws_iam_policy_document" "policy_document" {
+  statement {
+    effect = "Allow"
+    actions = [
+    "sts:AssumeRole"]
+    resources = [
+                "arn:aws:apigateway:us-east-1::/restapis",
+                "arn:aws:iam::901763029074:role/RolApiGatewayConverter"
+                ]
+    
+    principals {
+      type = "Service"
+      identifiers = [
+        "lambda.amazonaws.com"
+      ]           
+      } 
+     
+    }
+}
+
+resource "aws_iam_role" "lambda" {
+  name                 = "BURoleForLambda-${var.namespace}-${var.environment}-${var.function_name}"
+  assume_role_policy   = data.aws_iam_policy_document.policy_document.json
+  permissions_boundary = var.boundary_policy_arn
+
+  dynamic "inline_policy" {
+    for_each = var.inline_policy != "" ? { policy_found = true } : {}
+
+    content {
+      policy = var.inline_policy
+      name   = "BUPolicyForLambda-${var.namespace}-${var.environment}-${var.function_name}"
+    }
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "attach_basic_execution_role" {
+  role       = aws_iam_role.lambda.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+data "archive_file" "dummy" {
+  type        = "zip"
+  output_path = "/tmp/lambda_${var.function_name}.zip"
+
+  source {
+    content  = "dummy"
+    filename = "dummy.txt"
+  }
+}
+
+resource "aws_lambda_function" "lambda_function" {
+  function_name = "${var.namespace}-lambda-${var.function_name}"
+  description   = var.description
+  role          = aws_iam_role.lambda.arn
+
+  filename     = data.archive_file.dummy.output_path
+  package_type = "Zip"
+
+  handler       = var.lambda_handler
+  runtime       = var.runtime
+  memory_size   = var.memory_size
+  timeout       = var.timeout
+  architectures = var.architectures
+
+  dynamic "environment" {
+    for_each = var.environment_variables
+
+    content {
+      variables = environment.value.variables
+    }
+  }
+
+  lifecycle {
+    ignore_changes = [filename, s3_bucket, s3_key, source_code_hash]
+  }
+}
